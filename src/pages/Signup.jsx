@@ -25,7 +25,6 @@ const Signup = () => {
     axios.post(apis.signUp, payLoad).then((res) => {
       // console.log(res.data);
       setUserData(res.data)
-
       navigate(AppRoute.E_Verification);
     }).catch((err) => {
       console.log(err);

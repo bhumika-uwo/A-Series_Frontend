@@ -26,8 +26,8 @@ const Login = () => {
       setMessage(res.data.message)
       navigate(AppRoute.DASHBOARD);
       setUserData(res.data)
-      console.log(res.data);
       localStorage.setItem("userId", res.data.id)
+      localStorage.setItem("token",res.data.token)
 
     }).catch((err) => {
       console.log(err.response.data.error);
