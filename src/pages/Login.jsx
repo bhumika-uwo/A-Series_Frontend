@@ -5,7 +5,7 @@ import { apiService } from '../services/apiService';
 import axios from 'axios';
 import { apis, AppRoute } from '../types';
 import { setUserData } from '../userStore/userData';
-import { logo } from '../constents';
+import { logo } from '../constants';
 
 
 const Login = () => {
@@ -27,7 +27,7 @@ const Login = () => {
       navigate(AppRoute.DASHBOARD);
       setUserData(res.data)
       localStorage.setItem("userId", res.data.id)
-      localStorage.setItem("token",res.data.token)
+      localStorage.setItem("token", res.data.token)
 
     }).catch((err) => {
       console.log(err.response.data.error);

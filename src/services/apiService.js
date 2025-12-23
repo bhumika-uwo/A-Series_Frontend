@@ -2,21 +2,53 @@
 import axios from "axios";
 import { API } from "../types";
 
-const API_BASE_URL = API;
+// Create axios instance with default config
+const apiClient = axios.create({
+  baseURL: API,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 10000, // 10 second timeout
+});
+
+// Request interceptor for adding auth token
+apiClient.interceptors.request.use(
+  (config) => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      const userData = JSON.parse(user);
+      if (userData.token) {
+        config.headers.Authorization = `Bearer ${userData.token}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor for handling errors
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Clear user data and redirect to login on unauthorized
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const apiService = {
   // --- Auth ---
   async login(credentials) {
     try {
-      const response = await axios.post(`${API_BASE_URL}/auth/login`, { credentials })
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Login failed');
-      }
-      return data;
+      const response = await apiClient.post('/auth/login', credentials);
+      return response.data;
     } catch (error) {
-      console.warn('Backend login failed, falling back to mock auth for demo:', error);
+      console.warn('Backend login failed, falling back to mock auth for demo:', error.message);
 
+      // Mock fallback for demo purposes
       if (credentials.email && credentials.password) {
         return {
           id: 'demo-user-123',
@@ -25,27 +57,18 @@ export const apiService = {
           avatar: ''
         };
       }
-      throw new Error(error.message || 'Failed to connect to server');
+      throw new Error(error.response?.data?.error || error.message || 'Failed to connect to server');
     }
   },
 
   async signup(userData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Signup failed');
-      }
-      return data;
+      const response = await apiClient.post('/auth/signup', userData);
+      return response.data;
     } catch (error) {
-      console.warn('Backend signup failed, falling back to mock auth for demo:', error);
+      console.warn('Backend signup failed, falling back to mock auth for demo:', error.message);
 
+      // Mock fallback for demo purposes
       return {
         id: 'demo-user-' + Date.now(),
         name: userData.name,
@@ -58,10 +81,10 @@ export const apiService = {
   // --- Dashboard Stats ---
   async getDashboardStats() {
     try {
-      const response = await fetch(`${API_BASE_URL}/dashboard/stats`);
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.get('/dashboard/stats');
+      return response.data;
     } catch (error) {
+      // Mock fallback
       return {
         totalChats: 24,
         activeAgents: 6,
@@ -74,9 +97,8 @@ export const apiService = {
   // --- Agents ---
   async getAgents() {
     try {
-      const response = await fetch(`${API_BASE_URL}/agents`);
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.get('/agents');
+      return response.data;
     } catch (error) {
       const stored = localStorage.getItem('mock_agents');
       if (stored) return JSON.parse(stored);
@@ -94,13 +116,8 @@ export const apiService = {
 
   async createAgent(agentData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/agents`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(agentData)
-      });
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.post('/agents', agentData);
+      return response.data;
     } catch (error) {
       const stored = JSON.parse(localStorage.getItem('mock_agents') || '[]');
       const newAgent = { ...agentData, _id: Date.now().toString() };
@@ -112,13 +129,8 @@ export const apiService = {
 
   async updateAgent(id, updates) {
     try {
-      const response = await fetch(`${API_BASE_URL}/agents/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates)
-      });
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.put(`/agents/${id}`, updates);
+      return response.data;
     } catch (error) {
       const stored = JSON.parse(localStorage.getItem('mock_agents') || '[]');
       const index = stored.findIndex(a => a._id === id);
@@ -134,10 +146,7 @@ export const apiService = {
 
   async deleteAgent(id) {
     try {
-      const response = await fetch(`${API_BASE_URL}/agents/${id}`, {
-        method: 'DELETE'
-      });
-      if (!response.ok) throw new Error('Backend failed');
+      await apiClient.delete(`/agents/${id}`);
       return true;
     } catch (error) {
       const stored = JSON.parse(localStorage.getItem('mock_agents') || '[]');
@@ -150,9 +159,8 @@ export const apiService = {
   // --- Automations ---
   async getAutomations() {
     try {
-      const response = await fetch(`${API_BASE_URL}/automations`);
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.get('/automations');
+      return response.data;
     } catch (error) {
       const stored = localStorage.getItem('mock_automations');
       if (stored) return JSON.parse(stored);
@@ -171,11 +179,8 @@ export const apiService = {
 
   async toggleAutomation(id) {
     try {
-      const response = await fetch(`${API_BASE_URL}/automations/${id}/toggle`, {
-        method: 'POST'
-      });
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.post(`/automations/${id}/toggle`);
+      return response.data;
     } catch (error) {
       const stored = JSON.parse(localStorage.getItem('mock_automations') || '[]');
 
@@ -192,9 +197,8 @@ export const apiService = {
   // --- Admin ---
   async getAdminSettings() {
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/settings`);
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.get('/admin/settings');
+      return response.data;
     } catch (error) {
       const stored = localStorage.getItem('mock_admin_settings');
       if (stored) return JSON.parse(stored);
@@ -210,16 +214,13 @@ export const apiService = {
 
   async updateAdminSettings(settings) {
     try {
-      const response = await fetch(`${API_BASE_URL}/admin/settings`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(settings)
-      });
-      if (!response.ok) throw new Error('Backend failed');
-      return await response.json();
+      const response = await apiClient.post('/admin/settings', settings);
+      return response.data;
     } catch (error) {
       localStorage.setItem('mock_admin_settings', JSON.stringify(settings));
       return settings;
     }
   }
 };
+
+export default apiService;

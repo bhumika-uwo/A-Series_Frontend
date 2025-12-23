@@ -13,7 +13,7 @@ import {
 import { apis, AppRoute } from '../../types';
 import NotificationBar from '../NotificationBar/NotificationBar.jsx';
 import { useRecoilState } from 'recoil';
-import { getUserData, toggleState } from '../../userStore/userData';
+import { clearUser, getUserData, toggleState } from '../../userStore/userData';
 import axios from 'axios';
 
 
@@ -38,9 +38,12 @@ const Sidebar = ({ isOpen, onClose }) => {
       }
     }).then((res) => {
       console.log(res);
-
     }).catch((err) => {
       console.error(err);
+      if (err.status == 401) {
+        clearUser()
+        navigate(AppRoute.LOGIN)
+      }
 
     })
   }, [])

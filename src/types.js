@@ -52,8 +52,10 @@ export const AppRoute = {
   SETTINGS: "/dashboard/settings",
   agentSoon: "/agentsoon",
 };
-export const API="https://ai-mall-backend.onrender.com/api"
-// export const API = "http://localhost:5000/api"
+
+// Use environment variable for API URL (configured in .env file)
+export const API = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+
 export const apis = {
   emailVerificationApi: `${API}/email_varification`,
   signUp: `${API}/auth/signup`,
@@ -63,5 +65,4 @@ export const apis = {
   buyAgent: `${API}/agents/buy`,
   getUserAgents: `${API}/agents/get_my_agents`,
   chatAgent: `${API}/chat`,
-
-}
+};

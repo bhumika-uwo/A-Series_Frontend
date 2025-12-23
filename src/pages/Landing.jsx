@@ -1,7 +1,7 @@
 import React from 'react';
 import { data, useNavigate } from 'react-router';
-import { ArrowRight, Bot, Cpu, Zap, Shield , CircleUser } from 'lucide-react';
-import { logo } from '../constents';
+import { ArrowRight, Bot, Cpu, Zap, Shield, CircleUser } from 'lucide-react';
+import { logo } from '../constants';
 import { getUserData } from '../userStore/userData';
 import { AppRoute } from '../types';
 
@@ -26,7 +26,7 @@ const Landing = () => {
           </div>
           <span className="text-xl font-bold text-primary"></span>
         </div>
-        {user ?<CircleUser className=' h-7 w-7'/>: <div className="flex gap-4">
+        {user ? <CircleUser className=' h-7 w-7' /> : <div className="flex gap-4">
           <button
             onClick={() => navigate("/login")}
             className="text-subtext hover:text-primary font-medium transition-colors"
@@ -67,7 +67,7 @@ const Landing = () => {
 
           <button
             // onClick={() => user ? navigate(AppRoute.MARKETPLACE) : navigate(AppRoute.SIGNUP)}
-            onClick={() => navigate(AppRoute.MARKETPLACE) }
+            onClick={() => navigate(AppRoute.MARKETPLACE)}
             className="px-8 py-4 bg-primary rounded-2xl font-bold text-lg text-white shadow-xl shadow-primary/30 hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center gap-2"
           >
             Start Now <ArrowRight className="w-5 h-5" />

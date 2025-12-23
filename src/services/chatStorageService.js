@@ -5,8 +5,6 @@ const token = getUserData()?.token
 // const token = localStorage.getItem("token")
 console.log(token);
 
-
-
 const API_BASE_URL = API;
 
 export const chatStorageService = {

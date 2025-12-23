@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter as Router, Routes, Route, Outlet, Navigate, BrowserRouter } from 'react-router';
+import { Routes, Route, Outlet, Navigate, BrowserRouter } from 'react-router';
 
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -12,17 +12,13 @@ import MyAgents from './pages/MyAgents';
 import DashboardOverview from './pages/DashboardOverview';
 import Automations from './pages/Automations';
 import Admin from './pages/Admin';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
 
 import { AppRoute } from './types';
 import { Menu } from 'lucide-react';
 import AiBiz from './agents/AIBIZ/AiBiz.jsx';
-import ComingSoon from './Components/CommingSoon/CommingSoon.jsx';
+import ComingSoon from './Components/ComingSoon/ComingSoon.jsx';
 
-
-const AuthenticatRoute=({childern})=>{
-  
-  
-}
 // ------------------------------
 // Dashboard Layout (Auth pages)
 // ------------------------------
@@ -84,22 +80,29 @@ const PlaceholderPage = ({ title }) => (
 const NavigateProvider = () => {
   return (
     <BrowserRouter>
-
       <Routes>
         {/* Public Routes */}
         <Route path={AppRoute.LANDING} element={<Landing />} />
         <Route path={AppRoute.LOGIN} element={<Login />} />
         <Route path={AppRoute.SIGNUP} element={<Signup />} />
         <Route path={AppRoute.E_Verification} element={<VerificationForm />} />
-        <Route path="/agentsoon" element={<ComingSoon/>}></Route>
-      {/* agents */}
-        <Route path='/agents/aibiz' element={<AiBiz />}></Route>
-        {/* Dashboard (Protected) */}
-        <Route path={AppRoute.DASHBOARD} element={<DashboardLayout />}>
+        <Route path="/agentsoon" element={<ComingSoon />} />
+
+        {/* Agent Routes */}
+        <Route path='/agents/aibiz' element={<AiBiz />} />
+
+        {/* Dashboard (Protected) - Wrapped with ProtectedRoute */}
+        <Route
+          path={AppRoute.DASHBOARD}
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route index element={<Navigate to="chat" replace />} />
           <Route path="chat" element={<Chat />} />
           <Route path="chat/:sessionId" element={<Chat />} />
-
           <Route path="overview" element={<DashboardOverview />} />
           <Route path="marketplace" element={<Marketplace />} />
           <Route path="agents" element={<MyAgents />} />
@@ -109,7 +112,7 @@ const NavigateProvider = () => {
         </Route>
 
         {/* Catch All */}
-        <Route path="/" element={<Navigate to={AppRoute.LANDING} replace />} />
+        <Route path="*" element={<Navigate to={AppRoute.LANDING} replace />} />
       </Routes>
     </BrowserRouter>
   );
