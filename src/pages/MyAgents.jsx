@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Settings, Trash2, Bot, Code, Edit3, Save } from 'lucide-react';
+import { Plus, Settings, Trash2, Bot, Code, Edit3, Save, FileText, Download } from 'lucide-react';
 import { apiService } from '../services/apiService';
 import axios from 'axios';
 import { apis, AppRoute } from '../types';
 import { getUserData } from '../userStore/userData';
-import { Link } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 
 const MyAgents = () => {
     const [agents, setAgents] = useState([]);
@@ -13,6 +13,7 @@ const MyAgents = () => {
     const [editedInstructions, setEditedInstructions] = useState('');
     const [isSaving, setIsSaving] = useState(false);
     const user = getUserData("user")
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -125,13 +126,24 @@ const MyAgents = () => {
                                 <p className="text-sm text-subtext mb-6 flex-1">{agent.description}</p>
 
                                 {/* Install Button */}
-                                <Link to={!agent?.url || agent.url.trim() === "" ? AppRoute.agentSoon : agent.url}>
+                                <div className="flex gap-2">
+                                    <Link to={!agent?.url || agent.url.trim() === "" ? AppRoute.agentSoon : agent.url} className="flex-1">
+                                        <button
+                                            className="w-full py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all bg-green-50 text-green-600 border border-green-100"
+                                        >
+                                            Use
+                                        </button>
+                                    </Link>
                                     <button
-                                        className="w-full py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all bg-green-50 text-green-600 border border-green-100"
+                                        onClick={() => {
+                                            navigate(AppRoute.INVOICES);
+                                        }}
+                                        className="p-2.5 rounded-xl bg-surface border border-border text-subtext hover:text-primary transition-all"
+                                        title="View Invoice"
                                     >
-                                        Use
+                                        <FileText className="w-5 h-5" />
                                     </button>
-                                </Link>
+                                </div>
 
 
                             </div>)}

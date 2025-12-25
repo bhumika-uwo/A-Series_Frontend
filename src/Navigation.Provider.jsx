@@ -12,6 +12,8 @@ import MyAgents from './pages/MyAgents';
 import DashboardOverview from './pages/DashboardOverview';
 import Automations from './pages/Automations';
 import Admin from './pages/Admin';
+import Invoices from './pages/Invoices';
+import Notifications from './pages/Notifications';
 
 import { AppRoute } from './types';
 import { Menu } from 'lucide-react';
@@ -19,9 +21,9 @@ import AiBiz from './agents/AIBIZ/AiBiz.jsx';
 import ComingSoon from './Components/CommingSoon/CommingSoon.jsx';
 
 
-const AuthenticatRoute=({childern})=>{
-  
-  
+const AuthenticatRoute = ({ childern }) => {
+
+
 }
 // ------------------------------
 // Dashboard Layout (Auth pages)
@@ -91,8 +93,8 @@ const NavigateProvider = () => {
         <Route path={AppRoute.LOGIN} element={<Login />} />
         <Route path={AppRoute.SIGNUP} element={<Signup />} />
         <Route path={AppRoute.E_Verification} element={<VerificationForm />} />
-        <Route path="/agentsoon" element={<ComingSoon/>}></Route>
-      {/* agents */}
+        <Route path="/agentsoon" element={<ComingSoon />}></Route>
+        {/* agents */}
         <Route path='/agents/aibiz' element={<AiBiz />}></Route>
         {/* Dashboard (Protected) */}
         <Route path={AppRoute.DASHBOARD} element={<DashboardLayout />}>
@@ -106,6 +108,8 @@ const NavigateProvider = () => {
           <Route path="automations" element={<Automations />} />
           <Route path="admin" element={<Admin />} />
           <Route path="settings" element={<Admin />} />
+          <Route path="invoices" element={<Invoices />} />
+          <Route path="notifications" element={<Notifications />} />
         </Route>
 
         {/* Catch All */}
