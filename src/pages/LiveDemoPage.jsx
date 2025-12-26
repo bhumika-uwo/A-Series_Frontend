@@ -16,7 +16,7 @@ const MOCK_DEMOS = [
         thumbnail: '/demo/scene1.png',
         category: 'Business OS',
         duration: '1:00',
-        videoUrl: '/videos/AI-BIZ%20VIDEO.mp4',
+        videoUrl: 'https://res.cloudinary.com/dfmqbofsl/video/upload/v1766734462/ai-bizzzzz-videooo_xkt1ei.mp4',
         scenes: [
             {
                 image: '/demo/scene1.png',

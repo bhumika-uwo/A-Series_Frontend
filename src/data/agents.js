@@ -9,7 +9,7 @@ export const AGENTS = [
         output: "Dashboards, warnings, suggestions.",
         category: "Core System",
         hasRealVideo: true,
-        videoUrl: "/videos/AI-BIZ%20VIDEO.mp4",
+        videoUrl: "https://res.cloudinary.com/dfmqbofsl/video/upload/v1766734462/ai-bizzzzz-videooo_xkt1ei.mp4",
         videoType: "uploaded",
         thumbnail: "/demo/scene1.png"
     },
