@@ -12,13 +12,21 @@ import MyAgents from './pages/MyAgents';
 import DashboardOverview from './pages/DashboardOverview';
 import Automations from './pages/Automations';
 import Admin from './pages/Admin';
-import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
 
 import { AppRoute } from './types';
 import { Menu } from 'lucide-react';
 import AiBiz from './agents/AIBIZ/AiBiz.jsx';
 import AiBase from './agents/AIBASE/AiBase.jsx';
 import ComingSoon from './Components/ComingSoon/ComingSoon.jsx';
+
+import { lazy, Suspense } from 'react';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
+
+const LiveDemoPage = lazy(() => import('./pages/LiveDemoPage'));
+
+const AuthenticatRoute = ({ children }) => {
+  return children;
+}
 
 // ------------------------------
 // Dashboard Layout (Auth pages)
@@ -87,13 +95,10 @@ const NavigateProvider = () => {
         <Route path={AppRoute.LOGIN} element={<Login />} />
         <Route path={AppRoute.SIGNUP} element={<Signup />} />
         <Route path={AppRoute.E_Verification} element={<VerificationForm />} />
-        <Route path="/agentsoon" element={<ComingSoon />} />
-
-        {/* Agent Routes */}
-        <Route path='/agents/aibiz' element={<AiBiz />} />
-        <Route path='/agents/aibase' element={<AiBase />} />
-
-        {/* Dashboard (Protected) - Wrapped with ProtectedRoute */}
+        <Route path="/agentsoon" element={<ComingSoon />}></Route>
+        {/* agents */}
+        <Route path='/agents/aibiz' element={<AiBiz />}></Route>
+        {/* Dashboard (Protected) */}
         <Route
           path={AppRoute.DASHBOARD}
           element={
@@ -107,6 +112,11 @@ const NavigateProvider = () => {
           <Route path="chat/:sessionId" element={<Chat />} />
           <Route path="overview" element={<DashboardOverview />} />
           <Route path="marketplace" element={<Marketplace />} />
+          {/* <Route path="live-demos" element={
+            <Suspense fallback={<div className="flex items-center justify-center h-full"><p className="text-subtext">Loading...</p></div>}>
+              <LiveDemoPage />
+            </Suspense>
+          } /> */}
           <Route path="agents" element={<MyAgents />} />
           <Route path="automations" element={<Automations />} />
           <Route path="admin" element={<Admin />} />

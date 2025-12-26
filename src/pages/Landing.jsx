@@ -1,13 +1,27 @@
 import React from 'react';
 import { data, useNavigate } from 'react-router';
-import { ArrowRight, Bot, Cpu, Zap, Shield, CircleUser } from 'lucide-react';
+import { ArrowRight, Bot, Cpu, Zap, Shield, CircleUser, Play } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { logo } from '../constants';
 import { getUserData } from '../userStore/userData';
 import { AppRoute } from '../types';
+import LandingLiveDemoModal from '../Components/LiveDemo/LandingLiveDemoModal';
+import { useRecoilState } from 'recoil';
+import { demoModalState } from '../userStore/demoStore';
 
 const Landing = () => {
   const navigate = useNavigate();
   const user = getUserData("user")
+  const [demoState, setDemoState] = useRecoilState(demoModalState);
+
+  const openDemo = () => {
+    setDemoState({
+      isOpen: true,
+      selectedAgent: null
+    });
+  };
+
+  const btnClass = "px-8 py-4 bg-primary rounded-2xl font-bold text-lg text-white shadow-xl shadow-primary/30 flex items-center justify-center gap-2 border border-primary/10 w-full sm:w-auto overflow-hidden";
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden bg-secondary">
@@ -20,11 +34,8 @@ const Landing = () => {
       <header className="relative z-10 px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full">
         <div className="flex items-center gap-2">
           <div className="w-20 h-20 rounded-lg flex items-center justify-center">
-            <img src={logo} alt="" />
-
-            <Cpu className="text-white w-5 h-5" />
+            <img src={logo} alt="AI-Mall Logo" />
           </div>
-          <span className="text-xl font-bold text-primary"></span>
         </div>
         {user ? <CircleUser className=' h-7 w-7' /> : <div className="flex gap-4">
           <button
@@ -41,78 +52,126 @@ const Landing = () => {
             Get Started
           </button>
         </div>}
-
       </header>
 
       {/* Hero Section */}
-      <main className="flex-1 flex flex-col items-center justify-center text-center px-4 relative z-10">
+      <main className="flex-1 flex flex-col items-center justify-center text-center px-4 relative z-10 py-20">
 
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-border text-sm text-subtext mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-border text-sm text-subtext mb-8"
+        >
           <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
           Powered by UWO
-        </div>
+        </motion.div>
 
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight text-maintext">
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight text-maintext"
+        >
           The Future of <br />
           <span className="text-primary">Conversational AI</span>
-        </h1>
+        </motion.h1>
 
-        <p className="text-lg text-subtext max-w-2xl mb-10 leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg text-subtext max-w-2xl mb-10 leading-relaxed"
+        >
           Experience the next generation of intelligent assistance.
           AI Mall learns, adapts, and creates with you in real-time through a stunning interface.
-        </p>
+        </motion.p>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex flex-col sm:flex-row gap-4 w-full justify-center max-w-2xl"
+        >
 
-          <button
-            // onClick={() => user ? navigate(AppRoute.MARKETPLACE) : navigate(AppRoute.SIGNUP)}
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => navigate(AppRoute.MARKETPLACE)}
             className="px-8 py-4 bg-primary rounded-2xl font-bold text-lg text-white shadow-xl shadow-primary/30 hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center gap-2"
           >
             Start Now <ArrowRight className="w-5 h-5" />
-          </button>
-          {!user && <button
-            onClick={() => navigate("/login")}
-            className="px-8 py-4 bg-white border border-border rounded-2xl font-bold text-lg text-maintext hover:bg-surface transition-all duration-300 shadow-sm"
+          </motion.button>
+
+          <motion.button
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={openDemo}
+            className={btnClass}
           >
-            Existing User
-          </button>}
+            <Play className="w-5 h-5 fill-white" /> Watch Live Demo
+          </motion.button>
 
+          {!user && (
+            <motion.button
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate("/login")}
+              className={btnClass}
+            >
+              Existing User
+            </motion.button>
+          )}
+        </motion.div>
 
-
-        </div>
-
-        {/* Features */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full text-left">
-
-          <div className="p-6 rounded-2xl bg-white border border-border shadow-md hover:shadow-xl hover:border-primary/20 transition-all">
-            <Bot className="w-10 h-10 text-primary mb-4" />
+        {/* Features Preview */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-24 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full text-left"
+        >
+          <div className="p-6 rounded-3xl bg-white border border-border shadow-sm hover:shadow-xl hover:border-primary/20 transition-all group">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Bot className="w-6 h-6 text-primary" />
+            </div>
             <h3 className="text-xl font-bold mb-2 text-maintext">Smart Agents</h3>
             <p className="text-subtext">
               Access a marketplace of specialized AI agents for coding, writing, and analysis.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-border shadow-md hover:shadow-xl hover:border-primary/20 transition-all">
-            <Zap className="w-10 h-10 text-primary mb-4" />
+          <div className="p-6 rounded-3xl bg-white border border-border shadow-sm hover:shadow-xl hover:border-primary/20 transition-all group">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Zap className="w-6 h-6 text-primary" />
+            </div>
             <h3 className="text-xl font-bold mb-2 text-maintext">Real-time Speed</h3>
             <p className="text-subtext">
               Powered by the fastest Gemini models for instant, fluid conversation.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-border shadow-md hover:shadow-xl hover:border-primary/20 transition-all">
-            <Shield className="w-10 h-10 text-primary mb-4" />
+          <div className="p-6 rounded-3xl bg-white border border-border shadow-sm hover:shadow-xl hover:border-primary/20 transition-all group">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <Shield className="w-6 h-6 text-primary" />
+            </div>
             <h3 className="text-xl font-bold mb-2 text-maintext">Secure & Private</h3>
             <p className="text-subtext">
               Enterprise-grade security ensures your data and conversations stay private.
             </p>
           </div>
-
-        </div>
+        </motion.div>
 
       </main>
+
+      {/* Footer / Copyright */}
+      <footer className="p-8 text-center text-subtext text-xs relative z-10 border-t border-border mt-auto bg-surface/30">
+        © 2024 AI-Mall. All systems integrated with UWO-LINK.
+      </footer>
+
+      <LandingLiveDemoModal
+        isOpen={demoState.isOpen}
+        onClose={() => setDemoState({ ...demoState, isOpen: false })}
+      />
     </div>
   );
 };
