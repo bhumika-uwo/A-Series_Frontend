@@ -23,6 +23,7 @@ import ComingSoon from './Components/ComingSoon/ComingSoon.jsx';
 
 import { lazy, Suspense } from 'react';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
+import UserProfile from './pages/UserProfile.jsx';
 
 const LiveDemoPage = lazy(() => import('./pages/LiveDemoPage'));
 
@@ -114,6 +115,7 @@ const NavigateProvider = () => {
           <Route path="chat" element={<Chat />} />
           <Route path="chat/:sessionId" element={<Chat />} />
           <Route path="overview" element={<DashboardOverview />} />
+          <Route path="profile" element={<UserProfile />} />
           <Route path="marketplace" element={<Marketplace />} />
           {/* <Route path="live-demos" element={
             <Suspense fallback={<div className="flex items-center justify-center h-full"><p className="text-subtext">Loading...</p></div>}>

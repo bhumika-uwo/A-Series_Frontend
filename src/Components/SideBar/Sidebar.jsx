@@ -199,13 +199,19 @@ const Sidebar = ({ isOpen, onClose }) => {
 
         {/* User Profile */}
         <div className="p-4 border-t border-border mt-auto">
-          <div className="flex items-center gap-3 px-2 py-3 mb-2 rounded-xl hover:bg-surface border border-transparent hover:border-border cursor-pointer">
-            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase">
+          <div
+            onClick={() => {
+              navigate(AppRoute.PROFILE);
+              onClose();
+            }}
+            className="flex items-center gap-3 px-2 py-3 mb-2 rounded-xl hover:bg-surface border border-transparent hover:border-border cursor-pointer group"
+          >
+            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase group-hover:bg-primary/30 transition-colors">
               {user.name.charAt(0)}
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-maintext truncate">{user.name}</p>
+              <p className="text-sm font-medium text-maintext truncate group-hover:text-primary transition-colors">{user.name}</p>
               <p className="text-xs text-subtext truncate">{user.email}</p>
             </div>
           </div>
