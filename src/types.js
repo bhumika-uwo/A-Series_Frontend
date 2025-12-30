@@ -57,8 +57,8 @@ export const AppRoute = {
 };
 
 // Use environment variable for API URL (configured in .env file)
-export const API = "https://ai-mall-backend.onrender.com/api";
-// export const API = "http://localhost:5000/api";
+// export const API = "https://ai-mall-backend.onrender.com/api";
+export const API = "http://localhost:5000/api";
 
 export const apis = {
   emailVerificationApi: `${API}/email_varification`,
@@ -72,4 +72,5 @@ export const apis = {
   getUserAgents: `${API}/agents/get_my_agents`,
   chatAgent: `${API}/chat`,
   aibiz: `${API}/aibiz`,
+  support: `${API}/support`,
 };
