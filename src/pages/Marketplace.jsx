@@ -30,19 +30,11 @@ const Marketplace = () => {
 
 
     // localStorage.setItem("agents", JSON.stringify(agents))
-<<<<<<< HEAD
-    axios.post(apis.getUserAgents, { userId: user?.id }).then((res) => {
-      setUserAgent(res.data?.agents || [])
-      console.log(res.data?.agents);
-      setLoading(false)
-=======
     if (user && user.id) {
       axios.post(apis.getUserAgents, { userId: user?.id }).then((res) => {
-        setUserAgent(res.data.agents)
-        console.log(res.data.agents);
+        setUserAgent(res.data?.agents || [])
+        console.log(res.data?.agents);
         setLoading(false)
->>>>>>> a6a2ce2e0ac4eb1852e4aa90aa31bf317ba61bac
-
       }).catch(err => console.log(err))
     }
     axios.get(apis.agents).then((agent) => {

@@ -14,6 +14,7 @@ import Automations from './pages/Automations';
 import Admin from './pages/Admin';
 import Invoices from './pages/Invoices';
 import Notifications from './pages/Notifications';
+import Profile from './pages/Profile';
 
 import { AppRoute } from './types';
 import { Menu } from 'lucide-react';
@@ -122,13 +123,13 @@ const NavigateProvider = () => {
               <LiveDemoPage />
             </Suspense>
           } /> */}
-<<<<<<< HEAD
-          <Route path="agents" element={<MyAgents />} />
-          <Route path="automations" element={<Automations />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="settings" element={<Admin />} />
-          <Route path="invoices" element={<Invoices />} />
-          <Route path="notifications" element={<Notifications />} />
+          <Route path="agents" element={<ProtectedRoute><MyAgents /></ProtectedRoute>} />
+          <Route path="automations" element={<ProtectedRoute><Automations /></ProtectedRoute>} />
+          <Route path="admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          <Route path="settings" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+          <Route path="invoices" element={<ProtectedRoute><Invoices /></ProtectedRoute>} />
+          <Route path="notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+          <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="security" element={
             <Suspense fallback={<div className="flex items-center justify-center h-full">Loading...</div>}>
               <SecurityAndGuidelines />
@@ -153,20 +154,12 @@ const NavigateProvider = () => {
           <Route path="support/user" element={<VendorSupport />} />
           <Route path="support/admin" element={<PlaceholderPage title="Admin Support" />} />
           <Route path="settings" element={<PlaceholderPage title="Vendor Settings" />} />
-=======
-          <Route path="agents" element={<ProtectedRoute><MyAgents /></ProtectedRoute>} />
-          <Route path="automations" element={<ProtectedRoute><Automations /></ProtectedRoute>} />
-          <Route path="admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-          <Route path="settings" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
-          <Route path="invoices" element={<ProtectedRoute><Invoices /></ProtectedRoute>} />
-          <Route path="notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
->>>>>>> a6a2ce2e0ac4eb1852e4aa90aa31bf317ba61bac
         </Route>
 
         {/* Catch All */}
         <Route path="*" element={<Navigate to={AppRoute.LANDING} replace />} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter >
   );
 };
 
