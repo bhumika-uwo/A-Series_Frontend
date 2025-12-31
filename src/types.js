@@ -57,6 +57,8 @@ export const AppRoute = {
   ADMIN: "/dashboard/admin",
   SECURITY: "/dashboard/security",
   PROFILE: "/dashboard/profile",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password/:token",
 };
 
 // Use environment variable for API URL (configured in .env file)
@@ -67,6 +69,8 @@ export const apis = {
   emailVerificationApi: `${API}/email_varification`,
   signUp: `${API}/auth/signup`,
   logIn: `${API}/auth/login/`,
+  forgotPassword: `${API}/auth/forgot-password`,
+  resetPassword: `${API}/auth/reset-password/`,
   user: `${API}/user`,
   getPayments: `${API}/user/payments`,
   notifications: `${API}/notifications`,

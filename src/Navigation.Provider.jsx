@@ -20,6 +20,8 @@ import { Menu } from 'lucide-react';
 import AiBiz from './agents/AIBIZ/AiBiz.jsx';
 import AiBase from './agents/AIBASE/AiBase.jsx';
 import ComingSoon from './Components/ComingSoon/ComingSoon.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
+import ResetPassword from './pages/ResetPassword.jsx';
 
 import { lazy, Suspense } from 'react';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
@@ -104,6 +106,8 @@ const NavigateProvider = () => {
         <Route path={AppRoute.LOGIN} element={<Login />} />
         <Route path={AppRoute.SIGNUP} element={<Signup />} />
         <Route path={AppRoute.E_Verification} element={<VerificationForm />} />
+        <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
+        <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
         <Route path="/agentsoon" element={<ComingSoon />}></Route>
         {/* agents */}
         <Route path='/agents/aibiz' element={<AiBiz />}></Route>
