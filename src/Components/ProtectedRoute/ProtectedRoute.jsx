@@ -7,13 +7,13 @@ import { Navigate, useLocation } from 'react-router';
  */
 const ProtectedRoute = ({ children }) => {
   const location = useLocation();
-  
+
   // Check if user is authenticated
   const isAuthenticated = () => {
     try {
       const user = localStorage.getItem('user');
       if (!user) return false;
-      
+
       const userData = JSON.parse(user);
       // Check if user object has required fields
       return userData && userData.email;

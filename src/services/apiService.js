@@ -94,7 +94,44 @@ export const apiService = {
     }
   },
 
+  async getAdminOverviewStats() {
+    try {
+      const response = await apiClient.get('/admin/stats');
+      return response.data;
+    } catch (error) {
+      console.warn('Backend admin stats failed, falling back to mock:', error.message);
+      const agents = JSON.parse(localStorage.getItem('mock_agents') || '[]');
+      return {
+        totalUsers: 0,
+        activeAgents: agents.length,
+        pendingApprovals: 0,
+        totalRevenue: 0,
+        openComplaints: 0,
+        recentActivity: [],
+        inventory: agents.map(a => ({
+          ...a,
+          id: a._id,
+          name: a.name || a.agentName,
+          pricing: a.pricing || 'Free',
+          status: a.status || 'Active'
+        }))
+      };
+    }
+  },
+
   // --- Agents ---
+  async getCreatedAgents() {
+    try {
+      const response = await apiClient.get('/agents/created-by-me');
+      return response.data;
+    } catch (error) {
+      // Mock fallback: Return all local mock agents (assuming I am the owner in demo)
+      const stored = localStorage.getItem('mock_agents');
+      if (stored) return JSON.parse(stored);
+      return [];
+    }
+  },
+
   async getAgents() {
     try {
       const response = await apiClient.get('/agents');
@@ -104,9 +141,12 @@ export const apiService = {
       if (stored) return JSON.parse(stored);
 
       const defaults = [
-        { _id: '101', name: 'Support Bot V1', description: 'Handles initial queries.', type: 'support', instructions: 'You are a helpful support agent.' },
-        { _id: '102', name: 'Personal Diary', description: 'Reflects on entries.', type: 'writer', instructions: 'You are an empathetic listener.' },
-        { _id: '103', name: 'React Helper', description: 'Assists with code.', type: 'coder', instructions: 'You are a React expert.' }
+        { _id: '683d38ce-1', name: 'AIFLOW', description: 'Streamline your AI workflows.', pricing: 'Free', status: 'Inactive' },
+        { _id: '683d38ce-2', name: 'AIMARKET', description: 'AI-driven marketplace insights.', pricing: 'Free', status: 'Inactive' },
+        { _id: '683d38ce-3', name: 'AICONNECT', description: 'Connect all your AI tools.', pricing: 'Free', status: 'Inactive' },
+        { _id: '693d38ce-4', name: 'AIMUSIC', description: 'AI-powered music generation.', pricing: 'Free', status: 'Inactive' },
+        { _id: '693d38ce-5', name: 'AITRANS', description: 'Advanced AI translation services.', pricing: 'Free', status: 'Inactive' },
+        { _id: '683d38ce-6', name: 'AISCRIPT', description: 'AI script writing and automation.', pricing: 'Free', status: 'Inactive' }
       ];
 
       localStorage.setItem('mock_agents', JSON.stringify(defaults));
@@ -153,6 +193,124 @@ export const apiService = {
       const filtered = stored.filter(a => a._id !== id);
       localStorage.setItem('mock_agents', JSON.stringify(filtered));
       return true;
+    }
+  },
+
+  // --- Review Workflow ---
+  async submitForReview(id) {
+    try {
+      const response = await apiClient.post(`/agents/submit-review/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to submit review:", error);
+      throw error;
+    }
+  },
+
+  async approveAgent(id, message) {
+    try {
+      const response = await apiClient.post(`/agents/approve/${id}`, { message });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to approve agent:", error);
+      throw error;
+    }
+  },
+
+  async rejectAgent(id, reason) {
+    try {
+      const response = await apiClient.post(`/agents/reject/${id}`, { reason });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to reject agent:", error);
+      throw error;
+    }
+  },
+
+  async getVendorRevenue() {
+    try {
+      const response = await apiClient.get('/revenue/vendor');
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch vendor revenue:", error);
+      throw error;
+    }
+  },
+
+  async getAdminRevenueStats() {
+    try {
+      const response = await apiClient.get('/revenue/admin');
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch admin revenue:", error);
+      // Fallback or rethrow
+      return {
+        overview: { totalGross: 0, totalVendorPayouts: 0, totalPlatformNet: 0 },
+        appPerformance: []
+      };
+    }
+  },
+
+  async getVendorTransactions() {
+    try {
+      const response = await apiClient.get('/revenue/transactions');
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch vendor transactions:", error);
+      throw error;
+    }
+  },
+
+  async getAdminTransactions() {
+    try {
+      const response = await apiClient.get('/revenue/admin/transactions');
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch admin transactions:", error);
+      return []; // Return empty array on error
+    }
+  },
+
+  async downloadInvoice(transactionId) {
+    try {
+      const response = await apiClient.get(`/revenue/invoice/${transactionId}`, {
+        responseType: 'blob'
+      });
+
+      // Create blob link to download
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `invoice-${transactionId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      return true;
+    } catch (error) {
+      console.error("Failed to download invoice:", error);
+      throw error;
+    }
+  },
+
+  // --- Notifications ---
+  async getNotifications() {
+    try {
+      const response = await apiClient.get('/notifications');
+      return response.data;
+    } catch (error) {
+      console.warn("Using mock notifications");
+      return [];
+    }
+  },
+
+  async markNotificationRead(id) {
+    try {
+      const response = await apiClient.put(`/notifications/${id}/read`);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to mark notification read:", error);
     }
   },
 
@@ -219,6 +377,81 @@ export const apiService = {
     } catch (error) {
       localStorage.setItem('mock_admin_settings', JSON.stringify(settings));
       return settings;
+    }
+  },
+
+  async getAllUsers() {
+    try {
+      const response = await apiClient.get('/user/all');
+      return response.data;
+    } catch (error) {
+      console.warn('Backend get users failed, falling back to mock:', error.message);
+      // Mock fallback
+      return [
+        { id: '1', name: 'Mock User 1', email: 'user1@example.com', role: 'user', status: 'Active', agents: [], spent: 120 },
+        { id: '2', name: 'Mock User 2', email: 'user2@example.com', role: 'user', status: 'Active', agents: [], spent: 250 }
+      ];
+    }
+  },
+
+  async toggleBlockUser(id, isBlocked) {
+    try {
+      const response = await apiClient.put(`/user/${id}/block`, { isBlocked });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to block/unblock user:", error);
+      throw error;
+    }
+  },
+
+  async deleteUser(id) {
+    try {
+      await apiClient.delete(`/user/${id}`);
+      return true;
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      throw error;
+    }
+  },
+
+  // --- Reports ---
+  async submitReport(reportData) {
+    try {
+      const response = await apiClient.post('/reports/submit', reportData);
+      return response.data;
+    } catch (error) {
+      console.error("Backend report submission failed:", error);
+      throw new Error(error.response?.data?.error || "Failed to submit report");
+    }
+  },
+
+  async getReports() {
+    try {
+      const response = await apiClient.get('/reports');
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch reports:", error);
+      return [];
+    }
+  },
+
+  async resolveReport(id, status, resolutionNote) {
+    try {
+      const response = await apiClient.put(`/reports/${id}/resolve`, { status, resolutionNote });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to resolve report:", error);
+      throw error;
+    }
+  },
+
+  async replyToVendorTicket(ticketId, message) {
+    try {
+      const response = await apiClient.post(`/reports/${ticketId}/reply`, { message });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to send reply:", error);
+      throw error;
     }
   }
 };

@@ -1,8 +1,8 @@
-import React from 'react';
-import { data, useNavigate } from 'react-router';
-import { ArrowRight, Bot, Cpu, Zap, Shield, CircleUser, Play } from 'lucide-react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
+import { ArrowRight, Bot, Cpu, Zap, Shield, CircleUser, Play, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { logo } from '../constants';
+import { logo, faqs } from '../constants';
 import { getUserData } from '../userStore/userData';
 import { AppRoute } from '../types';
 import LandingLiveDemoModal from '../Components/LiveDemo/LandingLiveDemoModal';
@@ -13,6 +13,11 @@ const Landing = () => {
   const navigate = useNavigate();
   const user = getUserData("user")
   const [demoState, setDemoState] = useRecoilState(demoModalState);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
+
+  const toggleFaq = (index) => {
+    setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
 
   const openDemo = () => {
     setDemoState({
@@ -123,6 +128,38 @@ const Landing = () => {
           )}
         </motion.div>
 
+
+
+        {/* FAQ Section */}
+        <div className="mt-20 w-full max-w-3xl mb-8">
+          <h2 className="text-3xl font-bold text-center mb-10 text-maintext">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="border border-border rounded-xl bg-white overflow-hidden hover:shadow-md transition-all">
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full flex justify-between items-center p-5 text-left hover:bg-surface transition-colors focus:outline-none"
+                >
+                  <span className="font-semibold text-maintext text-lg">{faq.question}</span>
+                  {openFaqIndex === index ? (
+                    <ChevronUp className="w-5 h-5 text-primary" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-subtext" />
+                  )}
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${openFaqIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                >
+                  <div className="p-5 pt-0 text-subtext leading-relaxed">
+                    {faq.answer}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Features Preview */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -146,7 +183,7 @@ const Landing = () => {
             </div>
             <h3 className="text-xl font-bold mb-2 text-maintext">Real-time Speed</h3>
             <p className="text-subtext">
-              Powered by the fastest Gemini models for instant, fluid conversation.
+              Powered by the fastest AI models for instant, fluid conversation.
             </p>
           </div>
 
@@ -172,7 +209,7 @@ const Landing = () => {
         isOpen={demoState.isOpen}
         onClose={() => setDemoState({ ...demoState, isOpen: false })}
       />
-    </div>
+    </div >
   );
 };
 
