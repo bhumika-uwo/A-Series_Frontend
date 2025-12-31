@@ -127,11 +127,16 @@ const Login = () => {
           </form>
 
           {/* Signup Redirect */}
-          <div className="mt-8 text-center text-sm text-subtext">
-            Don't have an account?{' '}
-            <Link to="/signup" className="text-primary hover:underline font-medium">
-              Create Account
-            </Link>
+          <div className="mt-8 text-center text-sm text-subtext space-y-3">
+            <div>
+              Don't have an account?{' '}
+              <Link to="/signup" className="text-primary hover:underline font-medium">
+                Create Account
+              </Link>
+            </div>
+
+            {/* Vendor Registration Link */}
+
           </div>
         </div>
 

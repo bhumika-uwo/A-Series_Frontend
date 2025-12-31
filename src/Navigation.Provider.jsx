@@ -12,8 +12,12 @@ import MyAgents from './pages/MyAgents';
 import DashboardOverview from './pages/DashboardOverview';
 import Automations from './pages/Automations';
 import Admin from './pages/Admin';
+<<<<<<< HEAD
+import VendorRegister from './pages/VendorRegister';
+=======
 import Invoices from './pages/Invoices';
 import Notifications from './pages/Notifications';
+>>>>>>> cbe4033bd645362cf73e7c95ce204b47682a9828
 
 import { AppRoute } from './types';
 import { Menu } from 'lucide-react';
@@ -34,6 +38,33 @@ const VendorApps = lazy(() => import('./pages/VendorApps'));
 const RevenueOverview = lazy(() => import('./Components/Vendor/RevenueOverview'));
 const TransactionHistory = lazy(() => import('./Components/Admin/TransactionHistory'));
 const VendorSupport = lazy(() => import('./pages/VendorSupport'));
+
+// Vendor Imports
+import VendorLayout from './Components/Vendor/VendorLayout';
+import VendorOverview from './pages/Vendor/VendorOverview';
+import VendorApps from './pages/Vendor/VendorApps';
+import VendorRevenue from './pages/Vendor/VendorRevenue';
+import VendorSettings from './pages/Vendor/VendorSettings';
+// import VendorCommunication from './pages/Vendor/VendorCommunication'; // Removed in favor of split support
+import VendorUserSupport from './pages/Vendor/VendorUserSupport';
+import VendorAdminSupport from './pages/Vendor/VendorAdminSupport';
+import VendorAppDetail from './pages/Vendor/VendorAppDetail';
+import VendorTransactions from './pages/Vendor/VendorTransactions';
+
+// ... (other imports)
+
+// Inside Routes
+<Route path="/vendor" element={<VendorLayout />}>
+  <Route index element={<Navigate to="overview" replace />} />
+  <Route path="overview" element={<VendorOverview />} />
+  <Route path="apps" element={<VendorApps />} />
+  <Route path="apps/:appId" element={<VendorAppDetail />} />
+  <Route path="revenue" element={<VendorRevenue />} />
+  <Route path="revenue/transactions" element={<VendorTransactions />} />
+  <Route path="settings" element={<VendorSettings />} />
+  <Route path="user-support" element={<VendorUserSupport />} />
+  <Route path="admin-support" element={<VendorAdminSupport />} />
+</Route>
 
 const AuthenticatRoute = ({ children }) => {
   return children;
@@ -105,6 +136,7 @@ const NavigateProvider = () => {
         <Route path={AppRoute.LANDING} element={<Landing />} />
         <Route path={AppRoute.LOGIN} element={<Login />} />
         <Route path={AppRoute.SIGNUP} element={<Signup />} />
+        <Route path="/vendor/register" element={<VendorRegister />} />
         <Route path={AppRoute.E_Verification} element={<VerificationForm />} />
         <Route path={AppRoute.FORGOT_PASSWORD} element={<ForgotPassword />} />
         <Route path={AppRoute.RESET_PASSWORD} element={<ResetPassword />} />
@@ -158,6 +190,18 @@ const NavigateProvider = () => {
           <Route path="support/user" element={<VendorSupport />} />
           <Route path="support/admin" element={<PlaceholderPage title="Admin Support" />} />
           <Route path="settings" element={<PlaceholderPage title="Vendor Settings" />} />
+        </Route>
+
+        {/* Vendor Dashboard Routes (Public for MVP/Testing) */}
+        <Route path="/vendor" element={<VendorLayout />}>
+          <Route index element={<Navigate to="overview" replace />} />
+          <Route path="overview" element={<VendorOverview />} />
+          <Route path="apps" element={<VendorApps />} />
+          <Route path="apps/:appId" element={<VendorAppDetail />} />
+          <Route path="revenue" element={<VendorRevenue />} />
+          <Route path="settings" element={<VendorSettings />} />
+          <Route path="user-support" element={<VendorUserSupport />} />
+          <Route path="admin-support" element={<VendorAdminSupport />} />
         </Route>
 
         {/* Catch All */}
