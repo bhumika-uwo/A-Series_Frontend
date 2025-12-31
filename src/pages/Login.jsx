@@ -4,8 +4,9 @@ import { Cpu, Mail, Lock, ArrowLeft, AlertCircle } from 'lucide-react';
 import { apiService } from '../services/apiService';
 import axios from 'axios';
 import { apis, AppRoute } from '../types';
-import { setUserData } from '../userStore/userData';
+import { setUserData, userData as userDataAtom } from '../userStore/userData';
 import { logo } from '../constants';
+import { useSetRecoilState } from 'recoil';
 
 
 const Login = () => {
@@ -17,6 +18,8 @@ const Login = () => {
   const [message, setMessage] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const setUserRecoil = useSetRecoilState(userDataAtom);
+
   const payload = { email, password }
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ const Login = () => {
       const from = location.state?.from?.pathname || AppRoute.DASHBOARD;
       navigate(from, { replace: true });
       setUserData(res.data)
+      setUserRecoil({ user: res.data })
       localStorage.setItem("userId", res.data.id)
       localStorage.setItem("token", res.data.token)
 
