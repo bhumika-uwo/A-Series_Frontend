@@ -117,7 +117,12 @@ const Sidebar = ({ isOpen, onClose }) => {
             <span>Marketplace</span>
           </NavLink>
 
-        
+          <NavLink to="/vendor/overview" className={navItemClass} onClick={onClose}>
+            <LayoutGrid className="w-5 h-5" />
+            <span>Vendor Dashboard</span>
+          </NavLink>
+
+
 
           {/* <NavLink to="/dashboard/automations" className={navItemClass} onClick={onClose}>
             <Zap className="w-5 h-5" />
