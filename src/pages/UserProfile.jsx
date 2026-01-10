@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
     User, Mail, Shield, Smartphone, Bot, MessageSquare,
     Edit2, Check, X, Camera, Calendar, Sparkles, Zap,
@@ -18,6 +18,7 @@ const UserProfile = () => {
     const [sessions, setSessions] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const avatarInputRef = useRef(null);
 
     // Edit State
     const [isEditing, setIsEditing] = useState(false);
@@ -83,6 +84,31 @@ const UserProfile = () => {
         }
     };
 
+    const handleAvatarUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+            const base64Avatar = reader.result;
+            try {
+                const token = getUserData()?.token;
+                // Update local state immediately for preview
+                const updatedUser = { ...user, avatar: base64Avatar };
+                setCurrentUserData({ user: updatedUser });
+                setUserData(updatedUser);
+
+                // Send to backend
+                await axios.put(apis.user, { avatar: base64Avatar }, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+            } catch (error) {
+                console.error("Avatar upload failed", error);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
     if (loading) {
         return (
             <div className="flex h-full w-full items-center justify-center bg-secondary">
@@ -95,6 +121,7 @@ const UserProfile = () => {
 
     return (
         <div className="h-full w-full overflow-y-auto bg-secondary font-sans scrollbar-thin scrollbar-thumb-border">
+            <input type="file" ref={avatarInputRef} className="hidden" accept="image/*" onChange={handleAvatarUpload} />
 
             {/* Banner Area */}
             <div className="relative h-60 w-full overflow-hidden">
@@ -110,8 +137,8 @@ const UserProfile = () => {
                 <div className="bg-surface/80 backdrop-blur-xl border border-white/20 rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col md:flex-row gap-8 items-start md:items-end">
 
                     {/* Avatar */}
-                    <div className="relative group shrink-0">
-                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-surface border-4 border-surface shadow-xl overflow-hidden flex items-center justify-center text-primary text-5xl font-bold uppercase relative z-10">
+                    <div className="relative group shrink-0" onClick={() => avatarInputRef.current.click()}>
+                        <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-surface border-4 border-surface shadow-xl overflow-hidden flex items-center justify-center text-primary text-5xl font-bold uppercase relative z-10 cursor-pointer">
                             {user.avatar && user.avatar !== '/User.jpeg' ? (
                                 <img src={user.avatar} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
@@ -120,7 +147,7 @@ const UserProfile = () => {
                                 </div>
                             )}
                         </div>
-                        {/* Edit Avatar Overlay (Visual Only for now) */}
+                        {/* Edit Avatar Overlay */}
                         <div className="absolute inset-0 z-20 bg-black/40 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer border-4 border-transparent">
                             <Camera className="w-8 h-8 text-white" />
                         </div>
@@ -168,13 +195,17 @@ const UserProfile = () => {
                                     </button>
                                 </div>
                             ) : (
-                                <div className="flex items-center gap-3 group">
-                                    <h1 className="text-3xl md:text-4xl font-bold text-maintext tracking-tight truncate">
+                                <div className="flex items-center gap-3">
+                                    <h1
+                                        onClick={() => setIsEditing(true)}
+                                        className="text-3xl md:text-4xl font-bold text-maintext tracking-tight truncate cursor-pointer hover:opacity-80 transition-opacity"
+                                    >
                                         {user.name}
                                     </h1>
                                     <button
                                         onClick={() => setIsEditing(true)}
-                                        className="p-2 text-subtext hover:text-primary hover:bg-primary/10 rounded-lg transition-all opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 duration-200"
+                                        className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                        aria-label="Edit Name"
                                     >
                                         <Edit2 className="w-5 h-5" />
                                     </button>

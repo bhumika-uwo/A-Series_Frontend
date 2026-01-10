@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, Outlet, Navigate, BrowserRouter } from 'react-router';
+import { Routes, Route, Outlet, Navigate, BrowserRouter, useNavigate } from 'react-router';
 
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -63,6 +63,8 @@ const DashboardLayout = () => {
     localStorage.getItem('user') || '{"name":"User"}'
   );
 
+  const navigate = useNavigate();
+
   return (
     <div className="fixed inset-0 flex bg-background text-maintext overflow-hidden font-sans">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
@@ -70,7 +72,7 @@ const DashboardLayout = () => {
       <div className="flex-1 flex flex-col min-w-0 bg-background h-full relative">
 
         {/* Mobile Header */}
-        <div className="md:hidden flex items-center justify-between p-4 border-b border-border bg-secondary shrink-0 z-50 shadow-sm">
+        <div className="lg:hidden flex items-center justify-between p-4 border-b border-border bg-secondary shrink-0 z-50 shadow-sm">
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsSidebarOpen(true)}
@@ -81,7 +83,10 @@ const DashboardLayout = () => {
             <span className="font-bold text-lg text-primary">AI-Mall</span>
           </div>
 
-          <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase">
+          <div
+            onClick={() => navigate(user.email ? '/dashboard/profile' : '/login')}
+            className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase cursor-pointer hover:bg-primary/30 transition-colors"
+          >
             {user.name?.charAt(0) || 'U'}
           </div>
         </div>
@@ -135,8 +140,8 @@ const NavigateProvider = () => {
           element={<DashboardLayout />}
         >
           <Route index element={<Navigate to="marketplace" replace />} />
-          <Route path="chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-          <Route path="chat/:sessionId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="chat/:sessionId" element={<Chat />} />
           <Route path="overview" element={<ProtectedRoute><DashboardOverview /></ProtectedRoute>} />
           <Route path="marketplace" element={<Marketplace />} />
           <Route path="ai-personal-assistant" element={<ProtectedRoute><AiPersonalAssistantDashboard /></ProtectedRoute>} />

@@ -37,32 +37,32 @@ const Landing = () => {
       <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-blue-100 rounded-full blur-[100px] pointer-events-none" />
 
       {/* Header */}
-      <header className="relative z-10 px-6 py-6 flex justify-between items-center max-w-7xl mx-auto w-full">
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="Logo" className="w-14 h-14 object-contain" />
-          <span className="text-3xl font-black tracking-tighter text-maintext">{name}</span>
+      <header className="relative z-10 px-4 py-4 md:px-6 md:py-6 flex justify-between items-center max-w-7xl mx-auto w-full">
+        <div className="flex items-center gap-2 md:gap-3">
+          <img src={logo} alt="Logo" className="w-10 h-10 md:w-14 md:h-14 object-contain" />
+          <span className="text-xl md:text-3xl font-black tracking-tighter text-maintext">{name}</span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           {/* Theme Toggle */}
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2 rounded-full bg-surface border border-border text-subtext hover:text-primary hover:border-primary/50 transition-all shadow-sm"
+            className="p-1.5 md:p-2 rounded-full bg-surface border border-border text-subtext hover:text-primary hover:border-primary/50 transition-all shadow-sm"
           >
-            {theme === 'dark' ? <Sun className="w-5 h-5 text-orange-400" /> : <Moon className="w-5 h-5" />}
+            {theme === 'dark' ? <Sun className="w-4 h-4 md:w-5 md:h-5 text-orange-400" /> : <Moon className="w-4 h-4 md:w-5 md:h-5" />}
           </button>
 
-          {user ? <Link to={AppRoute.PROFILE}><CircleUser className=' h-7 w-7 text-maintext' /></Link> : <div className="flex gap-4">
+          {user ? <Link to={AppRoute.PROFILE}><CircleUser className='h-6 w-6 md:h-7 md:w-7 text-maintext' /></Link> : <div className="flex gap-2 md:gap-4 items-center">
             <button
               onClick={() => navigate("/login")}
-              className="text-subtext hover:text-primary font-medium transition-colors"
+              className="text-sm md:text-base text-subtext hover:text-primary font-medium transition-colors whitespace-nowrap"
             >
               Sign In
             </button>
 
             <button
               onClick={() => navigate("/signup")}
-              className="bg-primary text-white px-5 py-2 rounded-full font-semibold hover:opacity-90 transition-colors shadow-lg shadow-primary/20"
+              className="bg-primary text-white px-4 py-2 md:px-5 md:py-2 text-sm md:text-base rounded-full font-semibold hover:opacity-90 transition-colors shadow-lg shadow-primary/20 whitespace-nowrap"
             >
               Get Started
             </button>
@@ -112,7 +112,7 @@ const Landing = () => {
           <motion.button
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => navigate(AppRoute.MARKETPLACE)}
+            onClick={() => navigate("/dashboard/chat/new")}
             className="px-8 py-4 bg-primary rounded-2xl font-bold text-lg text-white shadow-xl shadow-primary/30 hover:translate-y-[-2px] transition-all duration-300 flex items-center justify-center gap-2"
           >
             Start Now <ArrowRight className="w-5 h-5" />

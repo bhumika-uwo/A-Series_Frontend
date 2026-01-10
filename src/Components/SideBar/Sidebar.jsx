@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate, Link } from 'react-router';
 import { AnimatePresence, motion } from 'motion/react';
 import {
+  User,
   LayoutGrid,
   MessageSquare,
   ShoppingBag,
@@ -144,13 +145,6 @@ const Sidebar = ({ isOpen, onClose }) => {
 
   return (
     <>
-      {/* Mobile Background Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-[90] md:hidden backdrop-blur-sm"
-          onClick={onClose}
-        />
-      )}
       <AnimatePresence>
         {notifiyTgl.notify && (
           <motion.div
@@ -167,9 +161,9 @@ const Sidebar = ({ isOpen, onClose }) => {
       {/* Sidebar */}
       <div
         className={`
-          fixed inset-y-0 left-0 z-[100] w-64 bg-secondary border-r border-border 
+          fixed inset-y-0 left-0 z-[100] w-full lg:w-64 bg-secondary border-r border-border 
           flex flex-col transition-transform duration-300 ease-in-out 
-          md:relative md:translate-x-0 shadow-2xl md:shadow-none
+          lg:relative lg:translate-x-0 shadow-2xl lg:shadow-none
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
@@ -182,7 +176,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
           <button
             onClick={onClose}
-            className="md:hidden p-2 -mr-2 text-subtext hover:text-maintext rounded-lg hover:bg-surface"
+            className="lg:hidden p-2 -mr-2 text-subtext hover:text-maintext rounded-lg hover:bg-surface"
           >
             <X className="w-6 h-6" />
           </button>
@@ -284,65 +278,65 @@ const Sidebar = ({ isOpen, onClose }) => {
 
         {/* User Profile */}
         <div className="p-4 border-t border-border mt-auto">
-          {/* Integrated Profile Card */}
-          <div className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isProfileOpen ? 'bg-card border-border shadow-md' : 'border-transparent hover:bg-secondary'}`}>
-            {/* Header / Toggle */}
-            <div className="flex items-center gap-1 group">
-              <div
-                onClick={() => {
-                  navigate(AppRoute.PROFILE);
-                  onClose();
-                }}
-                className="flex flex-1 items-center gap-3 px-3 py-3 cursor-pointer hover:bg-primary/5 transition-colors"
-              >
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase shrink-0 overflow-hidden border border-primary/10">
-                  {user.avatar ? (
-                    <img
-                      src={user.avatar}
-                      alt={user.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.style.display = 'none';
-                        // Fallback to text initial
-                        const parent = e.target.parentElement;
-                        if (parent) {
-                          parent.classList.add("flex", "items-center", "justify-center");
-                          parent.innerText = user.name ? user.name.charAt(0).toUpperCase() : "U";
-                        }
-                      }}
-                    />
-                  ) : (
-                    user.name ? user.name.charAt(0).toUpperCase() : "U"
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-0 text-left">
-                  <p className="text-sm font-bold text-maintext truncate">{user.name}</p>
-                  <p className="text-[11px] text-subtext truncate">{user.email}</p>
-                </div>
-              </div>
-
-              <div
-                onClick={() => setIsProfileOpen(!isProfileOpen)}
-                className={`p-3 cursor-pointer transition-transform duration-300 ${isProfileOpen ? 'rotate-180 text-primary' : 'text-subtext group-hover:text-maintext'}`}
-              >
-                <ChevronDown className="w-4 h-4" />
-              </div>
-            </div>
-
-            {/* Expandable Menu */}
-            <AnimatePresence>
-              {isProfileOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+          {token ? (
+            /* Integrated Profile Card */
+            <div className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isProfileOpen ? 'bg-card border-border shadow-md' : 'border-transparent hover:bg-secondary'}`}>
+              {/* Header / Toggle */}
+              <div className="flex items-center gap-1 group">
+                <div
+                  onClick={() => {
+                    navigate(AppRoute.PROFILE);
+                    onClose();
+                  }}
+                  className="flex flex-1 items-center gap-3 px-3 py-3 cursor-pointer hover:bg-primary/5 transition-colors"
                 >
-                  <div className="px-2 pb-2">
-                    <div className="h-[1px] bg-border/40 mx-2 mb-2" />
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase shrink-0 overflow-hidden border border-primary/10">
+                    {user.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt={user.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          // Fallback to text initial
+                          const parent = e.target.parentElement;
+                          if (parent) {
+                            parent.classList.add("flex", "items-center", "justify-center");
+                            parent.innerText = user.name ? user.name.charAt(0).toUpperCase() : "U";
+                          }
+                        }}
+                      />
+                    ) : (
+                      user.name ? user.name.charAt(0).toUpperCase() : "U"
+                    )}
+                  </div>
 
-                    {user.name !== "User" && (
+                  <div className="flex-1 min-w-0 text-left">
+                    <p className="text-sm font-bold text-maintext truncate">{user.name}</p>
+                    <p className="text-[11px] text-subtext truncate">{user.email}</p>
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className={`p-3 cursor-pointer transition-transform duration-300 ${isProfileOpen ? 'rotate-180 text-primary' : 'text-subtext group-hover:text-maintext'}`}
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+              </div>
+
+              {/* Expandable Menu */}
+              <AnimatePresence>
+                {isProfileOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="px-2 pb-2">
+                      <div className="h-[1px] bg-border/40 mx-2 mb-2" />
+
                       <button
                         onClick={handleLogout}
                         className="flex items-center gap-3 px-3 py-2.5 w-full rounded-xl text-red-600 dark:text-red-400 bg-red-500/5 hover:bg-red-500/10 transition-all text-[13px] font-medium"
@@ -350,29 +344,44 @@ const Sidebar = ({ isOpen, onClose }) => {
                         <LogOut className="w-4 h-4 shrink-0" />
                         <span>{t('logOut')}</span>
                       </button>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            /* Guest / Login State */
+            <div
+              onClick={() => navigate(AppRoute.LOGIN)}
+              className="rounded-2xl border border-transparent hover:bg-secondary transition-all cursor-pointer flex items-center gap-3 px-3 py-3 group"
+            >
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm uppercase shrink-0 border border-primary/10 group-hover:bg-primary/20 transition-colors">
+                <User className="w-5 h-5" />
+              </div>
+              <div className="font-bold text-maintext text-sm group-hover:text-primary transition-colors">
+                Log In
+              </div>
+            </div>
+          )}
 
           <div className="mt-1 flex flex-col gap-1">
-            {/* Region/Language Indicator */}
-            <button
-              onClick={() => {
-                navigate(AppRoute.PROFILE, { state: { openLanguage: true, timestamp: Date.now() } });
-                onClose();
-              }}
-              className="group flex items-center justify-center gap-2 px-2 py-2 rounded-lg text-subtext hover:bg-secondary hover:text-maintext transition-all text-xs font-bold uppercase tracking-wider border border-transparent hover:border-border"
-            >
-              <img
-                src={getFlagUrl(regionFlags[region] || 'in')}
-                alt={region}
-                className="w-4 h-3 object-cover rounded-sm shadow-sm"
-              />
-              <span>{regionFlags[region] || 'IN'} - {language.substring(0, 2).toUpperCase()}</span>
-            </button>
+            {/* Region/Language Indicator - Only show if logged in */}
+            {token && (
+              <button
+                onClick={() => {
+                  navigate(AppRoute.PROFILE, { state: { openLanguage: true, timestamp: Date.now() } });
+                  onClose();
+                }}
+                className="group flex items-center justify-center gap-2 px-2 py-2 rounded-lg text-subtext hover:bg-secondary hover:text-maintext transition-all text-xs font-bold uppercase tracking-wider border border-transparent hover:border-border"
+              >
+                <img
+                  src={getFlagUrl(regionFlags[region] || 'in')}
+                  alt={region}
+                  className="w-4 h-3 object-cover rounded-sm shadow-sm"
+                />
+                <span>{regionFlags[region] || 'IN'} - {language.substring(0, 2).toUpperCase()}</span>
+              </button>
+            )}
 
             {/* FAQ Button */}
             <button

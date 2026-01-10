@@ -29,12 +29,18 @@ export const clearUser = () => {
   localStorage.clear()
 }
 const getUser = () => {
-  const user = JSON.parse(localStorage.getItem('user'))
-  if (user) {
-    return processUser(user)
-  } else {
-    return null
+  try {
+    const item = localStorage.getItem('user');
+    if (!item || item === "undefined" || item === "null") return null;
+    const user = JSON.parse(item);
+    if (user) {
+      return processUser(user)
+    }
+  } catch (e) {
+    console.error("Error parsing user from localStorage", e);
+    localStorage.removeItem('user'); // Clear corrupted data
   }
+  return null
 }
 export const toggleState = atom({
   key: "toggle",

@@ -18,6 +18,20 @@ import ImageEditor from '../Components/ImageEditor';
 import axios from 'axios';
 import { apis } from '../types';
 
+
+const FEEDBACK_PROMPTS = [
+  "Was this helpful?",
+  "How did I do?",
+  "Is this answer detailed enough?",
+  "Did I answer your question?",
+  "Need anything else?",
+  "Is this what you were looking for?",
+  "Happy to help!",
+  "Let me know if you need more info",
+  "Any other questions?",
+  "Hope this clears things up!"
+];
+
 const Chat = () => {
   const { sessionId } = useParams();
   const navigate = useNavigate();
@@ -511,7 +525,7 @@ For "Remix" requests with an attachment, analyze the attached image, then create
 
       const lowerTranscript = speechToText.toLowerCase();
       // Auto-send triggers
-      const triggers = ['yes send it', 'send message', 'bhej do', 'send it', 'yes send', 'ok send it', 'ok send'];
+      const triggers = ['yes send it', 'send message', 'bhej do', 'send it', 'yes send', 'ok send it', 'ok send', 'send now', 'please send', 'ji bhejo', 'kar do'];
       const matchedTrigger = triggers.find(t => lowerTranscript.includes(t));
 
       if (matchedTrigger) {
@@ -530,6 +544,7 @@ For "Remix" requests with an attachment, analyze the attached image, then create
         // Update state (visual feedback)
         setInputValue(finalText);
 
+        toast.success('Voice Command: Sending message...');
         // Send IMMEDIATELY with explicit content, bypassing state delay
         handleSendMessage(null, finalText);
 
@@ -582,7 +597,16 @@ For "Remix" requests with an attachment, analyze the attached image, then create
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackMsgId, setFeedbackMsgId] = useState(null);
   const [feedbackCategory, setFeedbackCategory] = useState([]);
+  const [activeMessageId, setActiveMessageId] = useState(null);
   const [feedbackDetails, setFeedbackDetails] = useState("");
+
+  // Auto-resize chat input textarea
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style.height = 'auto'; // Reset height to recount
+      inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+    }
+  }, [inputValue]);
 
   const handleThumbsDown = (msgId) => {
     setFeedbackMsgId(msgId);
@@ -993,24 +1017,25 @@ For "Remix" requests with an attachment, analyze the attached image, then create
         )}
       </AnimatePresence>
 
-      {/* Mobile History Backdrop */}
-      {showHistory && (
-        <div
-          className="absolute inset-0 z-20 bg-black/50 md:hidden"
-          onClick={() => setShowHistory(false)}
-        />
-      )}
-
-      {/* Sidebar History */}
       <div
         className={`
-          w-64 bg-surface border-r border-border flex flex-col flex-shrink-0
-          absolute inset-y-0 left-0 z-30 transition-transform duration-300
-          md:relative md:translate-x-0
+          w-full lg:w-72 bg-surface border-r border-border flex flex-col flex-shrink-0
+          absolute inset-y-0 left-0 z-50 transition-transform duration-300
+          lg:relative lg:translate-x-0
           ${showHistory ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         <div className="p-4">
+          <div className="flex justify-between items-center mb-4 lg:hidden">
+            <span className="font-bold text-lg text-maintext">History</span>
+            <button
+              onClick={() => setShowHistory(false)}
+              className="p-2 hover:bg-secondary rounded-full text-subtext transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
           <button
             onClick={handleNewChat}
             className="w-full bg-primary hover:opacity-90 text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors shadow-lg shadow-primary/20"
@@ -1075,7 +1100,7 @@ For "Remix" requests with an attachment, analyze the attached image, then create
           <div className="flex items-center gap-2 min-w-0">
 
             <button
-              className="md:hidden p-2 -ml-2 text-subtext hover:text-maintext shrink-0"
+              className="lg:hidden p-2 -ml-2 text-subtext hover:text-maintext shrink-0"
               onClick={() => setShowHistory(!showHistory)}
             >
               <History className="w-5 h-5" />
@@ -1126,8 +1151,9 @@ For "Remix" requests with an attachment, analyze the attached image, then create
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`group relative flex items-start gap-3 sm:gap-4 max-w-4xl mx-auto ${msg.role === 'user' ? 'flex-row-reverse' : ''
+                  className={`group relative flex items-start gap-3 sm:gap-4 max-w-4xl mx-auto cursor-pointer ${msg.role === 'user' ? 'flex-row-reverse' : ''
                     }`}
+                  onClick={() => setActiveMessageId(activeMessageId === msg.id ? null : msg.id)}
                 >
                   {/* Actions Menu (Always visible for discoverability) */}
 
@@ -1274,11 +1300,11 @@ For "Remix" requests with an attachment, analyze the attached image, then create
                         </div>
                       ) : (
                         msg.content && (
-                          <div className={`prose prose-invert max-w-full break-words ${msg.role === 'user' ? 'text-white' : 'text-maintext'}`}>
+                          <div className={`prose max-w-full break-words prose-p:my-0.5 prose-headings:my-1 prose-ul:my-0 prose-li:my-0 ${msg.role === 'user' ? 'prose-invert text-white' : 'text-maintext'}`}>
                             <ReactMarkdown
                               remarkPlugins={[remarkGfm]}
                               components={{
-                                p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                                p: ({ children }) => <p className="mb-0.5 last:mb-0 leading-relaxed">{children}</p>,
                                 code: ({ node, inline, className, children, ...props }) => {
                                   const match = /language-(\w+)/.exec(className || '');
                                   const lang = match ? match[1] : '';
@@ -1353,7 +1379,10 @@ For "Remix" requests with an attachment, analyze the attached image, then create
                       {/* AI Feedback Actions */}
                       {msg.role !== 'user' && (
                         <div className="mt-1 pt-2 border-t border-transparent">
-                          <p className="text-sm text-maintext mb-2 flex items-center gap-1">Just tell me <span className="text-base">😊</span></p>
+                          <p className="text-sm text-maintext mb-2 flex items-center gap-1">
+                            {FEEDBACK_PROMPTS[(msg.id.toString().charCodeAt(msg.id.toString().length - 1) || 0) % FEEDBACK_PROMPTS.length]}
+                            <span className="text-base">😊</span>
+                          </p>
                           <div className="flex items-center gap-4">
                             <button
                               onClick={() => handleCopyMessage(msg.content)}
@@ -1397,7 +1426,7 @@ For "Remix" requests with an attachment, analyze the attached image, then create
 
                   {/* Hover Actions - User Only (AI has footer) */}
                   {msg.role === 'user' && (
-                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 self-start mt-2 mr-0 flex-row-reverse">
+                    <div className={`flex items-center gap-1 transition-opacity duration-200 self-start mt-2 mr-0 flex-row-reverse ${activeMessageId === msg.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                       <button
                         onClick={() => handleCopyMessage(msg.content || msg.text)}
                         className="p-1.5 text-subtext hover:text-primary hover:bg-surface rounded-full transition-colors"
@@ -1623,17 +1652,22 @@ For "Remix" requests with an attachment, analyze the attached image, then create
               </button>
 
               <div className="relative flex-1">
-                <input
-                  type="text"
+                <textarea
                   ref={inputRef}
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    e.target.style.height = 'auto';
+                    e.target.style.height = `${e.target.scrollHeight}px`;
+                  }}
                   onKeyDown={handleKeyDown}
                   onPaste={handlePaste}
-                  placeholder="Type a message or paste an image..."
-                  className="w-full bg-surface border border-border rounded-full py-3 sm:py-4 pl-4 sm:pl-6 pr-24 sm:pr-28 text-sm sm:text-base text-maintext placeholder-subtext focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm transition-all"
+                  placeholder="Ask AISA..."
+                  rows={1}
+                  className={`w-full bg-surface border border-border rounded-3xl py-3.5 sm:py-4 pl-4 sm:pl-6 text-sm sm:text-base text-maintext placeholder-subtext focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary shadow-sm transition-all resize-none overflow-y-auto custom-scrollbar ${inputValue.trim() ? 'pr-12 sm:pr-16' : 'pr-40 sm:pr-44'}`}
+                  style={{ minHeight: '52px', maxHeight: '150px' }}
                 />
-                <div className="absolute right-2 inset-y-0 flex items-center gap-2 z-10">
+                <div className="absolute right-2 inset-y-0 flex items-center gap-0 sm:gap-1 z-10">
                   {isListening && (
                     <motion.div
                       initial={{ opacity: 0, x: 10 }}
@@ -1647,23 +1681,27 @@ For "Remix" requests with an attachment, analyze the attached image, then create
                       <span className="text-[10px] font-mono font-bold text-primary">{formatTime(listeningTime)}</span>
                     </motion.div>
                   )}
-                  <button
-                    type="button"
-                    onClick={() => setIsLiveMode(true)}
-                    className="p-2 sm:p-2.5 rounded-full text-primary hover:bg-primary/10 hover:border-primary/20 transition-all flex items-center justify-center mr-1 border border-transparent"
-                    title="Live Video Call"
-                  >
-                    <Video className="w-5 h-5" />
-                  </button>
+                  {!inputValue.trim() && !isListening && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setIsLiveMode(true)}
+                        className="p-2 sm:p-2.5 rounded-full text-primary hover:bg-primary/10 hover:border-primary/20 transition-all flex items-center justify-center border border-transparent"
+                        title="Live Video Call"
+                      >
+                        <Video className="w-5 h-5" />
+                      </button>
 
-                  <button
-                    type="button"
-                    onClick={handleVoiceInput}
-                    className={`p-2 sm:p-2.5 rounded-full transition-all flex items-center justify-center border border-transparent ${isListening ? 'bg-primary text-white animate-pulse shadow-md shadow-primary/30' : 'text-primary hover:bg-primary/10 hover:border-primary/20'}`}
-                    title="Voice Input"
-                  >
-                    <Mic className="w-5 h-5" />
-                  </button>
+                      <button
+                        type="button"
+                        onClick={handleVoiceInput}
+                        className={`p-2 sm:p-2.5 rounded-full transition-all flex items-center justify-center border border-transparent ${isListening ? 'bg-primary text-white animate-pulse shadow-md shadow-primary/30' : 'text-primary hover:bg-primary/10 hover:border-primary/20'}`}
+                        title="Voice Input"
+                      >
+                        <Mic className="w-5 h-5" />
+                      </button>
+                    </>
+                  )}
 
                   <button
                     type="submit"
