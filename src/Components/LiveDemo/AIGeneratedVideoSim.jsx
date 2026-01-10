@@ -157,7 +157,7 @@ const AIGeneratedVideoSim = ({ agent }) => {
                     </AnimatePresence>
 
                     <div className="mt-6 flex items-center justify-between text-white/20 text-[10px] uppercase tracking-widest">
-                        <span>© AI-MALL BIOMETRIC SECURE</span>
+                        <span>© A-SERIES BIOMETRIC SECURE</span>
                         <span>UWO-LINK ENABLED</span>
                     </div>
                 </div>

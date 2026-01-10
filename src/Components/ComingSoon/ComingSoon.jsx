@@ -53,7 +53,7 @@ export default function ComingSoon() {
 
                     {/* Description */}
                     <p className="text-xl text-subtext text-center mb-12 max-w-2xl mx-auto leading-relaxed">
-                        We're crafting exceptional AI agents to revolutionize your AI Mall experience.
+                        We're crafting exceptional AI agents to revolutionize your A-Series experience.
                         Get ready for something extraordinary!
                     </p>
 

@@ -60,7 +60,7 @@ const AdminOverview = () => {
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-maintext">Dashboard Overview</h1>
-                    <p className="text-subtext mt-1">Welcome back, AI-Mall™. Here's what's happening today.</p>
+                    <p className="text-subtext mt-1">Welcome back, A-Series™. Here's what's happening today.</p>
                 </div>
 
             </div>

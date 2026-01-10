@@ -102,7 +102,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     })}
                 </nav>
 
-                {/* Bottom Section: Go to AI Mall and Theme Toggle */}
+                {/* Bottom Section: Go to A-Series and Theme Toggle */}
                 <div className="p-4 border-t border-border space-y-2">
                     <button
                         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -121,7 +121,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         <div className="p-2 bg-card border border-border rounded-lg text-subtext mr-3 group-hover:bg-red-500/10 group-hover:text-red-500 transition-colors">
                             <LogOut size={20} className="rotate-180" />
                         </div>
-                        Go to AI Mall
+                        Go to A-Series
                     </button>
                 </div>
 

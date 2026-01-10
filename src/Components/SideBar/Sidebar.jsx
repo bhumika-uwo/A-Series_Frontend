@@ -170,7 +170,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         {/* Brand */}
         <div className="p-6 flex items-center justify-between">
           <Link to="/">
-            <h1 className="text-2xl font-bold text-primary">AI-Mall <sup className="text-sm">TM</sup></h1>
+            <h1 className="text-2xl font-bold text-primary">A-Series <sup className="text-sm">TM</sup></h1>
           </Link>
 
 
@@ -510,7 +510,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                   )}
 
                   <p className="text-xs text-center text-subtext">
-                    Or email us directly at <a href="mailto:support@ai-mall.in" className="text-primary font-medium hover:underline">support@ai-mall.in</a>
+                    Or email us directly at <a href="mailto:support@a-series.in" className="text-primary font-medium hover:underline">support@a-series.in</a>
                   </p>
                 </div>
               )}

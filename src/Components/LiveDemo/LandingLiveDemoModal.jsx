@@ -82,7 +82,7 @@ const LandingLiveDemoModal = ({ isOpen, onClose }) => {
                                 </div>
                                 <div>
                                     <h2 className="text-xl font-bold text-maintext">
-                                        AI-Mall Agent Catalog
+                                        A-Series Agent Catalog
                                     </h2>
                                     <p className="text-sm text-subtext hidden md:block">
                                         Explore 30+ specialized AI agents for your business.
@@ -227,7 +227,7 @@ const LandingLiveDemoModal = ({ isOpen, onClose }) => {
                                             </h4>
                                             <p className="text-subtext max-w-xl">
                                                 Ready to experience the power of {selectedAgent.title}?
-                                                Join 5,000+ businesses automating with AI-Mall.
+                                                Join 5,000+ businesses automating with A-Series.
                                             </p>
                                         </div>
                                         <button

@@ -150,7 +150,7 @@ const CreateAppModal = ({ isOpen, onClose, onSubmit }) => {
                         <div>
                             <p className="text-sm font-bold text-maintext mb-1">This app will be created as a Draft.</p>
                             <p className="text-xs text-subtext leading-relaxed">
-                                Draft apps are NOT visible on the AI-Mall Marketplace. You can publish the app later from the App Details page.
+                                Draft apps are NOT visible on the A-Series Marketplace. You can publish the app later from the App Details page.
                             </p>
                         </div>
                     </div>

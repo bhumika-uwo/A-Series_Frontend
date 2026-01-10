@@ -74,11 +74,6 @@ const Marketplace = () => {
   };
 
   const filteredAgents = agents.filter(agent => {
-    // Only show apps that are 'Live'. 
-    // If status is missing, we assume it's one of the default/demo apps.
-    const isLive = !agent.status || agent.status === 'Live' || agent.status === 'active';
-    if (!isLive) return false;
-
     const matchesCategory = filter === 'all' || agent.category === filter;
     const matchesSearch = (agent.agentName || agent.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
       (agent.description || "").toLowerCase().includes(searchQuery.toLowerCase());
@@ -216,12 +211,21 @@ const Marketplace = () => {
             className="group bg-card border border-border hover:border-primary/50 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 flex flex-col h-full shadow-sm"
           >
             <div className="flex justify-between items-start mb-4">
-
-              <img
-                src={agent.avatar}
-                alt={agent.agentName}
-                className="w-20 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform"
-              />
+              <div className="relative">
+                <img
+                  src={agent.avatar}
+                  alt={agent.agentName}
+                  className="w-20 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform"
+                />
+                {agent.status && agent.status.toLowerCase() !== 'coming soon' && (
+                  <span className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${agent.status.toLowerCase() === 'live' || agent.status.toLowerCase() === 'active'
+                    ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                    : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+                    }`}>
+                    {agent.status}
+                  </span>
+                )}
+              </div>
               <div className="bg-surface border border-border px-2 py-1 rounded-lg flex items-center gap-1">
                 <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
                 <span className="text-xs font-bold text-maintext">4.9</span>
@@ -251,15 +255,21 @@ const Marketplace = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => toggleBuy(agent._id)}
-                disabled={userAgent.some((ag) => ag && agent._id == ag._id)}
+                disabled={userAgent.some((ag) => ag && agent._id == ag._id) || (agent.status && agent.status.toLowerCase() !== 'live' && agent.status.toLowerCase() !== 'active' && agent.status.toLowerCase() !== 'coming soon')}
                 className={`flex-1 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all ${userAgent.some((ag) => ag && agent._id == ag._id)
                   ? 'bg-primary/10 text-subtext border border-primary/20 cursor-not-allowed opacity-70'
-                  : 'bg-primary text-white hover:opacity-90 shadow-lg shadow-primary/20'
+                  : (agent.status && agent.status.toLowerCase() !== 'live' && agent.status.toLowerCase() !== 'active' && agent.status.toLowerCase() !== 'coming soon')
+                    ? 'bg-border text-subtext cursor-not-allowed opacity-50'
+                    : 'bg-primary text-white hover:opacity-90 shadow-lg shadow-primary/20'
                   }`}
               >
                 {userAgent.some((ag) => ag && agent._id == ag._id) ? (
                   <>
                     <Check className="w-4 h-4" /> Subscribed
+                  </>
+                ) : (agent.status && agent.status.toLowerCase() !== 'live' && agent.status.toLowerCase() !== 'active' && agent.status.toLowerCase() !== 'coming soon') ? (
+                  <>
+                    Unavailable
                   </>
                 ) : (
                   <>

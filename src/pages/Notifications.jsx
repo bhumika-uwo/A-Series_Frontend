@@ -63,7 +63,7 @@ const Notifications = () => {
                         <BadgeInfo className="w-6 h-6 text-blue-500" />
                     </div>
                     <div className="flex-1">
-                        <h3 className="font-bold text-maintext">Welcome to AI-Mall!</h3>
+                        <h3 className="font-bold text-maintext">Welcome to A-Series!</h3>
                         <p className="text-sm text-subtext leading-relaxed">
                             We're glad to have you here. This is your notifications center where you'll receive updates about your subscriptions, payments, and new agent launches.
                         </p>
@@ -78,7 +78,7 @@ const Notifications = () => {
                             }`}
                     >
                         <div className={`p-3 rounded-xl ${notif.type === 'ALERT' ? 'bg-red-50' :
-                                notif.type === 'SUCCESS' ? 'bg-green-50' : 'bg-blue-50'
+                            notif.type === 'SUCCESS' ? 'bg-green-50' : 'bg-blue-50'
                             }`}>
                             {getIcon(notif.type)}
                         </div>

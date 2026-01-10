@@ -284,7 +284,7 @@ const Chat = () => {
 
         // Send to AI for response
         const SYSTEM_INSTRUCTION = `
-You are AISA, an advanced AI assistant.
+You are AISA, an advanced AI assistant powered by A-Series.
 
 ### RESPONSE FORMATTING RULES (STRICT):
 1.  **Structure**: ALWAYS use **Bold Headings** and **Bullet Points**. Avoid long paragraphs.

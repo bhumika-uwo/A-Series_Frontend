@@ -179,7 +179,7 @@ const AppDetail = ({ app, usage, onDeactivate, onReactivate, onSubmitForReview, 
                         </div>
                         <h3 className="text-xl font-bold text-gray-900 mb-2">Deactivate App?</h3>
                         <p className="text-gray-500 mb-6">
-                            Are you sure you want to deactivate <strong>{app.agentName}</strong>? This will immediately remove it from the AI-Mall Marketplace.
+                            Are you sure you want to deactivate <strong>{app.agentName}</strong>? This will immediately remove it from the A-Series Marketplace.
                         </p>
                         <div className="flex space-x-3">
                             <PrimaryButton variant="secondary" onClick={() => setIsDeactivateModalOpen(false)} className="flex-1">

@@ -99,7 +99,7 @@ const Landing = () => {
           className="text-lg text-subtext max-w-2xl mb-10 leading-relaxed"
         >
           Experience the next generation of intelligent assistance.
-          AI Mall learns, adapts, and creates with you in real-time through a stunning interface.
+          A-Series learns, adapts, and creates with you in real-time through a stunning interface.
         </motion.p>
 
         <motion.div
@@ -189,7 +189,7 @@ const Landing = () => {
                 <span className="text-2xl font-black tracking-tighter text-maintext">{name}</span>
               </div>
               <p className="text-sm text-subtext leading-relaxed max-w-sm">
-                Ai-Mall™ — India’s First AI App Marketplace 🚀<br />
+                A-Series™ — India’s First AI App Marketplace 🚀<br />
                 100 AI Apps | A-Series™ | Partner Integrations<br />
                 Powered by UWO™
               </p>

@@ -44,7 +44,7 @@ export default function ComingSoon() {
           <h1 className="text-5xl md:text-6xl font-bold text-center mb-4 text-maintext">
             New AI Agents
           </h1>
-          
+
           <div className="text-center mb-8">
             <p className="text-3xl md:text-4xl font-semibold text-primary inline-block">
               Coming Soon{dots}
@@ -53,7 +53,7 @@ export default function ComingSoon() {
 
           {/* Description */}
           <p className="text-xl text-subtext text-center mb-12 max-w-2xl mx-auto leading-relaxed">
-            We're crafting exceptional AI agents to revolutionize your AI Mall experience. 
+            We're crafting exceptional AI agents to revolutionize your A-Series experience.
             Get ready for something extraordinary!
           </p>
 
@@ -62,7 +62,7 @@ export default function ComingSoon() {
             {features.map((feature, index) => {
               const Icon = feature.icon;
               return (
-                <div 
+                <div
                   key={index}
                   className="bg-secondary rounded-xl p-5 border border-border hover:border-primary transition-all duration-300 hover:shadow-lg group"
                 >

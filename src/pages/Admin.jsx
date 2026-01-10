@@ -174,7 +174,7 @@ const Admin = () => {
 
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-maintext">AI-Mall <sup className="text-[9px] font-normal">TM</sup></p>
+                <p className="text-sm font-bold text-maintext">A-Series <sup className="text-[9px] font-normal">TM</sup></p>
 
               </div>
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold shadow-sm border border-primary/10">
