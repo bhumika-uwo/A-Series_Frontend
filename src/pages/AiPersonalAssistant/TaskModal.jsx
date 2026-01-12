@@ -82,7 +82,7 @@ const TaskModal = ({ isOpen, onClose, onSave, task = null }) => {
                         />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1"><Calendar className="w-3 h-3" /> Date</label>
                             <div className="flex gap-2">
@@ -195,7 +195,7 @@ const TaskModal = ({ isOpen, onClose, onSave, task = null }) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-1"><Tag className="w-3 h-3" /> Category</label>
                             <select

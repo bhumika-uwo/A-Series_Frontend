@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Routes, Route, Outlet, Navigate, BrowserRouter, useNavigate } from 'react-router';
+import { Routes, Route, Outlet, Navigate, BrowserRouter, useNavigate, useLocation } from 'react-router';
 
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -58,6 +58,8 @@ const AuthenticatRoute = ({ children }) => {
 
 const DashboardLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
+  const isFullScreen = location.pathname.includes('/ai-personal-assistant');
 
   const user = JSON.parse(
     localStorage.getItem('user') || '{"name":"User"}'
@@ -67,32 +69,47 @@ const DashboardLayout = () => {
 
   return (
     <div className="fixed inset-0 flex bg-background text-maintext overflow-hidden font-sans">
-      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      {!isFullScreen && <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />}
 
       <div className="flex-1 flex flex-col min-w-0 bg-background h-full relative">
 
         {/* Mobile Header */}
-        <div className="lg:hidden flex items-center justify-between p-4 border-b border-border bg-secondary shrink-0 z-50 shadow-sm">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="p-2 -ml-2 rounded-lg hover:bg-surface text-maintext active:bg-surface/80 transition-colors"
-            >
-              <Menu className="w-6 h-6" />
-            </button>
-            <span className="font-bold text-lg text-primary">A-Series</span>
-          </div>
+        {!isFullScreen && (
+          <div className="lg:hidden flex items-center justify-between p-4 border-b border-border bg-secondary shrink-0 z-50 shadow-sm">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="p-2 -ml-2 rounded-lg hover:bg-surface text-maintext active:bg-surface/80 transition-colors"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+              <span className="font-bold text-lg text-primary">A-Series</span>
+            </div>
 
-          <div
-            onClick={() => navigate(user.email ? '/dashboard/profile' : '/login')}
-            className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase cursor-pointer hover:bg-primary/30 transition-colors"
-          >
-            {user.name?.charAt(0) || 'U'}
+            <div
+              onClick={() => navigate(user.email ? '/dashboard/profile' : '/login')}
+              className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm uppercase cursor-pointer hover:bg-primary/30 transition-colors"
+            >
+              {user.name?.charAt(0) || 'U'}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Back Button for Full Screen Mode (Desktop/Mobile) */}
+        {isFullScreen && (
+          <div className="absolute top-4 left-4 z-50">
+            <button
+              onClick={() => navigate('/dashboard')}
+              className="flex items-center gap-2 px-4 py-2 bg-white/80 dark:bg-black/50 backdrop-blur-md border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:bg-gray-100 dark:hover:bg-white/10 transition-all text-sm font-medium"
+            >
+              <Menu className="w-4 h-4" />
+              <span>Menu</span>
+            </button>
+          </div>
+        )}
 
         {/* Outlet for pages */}
-        <main className="flex-1 overflow-hidden relative w-full">
+        <main className={`flex-1 overflow-y-auto relative w-full scroll-smooth ${isFullScreen ? 'p-0' : ''}`}>
           <Outlet />
         </main>
       </div>

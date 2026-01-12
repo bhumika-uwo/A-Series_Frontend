@@ -162,20 +162,20 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0f0f0f] p-6 lg:p-10 font-sans">
-            <div className="max-w-7xl mx-auto space-y-8">
+        <div className="min-h-screen bg-gray-50 dark:bg-[#0f0f0f] p-4 md:p-8 lg:p-10 font-sans transition-all">
+            <div className="max-w-7xl mx-auto space-y-6 md:space-y-8">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                        <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                             AI Personal Assistant
                         </h1>
-                        <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your daily routine & smart reminders</p>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm md:text-base">Manage your daily routine & smart reminders</p>
                     </div>
                     <button
                         onClick={() => { setEditingTask(null); setIsModalOpen(true); }}
-                        className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-2xl font-medium shadow-lg shadow-primary/20 transition-all hover:-translate-y-1"
+                        className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-primary hover:bg-primary/90 text-white rounded-2xl font-medium shadow-lg shadow-primary/20 transition-all hover:-translate-y-1 active:scale-95"
                     >
                         <Plus className="w-5 h-5" />
                         New Task
@@ -183,43 +183,43 @@ const Dashboard = () => {
                 </div>
 
                 {/* Stats / Dashboard */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-blue-500 relative overflow-hidden group hover:shadow-lg transition-all">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-blue-500 relative overflow-hidden group hover:shadow-lg transition-all">
                         <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <CalendarIcon className="w-16 h-16 text-blue-500" />
+                            <CalendarIcon className="w-14 h-14 md:w-16 md:h-16 text-blue-500" />
                         </div>
                         <p className="text-gray-500 text-sm font-medium">Today's Tasks</p>
-                        <h3 className="text-4xl font-bold text-gray-900 dark:text-white mt-2">
+                        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mt-2">
                             {tasks.filter(t => new Date(t.datetime).toDateString() === new Date().toDateString()).length}
                         </h3>
                     </div>
 
-                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-orange-500 relative overflow-hidden group hover:shadow-lg transition-all">
+                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-orange-500 relative overflow-hidden group hover:shadow-lg transition-all">
                         <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <Clock className="w-16 h-16 text-orange-500" />
+                            <Clock className="w-14 h-14 md:w-16 md:h-16 text-orange-500" />
                         </div>
                         <p className="text-gray-500 text-sm font-medium">Pending</p>
-                        <h3 className="text-4xl font-bold text-orange-500 mt-2">
+                        <h3 className="text-3xl md:text-4xl font-bold text-orange-500 mt-2">
                             {tasks.filter(t => t.status === 'pending' || t.status === 'missed').length}
                         </h3>
                     </div>
 
-                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-green-500 relative overflow-hidden group hover:shadow-lg transition-all">
+                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-green-500 relative overflow-hidden group hover:shadow-lg transition-all">
                         <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <CheckCircle className="w-16 h-16 text-green-500" />
+                            <CheckCircle className="w-14 h-14 md:w-16 md:h-16 text-green-500" />
                         </div>
                         <p className="text-gray-500 text-sm font-medium">Completed</p>
-                        <h3 className="text-4xl font-bold text-green-500 mt-2">
+                        <h3 className="text-3xl md:text-4xl font-bold text-green-500 mt-2">
                             {tasks.filter(t => t.status === 'completed').length}
                         </h3>
                     </div>
 
-                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-primary relative overflow-hidden group hover:shadow-lg transition-all">
+                    <div className="bg-white/80 dark:bg-[#1A1A1A]/90 backdrop-blur-xl p-5 md:p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 border-t-4 border-t-primary relative overflow-hidden group hover:shadow-lg transition-all">
                         <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <Settings className="w-16 h-16 text-primary" />
+                            <Settings className="w-14 h-14 md:w-16 md:h-16 text-primary" />
                         </div>
                         <p className="text-gray-500 text-sm font-medium">Total Routines</p>
-                        <h3 className="text-4xl font-bold text-primary mt-2">
+                        <h3 className="text-3xl md:text-4xl font-bold text-primary mt-2">
                             {tasks.length}
                         </h3>
                     </div>
