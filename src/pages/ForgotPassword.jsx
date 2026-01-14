@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { ArrowLeft, Mail, Loader } from 'lucide-react';
 import axios from 'axios';
+import { apis } from '../types';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +19,7 @@ const ForgotPassword = () => {
 
         try {
             // ideally use env var for API URL
-            const response = await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+            const response = await axios.post(apis.forgotPassword, { email });
             setMessage(response.data.message);
         } catch (err) {
             setError(err.response?.data?.error || 'Something went wrong. Please try again.');

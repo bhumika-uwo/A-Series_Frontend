@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router';
-import { Cpu, Mail, Lock, ArrowLeft, AlertCircle } from 'lucide-react';
+import { Cpu, Mail, Lock, ArrowLeft, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { apiService } from '../services/apiService';
 import axios from 'axios';
 import { apis, AppRoute } from '../types';
@@ -15,6 +15,7 @@ const Login = () => {
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
@@ -100,13 +101,24 @@ const Login = () => {
               <div className="relative">
                 <Lock className="absolute left-4 top-3.5 w-5 h-5 text-subtext" />
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full bg-surface border border-border rounded-xl py-3 pl-12 pr-4 text-maintext placeholder-subtext focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                  className="w-full bg-surface border border-border rounded-xl py-3 pl-12 pr-12 text-maintext placeholder-subtext focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-3.5 text-subtext hover:text-maintext transition-colors"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
+                </button>
               </div>
             </div>
 

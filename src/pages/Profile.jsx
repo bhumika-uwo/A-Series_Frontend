@@ -67,7 +67,9 @@ const Profile = () => {
     // Password Modal State
     const [showPasswordModal, setShowPasswordModal] = React.useState(false);
     const [passwordForm, setPasswordForm] = React.useState({ current: '', new: '', confirm: '' });
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showCurrentPassword, setShowCurrentPassword] = React.useState(false);
+    const [showNewPassword, setShowNewPassword] = React.useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     const toggleSetting = async (key) => {
         const oldSettings = { ...userSettings };
@@ -495,7 +497,7 @@ const Profile = () => {
                         </div>
 
                         <div className="space-y-3 pt-8">
-                            <button onClick={handleLogout} className="w-full py-4 bg-red-500/5 text-red-600 border border-red-500/10 rounded-2xl font-bold text-sm hover:bg-red-500/10 transition-all flex items-center justify-center gap-2"><LogOut className="w-4 h-4" />Sign out</button>
+                            <button onClick={handleLogout} className="w-full py-4 bg-red-500/5 text-red-600 border border-red-500/10 rounded-2xl font-bold text-sm hover:bg-red-500/10 transition-all flex items-center justify-center gap-2"><LogOut className="w-4 h-4" />LogOut</button>
                             <button onClick={handleDeleteAccount} className="w-full py-4 bg-red-500/5 text-red-600 border border-red-500/10 rounded-2xl font-bold text-sm hover:bg-red-500 hover:text-white transition-all flex items-center justify-center gap-2"><Trash2 className="w-4 h-4" />Delete Account</button>
                         </div>
                     </div>
@@ -508,9 +510,24 @@ const Profile = () => {
                             <button onClick={() => setShowPasswordModal(false)} className="absolute top-4 right-4 p-2 hover:bg-secondary rounded-full"><X className="w-5 h-5 text-subtext" /></button>
                             <h2 className="text-xl font-bold text-maintext mb-6">Change Password</h2>
                             <form onSubmit={handlePasswordChange} className="space-y-4">
-                                <input type="password" placeholder="Current Password" required className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 text-maintext" value={passwordForm.current} onChange={e => setPasswordForm(prev => ({ ...prev, current: e.target.value }))} />
-                                <input type="password" placeholder="New Password" required className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 text-maintext" value={passwordForm.new} onChange={e => setPasswordForm(prev => ({ ...prev, new: e.target.value }))} />
-                                <input type="password" placeholder="Confirm Password" required className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 text-maintext" value={passwordForm.confirm} onChange={e => setPasswordForm(prev => ({ ...prev, confirm: e.target.value }))} />
+                                <div className="relative">
+                                    <input type={showCurrentPassword ? 'text' : 'password'} placeholder="Current Password" required className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 pr-12 text-maintext" value={passwordForm.current} onChange={e => setPasswordForm(prev => ({ ...prev, current: e.target.value }))} />
+                                    <button type="button" onClick={() => setShowCurrentPassword(!showCurrentPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-subtext hover:text-maintext transition-colors">
+                                        {showCurrentPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
+                                </div>
+                                <div className="relative">
+                                    <input type={showNewPassword ? 'text' : 'password'} placeholder="New Password" required className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 pr-12 text-maintext" value={passwordForm.new} onChange={e => setPasswordForm(prev => ({ ...prev, new: e.target.value }))} />
+                                    <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-subtext hover:text-maintext transition-colors">
+                                        {showNewPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
+                                </div>
+                                <div className="relative">
+                                    <input type={showConfirmPassword ? 'text' : 'password'} placeholder="Confirm Password" required className="w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 pr-12 text-maintext" value={passwordForm.confirm} onChange={e => setPasswordForm(prev => ({ ...prev, confirm: e.target.value }))} />
+                                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-subtext hover:text-maintext transition-colors">
+                                        {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                                    </button>
+                                </div>
                                 <div className="pt-4 flex gap-3">
                                     <button type="button" onClick={() => setShowPasswordModal(false)} className="flex-1 py-3 bg-secondary text-maintext font-bold rounded-xl">Cancel</button>
                                     <button type="submit" className="flex-1 py-3 bg-primary text-white font-bold rounded-xl">Update</button>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { Lock, Eye, EyeOff, Loader, CheckCircle } from 'lucide-react';
 import axios from 'axios';
+import { apis } from '../types';
 
 const ResetPassword = () => {
     const { token } = useParams();
@@ -28,7 +29,7 @@ const ResetPassword = () => {
 
         try {
             // ideally use env var for API URL
-            const response = await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, {
+            const response = await axios.post(`${apis.resetPassword}/${token}`, {
                 password,
                 confirmPassword
             });
