@@ -68,10 +68,17 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="fixed inset-0 flex bg-background text-maintext overflow-hidden font-sans">
+    <div className="fixed inset-0 flex bg-transparent text-maintext overflow-hidden font-sans">
+      {/* Background Dreamy Orbs */}
+      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-[#f8fafc] via-[#eef2ff] to-[#fce7f3] dark:from-[#020617] dark:via-[#0f172a] dark:to-[#1e1b4b]">
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-purple-200/30 dark:bg-purple-900/20 blur-[120px]"></div>
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-200/30 dark:bg-blue-900/20 blur-[120px]"></div>
+        <div className="absolute top-[40%] left-[30%] w-[40%] h-[40%] rounded-full bg-pink-200/20 dark:bg-pink-900/10 blur-[100px]"></div>
+      </div>
+
       {!isFullScreen && <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />}
 
-      <div className="flex-1 flex flex-col min-w-0 bg-background h-full relative">
+      <div className="flex-1 flex flex-col min-w-0 bg-transparent h-full relative">
 
         {/* Mobile Header */}
         {!isFullScreen && (

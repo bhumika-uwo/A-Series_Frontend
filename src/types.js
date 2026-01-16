@@ -64,10 +64,10 @@ export const AppRoute = {
   RESET_PASSWORD: "/reset-password/:token",
 };
 
-// Use environment variable for API URL (configured in .env file)
+
 // export const API = "https://a-series-backend-561947379084.asia-south1.run.app/api";
-export const API = "http://localhost:8080/api";
-// export const API = "https://intermuscular-rosalee-drivingly.ngrok-free.dev/api";
+export const API = "http://localhost:5000/api";
+// export const API = "https://a-series-backend.onrender.com/api";
 
 export const apis = {
   emailVerificationApi: `${API}/email_varification`,
@@ -88,4 +88,6 @@ export const apis = {
   resetPasswordEmail: `${API}/auth/reset-password-email`,
   feedback: `${API}/feedback`,
   synthesizeVoice: `${API}/voice/synthesize`,
+  createOrder: `${API}/payments/create-order`,
+  verifyPayment: `${API}/payments/verify`,
 };

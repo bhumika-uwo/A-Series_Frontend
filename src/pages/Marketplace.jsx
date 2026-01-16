@@ -40,9 +40,6 @@ const Marketplace = () => {
         setLoading(true);
       }
       const userId = user?.id || user?._id;
-      axios.get(apis.agents).then((res) => {
-        console.log(res.data);
-      })
 
       try {
         const [userAgentsRes, agentsRes] = await Promise.allSettled([
@@ -97,7 +94,7 @@ const Marketplace = () => {
     "Medical & Health AI",];
 
   return (
-    <div className="p-4 md:p-8 h-full overflow-y-auto bg-secondary">
+    <div className="p-4 md:p-8 h-full overflow-y-auto bg-transparent">
 
       <AnimatePresence>
         {subToggle.subscripPgTgl && <SubscriptionForm id={agentId} />}
