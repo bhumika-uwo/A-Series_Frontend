@@ -19,6 +19,7 @@ const LiveAI = ({ onClose, language }) => {
 
     const recognitionRef = useRef(null);
     const synthRef = useRef(window.speechSynthesis);
+    const shouldListenRef = useRef(false);
 
     const [facingMode, setFacingMode] = useState('user');
     const [voiceGender, setVoiceGender] = useState('FEMALE'); // Default to Female
@@ -229,8 +230,28 @@ const LiveAI = ({ onClose, language }) => {
         const recognition = new SpeechRecognition();
         recognitionRef.current = recognition;
 
-        recognition.continuous = false;
+        recognition.lang = 'hi-IN'; // Force Hindi
+        recognition.continuous = false; // Loop mode is better
         recognition.interimResults = true;
+
+        recognition.onstart = () => {
+            console.log("Live Mic Started");
+            toast.success("Mic ON (Hindi)");
+        };
+
+        recognition.onerror = (e) => {
+            console.error("Mic Error", e);
+            if (e.error === 'not-allowed') toast.error("Mic Blocked");
+        };
+
+        recognition.onend = () => {
+            // Loop if enabled
+            if (shouldListenRef.current && !synthRef.current.speaking) {
+                try { recognition.start(); } catch (e) { }
+            } else {
+                if (!shouldListenRef.current) setIsListening(false);
+            }
+        };
 
         recognition.onresult = (event) => {
             const lastResult = event.results[event.results.length - 1];
@@ -238,22 +259,28 @@ const LiveAI = ({ onClose, language }) => {
             setTranscript(text);
 
             if (lastResult.isFinal) {
+                // Stop to process
+                shouldListenRef.current = false;
+                setIsListening(false);
+                recognition.stop();
                 processQuery(text);
             }
         };
 
-        return () => recognition.stop();
+        return () => recognition.abort();
     }, [captureFrame]);
 
     const toggleListening = () => {
-        if (isListening) {
+        if (shouldListenRef.current) {
+            shouldListenRef.current = false;
             recognitionRef.current.stop();
             setIsListening(false);
         } else {
             if (synthRef.current.speaking) synthRef.current.cancel();
 
             setTranscript("");
-            recognitionRef.current.start();
+            shouldListenRef.current = true;
+            try { recognitionRef.current.start(); } catch (e) { }
             setIsListening(true);
         }
     };

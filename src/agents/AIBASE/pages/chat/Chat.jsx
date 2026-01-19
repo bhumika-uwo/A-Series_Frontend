@@ -147,46 +147,51 @@ const Chat = () => {
     const [isUploading, setIsUploading] = useState(false);
     const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
-    const handleModalUpload = async (file) => {
-        if (!file) return;
+    const handleModalUpload = async (filesOrFile) => {
+        const files = Array.isArray(filesOrFile) ? filesOrFile : [filesOrFile];
+        if (!files || files.length === 0) return;
 
-        // Modal handles validation, so file here is valid
         setIsUploading(true);
         const formData = new FormData();
-        formData.append('file', file);
+        files.forEach(file => {
+            formData.append('file', file);
+        });
 
         try {
-            // Optimistic update
             setMessages(prev => [...prev, {
                 id: Date.now(),
                 role: 'assistant',
-                text: `Uploading ${file.name}...`
+                text: `Uploading ${files.length} file(s)...`
             }]);
 
-            // UPDATED: Call /chat/upload (Temporary context) instead of /knowledge/upload
             const response = await api.post('/chat/upload', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
 
             if (response.data.success) {
-                const { parsedText } = response.data.data;
+                const results = Array.isArray(response.data.data) ? response.data.data : [response.data.data];
 
-                // Store text in state for "Explain this doc" follow-ups
-                if (parsedText) {
-                    setActiveDocContext(parsedText);
-                    setActiveFileName(file.name);
+                // Combine texts from all files
+                const contextParts = results
+                    .filter(r => r.parsedText)
+                    .map(r => `--- Start of ${r.filename} ---\n${r.parsedText}\n--- End of ${r.filename} ---`);
+
+                const combinedText = contextParts.join('\n\n');
+
+                if (combinedText) {
+                    setActiveDocContext(combinedText);
+                    const name = results.length === 1 ? results[0].filename : `${results.length} files`;
+                    setActiveFileName(name);
                 }
 
                 setMessages(prev => {
                     const newMsgs = [...prev];
-                    const msgText = parsedText
-                        ? `✅ File "${file.name}" loaded for this chat. I am ready to answer questions about it.`
-                        : `✅ File "${file.name}" uploaded (Image/Video). Text context not available.`;
+                    const msgText = `✅ Loaded ${results.length} file(s) into context. I am ready to answer questions about them.`;
                     newMsgs[newMsgs.length - 1].text = msgText;
                     return newMsgs;
                 });
-                toast.success('File loaded for chat!');
-                setIsUploadModalOpen(false); // Close modal on success
+                toast.success('Files loaded for chat!');
+                setIsUploadModalOpen(false);
             }
         } catch (error) {
             console.error("Upload failed", error);
@@ -194,13 +199,38 @@ const Chat = () => {
             toast.error(`Upload failed: ${errMsg}`);
             setMessages(prev => {
                 const newMsgs = [...prev];
-                newMsgs[newMsgs.length - 1].text = `❌ Failed to upload "${file.name}". ${errMsg}`;
+                newMsgs[newMsgs.length - 1].text = `❌ Failed to upload files. ${errMsg}`;
                 return newMsgs;
             });
         } finally {
             setIsUploading(false);
         }
     };
+
+    // Paste Handler
+    useEffect(() => {
+        const handlePaste = (e) => {
+            // Only handle paste if no active input focus (optional, but good for UX) 
+            // - actually user might want to paste image while typing text.
+            if (e.clipboardData && e.clipboardData.files.length > 0) {
+                e.preventDefault();
+                const pastedFiles = Array.from(e.clipboardData.files);
+                // Filter large files
+                const validFiles = pastedFiles.filter(f => f.size <= 50 * 1024 * 1024);
+
+                if (validFiles.length < pastedFiles.length) {
+                    toast.error("Some files were skipped (limit 50MB)");
+                }
+
+                if (validFiles.length > 0) {
+                    handleModalUpload(validFiles);
+                }
+            }
+        };
+
+        window.addEventListener('paste', handlePaste);
+        return () => window.removeEventListener('paste', handlePaste);
+    }, []);
 
     return (
         <div className="flex h-full gap-4 p-4">
