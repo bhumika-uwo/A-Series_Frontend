@@ -17,6 +17,7 @@ import Invoices from './pages/Invoices';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 import AiPersonalAssistantDashboard from './pages/AiPersonalAssistant/Dashboard';
+import UserTransactions from './pages/UserTransactions';
 
 import { AppRoute } from './types';
 import { Menu } from 'lucide-react';
@@ -181,6 +182,7 @@ const NavigateProvider = () => {
           <Route path="invoices" element={<ProtectedRoute><Invoices /></ProtectedRoute>} />
           <Route path="notifications" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
           <Route path="profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="transactions" element={<ProtectedRoute><UserTransactions /></ProtectedRoute>} />
           <Route path="security" element={
             <Suspense fallback={<div className="flex items-center justify-center h-full">Loading...</div>}>
               <SecurityAndGuidelines />

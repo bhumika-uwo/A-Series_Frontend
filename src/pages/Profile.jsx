@@ -20,7 +20,8 @@ import {
     X,
     Moon,
     Sun,
-    Globe
+    Globe,
+    FileText
 } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router';
 import { AppRoute, apis } from '../types';
@@ -522,6 +523,17 @@ const Profile = () => {
                                 <button onClick={() => setShowPasswordModal(true)} className="w-full p-4 bg-secondary/50 rounded-2xl border border-border hover:bg-secondary transition-colors text-left group">
                                     <p className="text-xs text-subtext mb-1">Password</p>
                                     <div className="flex justify-between items-center"><span className="text-sm font-bold text-maintext">Change Password</span><ChevronRight className="w-4 h-4 text-subtext group-hover:text-primary transition-colors" /></div>
+                                </button>
+
+                                <button onClick={() => navigate(AppRoute.USER_TRANSACTIONS)} className="w-full p-4 bg-secondary/50 rounded-2xl border border-border hover:bg-secondary transition-colors text-left group">
+                                    <p className="text-xs text-subtext mb-1">Billing & Payments</p>
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-center gap-2">
+                                            <FileText className="w-4 h-4 text-primary" />
+                                            <span className="text-sm font-bold text-maintext">Transactions</span>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-subtext group-hover:text-primary transition-colors" />
+                                    </div>
                                 </button>
                             </div>
                         </div>

@@ -101,7 +101,7 @@ const TransactionHistory = () => {
                                             <span className="text-sm font-bold text-maintext group-hover:text-primary transition-colors">{t.appName}</span>
                                         </td>
                                         <td className="px-8 py-5">
-                                            <span className="text-sm font-black text-maintext">${t.amount.toFixed(2)}</span>
+                                            <span className="text-sm font-black text-maintext">₹{t.amount.toFixed(2)}</span>
                                         </td>
                                         <td className="px-8 py-5">
                                             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-full border border-green-500/20 text-[10px] font-black uppercase tracking-wider">
@@ -189,18 +189,18 @@ const TransactionHistory = () => {
                                                 <DollarSign className="w-4 h-4 text-subtext" />
                                                 <span className="text-sm font-medium text-subtext">Gross Amount</span>
                                             </div>
-                                            <span className="text-sm font-bold text-maintext">${selectedTransaction.amount.toFixed(2)}</span>
+                                            <span className="text-sm font-bold text-maintext">₹{selectedTransaction.amount.toFixed(2)}</span>
                                         </div>
                                         <div className="border-t border-border pt-3">
                                             <div className="flex items-center justify-between">
                                                 <span className="text-sm font-medium text-subtext">Platform Fee (50%)</span>
-                                                <span className="text-sm font-bold text-amber-600 dark:text-amber-400">-${(selectedTransaction.amount * 0.5).toFixed(2)}</span>
+                                                <span className="text-sm font-bold text-amber-600 dark:text-amber-400">-₹{(selectedTransaction.amount * 0.5).toFixed(2)}</span>
                                             </div>
                                         </div>
                                         <div className="border-t border-border pt-3">
                                             <div className="flex items-center justify-between">
                                                 <span className="text-sm font-bold text-maintext">Vendor Earnings</span>
-                                                <span className="text-lg font-black text-green-600 dark:text-green-400">${(selectedTransaction.amount * 0.5).toFixed(2)}</span>
+                                                <span className="text-lg font-black text-green-600 dark:text-green-400">₹{(selectedTransaction.amount * 0.5).toFixed(2)}</span>
                                             </div>
                                         </div>
                                     </div>

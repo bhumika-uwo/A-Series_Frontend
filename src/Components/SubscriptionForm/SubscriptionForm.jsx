@@ -61,10 +61,27 @@ const SubscriptionForm = ({ id }) => {
     const amount = selectedPlan ? selectedPlan.price : 0;
     const planName = selectedPlan?.name || selectedValue;
 
+    console.log('[PAYMENT DEBUG] Selected Plan:', selectedPlan);
+    console.log('[PAYMENT DEBUG] Amount:', amount);
+    console.log('[PAYMENT DEBUG] Plan Name:', planName);
+    console.log('[PAYMENT DEBUG] User ID:', userId);
+    console.log('[PAYMENT DEBUG] User Object:', user);
+
     if (amount === 0) {
+      setIsProcessing(true);
+      console.log('[FREE PLAN] Sending request with userId:', userId);
+
       axios.post(`${apis.buyAgent}/${id}`, { userId })
-        .then(() => setSubscripTgl({ ...subscripTgl, subscripPgTgl: false, notify: true }))
-        .catch(err => console.error(err));
+        .then(() => {
+          setSubscripTgl({ ...subscripTgl, subscripPgTgl: false, notify: true });
+          // Reload to refresh agent list
+          setTimeout(() => window.location.reload(), 500);
+        })
+        .catch(err => {
+          console.error('Free plan subscription failed:', err);
+          alert(err.response?.data?.error || 'Failed to add agent. Please try again.');
+        })
+        .finally(() => setIsProcessing(false));
       return;
     }
 
@@ -90,23 +107,39 @@ const SubscriptionForm = ({ id }) => {
           description: `Subscription for Agent ${agent?.agentName || id}`,
           order_id: orderId,
           handler: function (response) {
+            console.log('[RAZORPAY] Payment response received:', response);
+
             // 3. Verify Payment on Backend
-            axios.post(apis.verifyPayment, {
+            const verifyData = {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
               agentId: id,
               amount,
               plan: planName
-            }, {
+            };
+
+            console.log('[RAZORPAY] Sending verification request:', verifyData);
+
+            axios.post(apis.verifyPayment, verifyData, {
               headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             })
-              .then(() => {
+              .then((verifyRes) => {
+                console.log('[RAZORPAY] Verification successful:', verifyRes.data);
                 setSubscripTgl({ ...subscripTgl, subscripPgTgl: false, notify: true });
+                // Reload to refresh agent list
+                setTimeout(() => window.location.reload(), 500);
               })
               .catch(err => {
                 console.error("Verification failed", err);
-                alert("Payment verification failed. Please contact support.");
+                const backendError = err.response?.data?.error;
+                const backendDetails = err.response?.data?.details;
+                const errorMsg = backendError
+                  ? `${backendError}${backendDetails ? ': ' + backendDetails : ''}`
+                  : "Payment verification failed. Please contact support.";
+
+                alert(errorMsg);
+                setIsProcessing(false);
               });
           },
           prefill: {

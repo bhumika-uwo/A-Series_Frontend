@@ -30,11 +30,15 @@ const MyAgents = () => {
     const loadAgents = async () => {
         setLoading(true);
         const userId = user?.id || user?._id;
-        axios.post(apis.getUserAgents, { userId }).then((res) => {
-            console.log(res.data.agents);
-            setAgents(res.data.agents);
-        }).catch(err => console.log(err))
-        setLoading(false);
+        try {
+            const res = await axios.post(apis.getUserAgents, { userId });
+            console.log('[MY AGENTS] Loaded:', res.data.agents);
+            setAgents(res.data.agents || []);
+        } catch (err) {
+            console.error('[MY AGENTS] Load failed:', err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCreateAgent = async () => {
@@ -105,21 +109,30 @@ const MyAgents = () => {
                 <div className="text-subtext text-center">Loading agents...</div>
             ) : (
                 <div className="">
-                    <div className='grid grid-cols-3 gap-3'>
-                        {agents.map((agent) =>
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                        {agents.filter(agent => agent !== null).map((agent) =>
                             <div
                                 key={agent._id}
                                 className=" group bg-card border border-border hover:border-primary/50 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 flex flex-col w-full shadow-sm"
                             >
                                 <div className="flex justify-between items-start mb-4">
-                                    <img
-                                        src={agent.avatar}
-                                        alt={agent.name}
-                                        className="w-19 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform"
-                                    />
+                                    <div className="relative">
+                                        <img
+                                            src={agent.avatar || "/AGENTS_IMG/default.png"}
+                                            alt={agent.agentName}
+                                            className="w-20 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform"
+                                        />
+                                        {agent.status && (
+                                            <span className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${agent.status.toLowerCase() === 'live' || agent.status.toLowerCase() === 'active'
+                                                ? 'bg-green-500/10 text-green-500 border-green-500/20'
+                                                : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
+                                                }`}>
+                                                {agent.status}
+                                            </span>
+                                        )}
+                                    </div>
 
                                     <div className="bg-surface border border-border px-2 py-1 rounded-lg flex items-center gap-1">
-                                        {/* <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" /> */}
                                         <span className="text-xs font-bold text-maintext">4.9</span>
                                     </div>
                                 </div>
@@ -132,8 +145,8 @@ const MyAgents = () => {
 
                                 <p className="text-sm text-subtext mb-6 flex-1">{agent.description}</p>
 
-                                {/* Install Button */}
-                                <div className="flex gap-2">
+                                {/* Use Button */}
+                                <div className="flex gap-2 mt-auto">
                                     <button
                                         onClick={() => {
                                             const targetUrl = (!agent?.url || agent.url.trim() === "") ? AppRoute.agentSoon : agent.url;
@@ -142,7 +155,7 @@ const MyAgents = () => {
                                         }}
                                         className="flex-1 py-2.5 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:shadow-md"
                                     >
-                                        Use
+                                        Use Agent
                                     </button>
                                     <button
                                         onClick={() => {
@@ -154,20 +167,20 @@ const MyAgents = () => {
                                         <FileText className="w-5 h-5" />
                                     </button>
                                 </div>
+                            </div>
+                        )}
 
-
-                            </div>)}
-                    </div>
-                    {/* Empty Create Card */}
-                    <div
-                        onClick={handleCreateAgent}
-                        className="border border-dashed border-border bg-surface/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-surface transition-colors cursor-pointer group min-h-[160px]"
-                    >
-                        <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center mb-3 group-hover:border-primary/50">
-                            <Plus className="w-6 h-6 text-subtext group-hover:text-primary" />
+                        {/* Empty Create Card */}
+                        <div
+                            onClick={handleCreateAgent}
+                            className="border border-dashed border-border bg-surface/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-surface transition-colors cursor-pointer group min-h-[250px]"
+                        >
+                            <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center mb-3 group-hover:border-primary/50">
+                                <Plus className="w-6 h-6 text-subtext group-hover:text-primary" />
+                            </div>
+                            <h3 className="font-medium text-maintext">Create Custom Agent</h3>
+                            <p className="text-xs text-subtext mt-1">Configure a new assistant template</p>
                         </div>
-                        <h3 className="font-medium text-maintext">Create from Template</h3>
-                        <p className="text-xs text-subtext mt-1">Start with a pre-configured base</p>
                     </div>
                 </div>
             )}

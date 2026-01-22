@@ -207,6 +207,8 @@ const Sidebar = ({ isOpen, onClose }) => {
             <span>{t('marketplace')}</span>
           </NavLink>
 
+
+
           {/* <NavLink to="/vendor/overview" className={navItemClass} onClick={onClose}>
             <LayoutGrid className="w-5 h-5" />
             <span>{t('vendorDashboard')}</span>
@@ -228,6 +230,12 @@ const Sidebar = ({ isOpen, onClose }) => {
             <span>{t('adminDashboard')}</span>
           </NavLink>
 
+
+        </div>
+
+        {/* User Profile Footer */}
+        <div className="p-3 border-t border-border bg-secondary/30 relative space-y-2">
+          {/* Moved Updates Link */}
           <NavLink to={AppRoute.NOTIFICATIONS} className={navItemClass} onClick={onClose}>
             <div className="relative">
               <Bell className="w-5 h-5" />
@@ -237,10 +245,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             </div>
             <span>{t('updates') || 'Updates'}</span>
           </NavLink>
-        </div>
-
-        {/* User Profile Footer */}
-        <div className="p-3 border-t border-border bg-secondary/30 relative">
           {token ? (
             /* Integrated Profile Card */
             <div
