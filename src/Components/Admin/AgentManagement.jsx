@@ -46,8 +46,7 @@ const AgentManagement = () => {
             await fetchStats(); // Refresh list
         } catch (error) {
             console.error("Error creating agent:", error);
-            alert("Failed to create app. Please check the console for details.");
-            throw error;
+            throw error; // Let the modal handle the alert
         }
     };
 

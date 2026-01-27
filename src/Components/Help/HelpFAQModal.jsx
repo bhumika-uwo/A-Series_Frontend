@@ -32,7 +32,8 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
                 email: user?.email || "guest@ai-mall.in",
                 issueType,
                 message: issueText,
-                userId: user?.id || null
+                userId: user?.id || null,
+                source: 'help_faq'
             });
             setSendStatus('success');
             setIssueText("");

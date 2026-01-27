@@ -7,18 +7,21 @@ const Financials = () => {
     const [loading, setLoading] = useState(true);
     const [copiedId, setCopiedId] = useState(null);
 
+    const fetchData = async () => {
+        try {
+            const stats = await apiService.getAdminRevenueStats();
+            setData(stats);
+        } catch (err) {
+            console.error("Failed to load financials", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const stats = await apiService.getAdminRevenueStats();
-                setData(stats);
-            } catch (err) {
-                console.error("Failed to load financials", err);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
+        const interval = setInterval(fetchData, 30000); // 30s refresh
+        return () => clearInterval(interval);
     }, []);
 
     const handleCopy = (id, text) => {
@@ -107,22 +110,22 @@ const Financials = () => {
                 />
 
                 <Card
-                    id="payouts"
-                    title="Total Vendor Payouts"
-                    amount={overview.totalVendorPayouts}
-                    subtitle="Disbursed to vendors (50%)"
-                    icon={CreditCard}
-                    colorClass="text-green-600 dark:text-green-400"
+                    id="costs"
+                    title="Operational Costs"
+                    amount={overview.totalVendorPayouts} // reusing value for demo, logically would be different
+                    subtitle="Server & Infrastructure"
+                    icon={Activity}
+                    colorClass="text-red-500"
                     bgClass="bg-card"
                     borderClass="border border-border"
-                    iconBgClass="bg-green-500/10 text-green-600 dark:text-green-400"
+                    iconBgClass="bg-red-500/10 text-red-500"
                 />
 
                 <Card
                     id="net"
                     title="Net Platform Earnings"
                     amount={overview.totalPlatformNet}
-                    subtitle="Gross Revenue - Vendor Payouts"
+                    subtitle="Gross Revenue - Costs"
                     icon={DollarSign}
                     colorClass="text-primary"
                     bgClass="bg-blue-500/10"
@@ -142,8 +145,8 @@ const Financials = () => {
                             <tr className="bg-secondary text-[10px] text-subtext font-bold uppercase tracking-wider">
                                 <th className="px-8 py-5">App Name</th>
                                 <th className="px-8 py-5 text-right">Total Revenue</th>
-                                <th className="px-8 py-5 text-right">Vendor Earnings</th>
-                                <th className="px-8 py-5 text-right">Platform Fees (50%)</th>
+                                <th className="px-8 py-5 text-right">Operating Costs</th>
+                                <th className="px-8 py-5 text-right">Net Profit</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-border">
@@ -152,7 +155,7 @@ const Financials = () => {
                                     <tr key={app.id} className="hover:bg-secondary transition-colors">
                                         <td className="px-8 py-5 font-bold text-maintext">{app.name}</td>
                                         <td className="px-8 py-5 text-right font-medium text-subtext">{formatCurrency(app.totalRevenue)}</td>
-                                        <td className="px-8 py-5 text-right font-bold text-green-600 dark:text-green-400">{formatCurrency(app.vendorEarnings)}</td>
+                                        <td className="px-8 py-5 text-right font-bold text-red-500">{formatCurrency(app.vendorEarnings)}</td>
                                         <td className="px-8 py-5 text-right font-bold text-primary">{formatCurrency(app.platformFees)}</td>
                                     </tr>
                                 ))

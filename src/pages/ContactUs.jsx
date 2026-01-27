@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, MessageSquare } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { apiService } from '../services/apiService';
+import { getUserData } from '../userStore/userData';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +20,6 @@ const ContactUs = () => {
   const categories = [
     { value: 'general', label: 'General Inquiry' },
     { value: 'technical', label: 'Technical Support' },
-    { value: 'vendor', label: 'Vendor Support' },
     { value: 'bug', label: 'Bug Report' },
     { value: 'feedback', label: 'Feedback' },
     { value: 'partnership', label: 'Partnership' },
@@ -62,29 +63,41 @@ const ContactUs = () => {
 
     setLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/contact/submit`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      // Map category to issueType
+      const categoryMap = {
+        'general': 'General Inquiry',
+        'technical': 'Technical Support',
+        'bug': 'Bug Report',
+        'feedback': 'Feedback',
+        'partnership': 'Partnership'
+      };
+
+      // Get user ID if logged in
+      const userData = getUserData();
+      // Check multiple possible locations for the ID
+      const userId = userData?._id || userData?.id || userData?.user?._id || userData?.user?.id;
+
+      await apiService.createSupportTicket({ // Use apiService directly
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        issueType: categoryMap[formData.category] || 'Other',
+        message: formData.message,
+        userId: userId, // Add userId to payload
+        source: 'contact_us'
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        toast.success('Thank you! Your message has been sent successfully.');
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          category: 'general',
-          message: '',
-        });
-      } else {
-        toast.error(data.message || 'Failed to send message. Please try again.');
-      }
+      toast.success(`Ticket Sent! ID: ${userId ? userId : 'None'}`);
+      console.log("Sent Ticket. UserData:", userData, "Extracted userId:", userId);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        category: 'general',
+        message: '',
+      });
     } catch (error) {
       console.error('Contact form error:', error);
       toast.error('Failed to send message. Please try again later.');
@@ -179,8 +192,8 @@ const ContactUs = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 rounded-lg border-2 transition-colors bg-transparent ${errors.name
-                        ? 'border-red-500 focus:border-red-600'
-                        : 'border-border focus:border-primary'
+                      ? 'border-red-500 focus:border-red-600'
+                      : 'border-border focus:border-primary'
                       } text-maintext placeholder-subtext/50 focus:outline-none`}
                     placeholder="Your name"
                   />
@@ -198,8 +211,8 @@ const ContactUs = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 rounded-lg border-2 transition-colors bg-transparent ${errors.email
-                        ? 'border-red-500 focus:border-red-600'
-                        : 'border-border focus:border-primary'
+                      ? 'border-red-500 focus:border-red-600'
+                      : 'border-border focus:border-primary'
                       } text-maintext placeholder-subtext/50 focus:outline-none`}
                     placeholder="your@email.com"
                   />
@@ -254,8 +267,8 @@ const ContactUs = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 rounded-lg border-2 transition-colors bg-transparent ${errors.subject
-                      ? 'border-red-500 focus:border-red-600'
-                      : 'border-border focus:border-primary'
+                    ? 'border-red-500 focus:border-red-600'
+                    : 'border-border focus:border-primary'
                     } text-maintext placeholder-subtext/50 focus:outline-none`}
                   placeholder="What is this about?"
                 />
@@ -273,8 +286,8 @@ const ContactUs = () => {
                   onChange={handleChange}
                   rows="6"
                   className={`w-full px-4 py-3 rounded-lg border-2 transition-colors bg-transparent resize-none ${errors.message
-                      ? 'border-red-500 focus:border-red-600'
-                      : 'border-border focus:border-primary'
+                    ? 'border-red-500 focus:border-red-600'
+                    : 'border-border focus:border-primary'
                     } text-maintext placeholder-subtext/50 focus:outline-none`}
                   placeholder="Tell us more about your inquiry..."
                 />
@@ -322,10 +335,6 @@ const ContactUs = () => {
               {
                 q: "Are there any alternative contact methods?",
                 a: "You can also reach us via email at admin@uwo24.com or check our Help Center."
-              },
-              {
-                q: "How long does it take to become a vendor?",
-                a: "Vendor onboarding typically takes 3-5 business days after application submission."
               },
             ].map((faq, i) => (
               <div key={i} className="border border-border rounded-lg p-4 hover:border-primary/50 transition-colors">

@@ -99,23 +99,29 @@ export const apiService = {
       const response = await apiClient.get('/admin/stats');
       return response.data;
     } catch (error) {
-      console.warn('Backend admin stats failed, falling back to mock:', error.message);
-      const agents = JSON.parse(localStorage.getItem('mock_agents') || '[]');
-      return {
-        totalUsers: 0,
-        activeAgents: agents.length,
-        pendingApprovals: 0,
-        totalRevenue: 0,
-        openComplaints: 0,
-        recentActivity: [],
-        inventory: agents.map(a => ({
-          ...a,
-          id: a._id,
-          name: a.name || a.agentName,
-          pricing: a.pricing || 'Free',
-          status: a.status || 'Active'
-        }))
-      };
+      console.error('Backend admin stats failed:', error.message);
+      throw error;
+    }
+  },
+
+  async getAdminRevenueStats() {
+    try {
+      const response = await apiClient.get('/revenue/stats');
+      return response.data;
+    } catch (error) {
+      console.error('Backend revenue stats failed:', error.message);
+      throw error;
+    }
+  },
+
+  async getAuditLogs(search = '') {
+    try {
+      const params = search ? { search } : {};
+      const response = await apiClient.get('/audit-logs', { params });
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch audit logs:", error);
+      return [];
     }
   },
 
@@ -125,10 +131,8 @@ export const apiService = {
       const response = await apiClient.get('/agents/created-by-me');
       return response.data;
     } catch (error) {
-      // Mock fallback: Return all local mock agents (assuming I am the owner in demo)
-      const stored = localStorage.getItem('mock_agents');
-      if (stored) return JSON.parse(stored);
-      return [];
+      console.error("Failed to fetch created agents:", error);
+      throw error;
     }
   },
 
@@ -137,20 +141,8 @@ export const apiService = {
       const response = await apiClient.get('/agents');
       return response.data;
     } catch (error) {
-      const stored = localStorage.getItem('mock_agents');
-      if (stored) return JSON.parse(stored);
-
-      const defaults = [
-        { _id: '683d38ce-1', name: 'AIFLOW', description: 'Streamline your AI workflows.', pricing: 'Free', status: 'Inactive' },
-        { _id: '683d38ce-2', name: 'AIMARKET', description: 'AI-driven marketplace insights.', pricing: 'Free', status: 'Inactive' },
-        { _id: '683d38ce-3', name: 'AICONNECT', description: 'Connect all your AI tools.', pricing: 'Free', status: 'Inactive' },
-        { _id: '693d38ce-4', name: 'AIMUSIC', description: 'AI-powered music generation.', pricing: 'Free', status: 'Inactive' },
-        { _id: '693d38ce-5', name: 'AITRANS', description: 'Advanced AI translation services.', pricing: 'Free', status: 'Inactive' },
-        { _id: '683d38ce-6', name: 'AISCRIPT', description: 'AI script writing and automation.', pricing: 'Free', status: 'Inactive' }
-      ];
-
-      localStorage.setItem('mock_agents', JSON.stringify(defaults));
-      return defaults;
+      console.error("Failed to fetch agents:", error);
+      throw error;
     }
   },
 
@@ -159,11 +151,8 @@ export const apiService = {
       const response = await apiClient.post('/agents', agentData);
       return response.data;
     } catch (error) {
-      const stored = JSON.parse(localStorage.getItem('mock_agents') || '[]');
-      const newAgent = { ...agentData, _id: Date.now().toString() };
-      stored.push(newAgent);
-      localStorage.setItem('mock_agents', JSON.stringify(stored));
-      return newAgent;
+      console.error("Failed to create agent:", error);
+      throw error;
     }
   },
 
@@ -172,15 +161,8 @@ export const apiService = {
       const response = await apiClient.put(`/agents/${id}`, updates);
       return response.data;
     } catch (error) {
-      const stored = JSON.parse(localStorage.getItem('mock_agents') || '[]');
-      const index = stored.findIndex(a => a._id === id);
-
-      if (index !== -1) {
-        stored[index] = { ...stored[index], ...updates };
-        localStorage.setItem('mock_agents', JSON.stringify(stored));
-        return stored[index];
-      }
-      return null;
+      console.error("Failed to update agent:", error);
+      throw error;
     }
   },
 
@@ -189,10 +171,8 @@ export const apiService = {
       await apiClient.delete(`/agents/${id}`);
       return true;
     } catch (error) {
-      const stored = JSON.parse(localStorage.getItem('mock_agents') || '[]');
-      const filtered = stored.filter(a => a._id !== id);
-      localStorage.setItem('mock_agents', JSON.stringify(filtered));
-      return true;
+      console.error("Failed to delete agent:", error);
+      throw error;
     }
   },
 
@@ -343,12 +323,8 @@ export const apiService = {
       const response = await apiClient.get('/user/all');
       return response.data;
     } catch (error) {
-      console.warn('Backend get users failed, falling back to mock:', error.message);
-      // Mock fallback
-      return [
-        { id: '1', name: 'Mock User 1', email: 'user1@example.com', role: 'user', status: 'Active', agents: [], spent: 120 },
-        { id: '2', name: 'Mock User 2', email: 'user2@example.com', role: 'user', status: 'Active', agents: [], spent: 250 }
-      ];
+      console.error('Backend get users failed:', error.message);
+      throw error;
     }
   },
 
@@ -384,9 +360,10 @@ export const apiService = {
     }
   },
 
-  async getReports() {
+  async getReports(search = '') {
     try {
-      const response = await apiClient.get('/reports');
+      const params = search ? { search } : {};
+      const response = await apiClient.get('/reports', { params });
       return response.data;
     } catch (error) {
       console.error("Failed to fetch reports:", error);
@@ -405,9 +382,20 @@ export const apiService = {
   },
 
   // --- Support Tickets ---
-  async getSupportTickets() {
+  async createSupportTicket(ticketData) {
     try {
-      const response = await apiClient.get('/support');
+      const response = await apiClient.post('/support', ticketData);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to create support ticket:", error);
+      throw error;
+    }
+  },
+
+  async getSupportTickets(search = '') {
+    try {
+      const params = search ? { search } : {};
+      const response = await apiClient.get('/support', { params });
       return response.data;
     } catch (error) {
       console.error("Failed to fetch support tickets:", error);
@@ -425,15 +413,7 @@ export const apiService = {
     }
   },
 
-  async replyToVendorTicket(ticketId, message) {
-    try {
-      const response = await apiClient.post(`/reports/${ticketId}/reply`, { message });
-      return response.data;
-    } catch (error) {
-      console.error("Failed to send reply:", error);
-      throw error;
-    }
-  },
+
 
   // --- Personal Assistant ---
   async getPersonalTasks(params) {

@@ -41,10 +41,15 @@ const UserManagement = () => {
         }
     };
 
-    const filteredUsers = users.filter(user =>
-        user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredUsers = users.filter(user => {
+        const term = searchTerm.toLowerCase();
+        const matchesName = user.name?.toLowerCase().includes(term);
+        const matchesEmail = user.email?.toLowerCase().includes(term);
+        const matchesAgent = user.agents?.some(agent =>
+            (agent.agentName || agent.name)?.toLowerCase().includes(term)
+        );
+        return matchesName || matchesEmail || matchesAgent;
+    });
 
     const handleBlockUser = async (userId, currentStatus) => {
         try {

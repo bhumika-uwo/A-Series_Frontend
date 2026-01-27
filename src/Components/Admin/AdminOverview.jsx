@@ -21,6 +21,9 @@ const AdminOverview = () => {
 
     useEffect(() => {
         fetchStats();
+        // Refresh every 30 seconds
+        const interval = setInterval(fetchStats, 30000);
+        return () => clearInterval(interval);
     }, []);
 
     const handleCreateApp = async (formData) => {
@@ -28,9 +31,23 @@ const AdminOverview = () => {
             // Map agentUrl to url for backend compatibility
             const payload = {
                 ...formData,
-                url: formData.agentUrl
+                url: formData.agentUrl,
+                pricingModel: formData.pricing,
+                pricing: formData.pricingConfig ? {
+                    type: 'Subscription',
+                    plans: formData.pricingConfig.plans.map(planName => ({
+                        name: planName,
+                        price: formData.pricingConfig.prices[planName] || {},
+                        currency: formData.pricingConfig.currency,
+                        billingCycle: formData.pricingConfig.billingCycle
+                    }))
+                } : {
+                    type: formData.pricing === 'Free' ? 'Free' : 'Paid',
+                    plans: [formData.pricing]
+                }
             };
             delete payload.agentUrl;
+            delete payload.pricingConfig; // Remove temporary field
 
             await apiService.createAgent(payload);
             await fetchStats(); // Refresh list
@@ -50,7 +67,7 @@ const AdminOverview = () => {
 
     const snapshot = [
         { label: 'Total Users', value: statsData?.totalUsers?.toLocaleString() || '0', trend: '0%', direction: 'down' },
-        { label: 'Active Users', value: statsData?.activeAgents?.toLocaleString() || '0', trend: '0%', direction: 'down' },
+        { label: 'Active Agents', value: statsData?.activeAgents?.toLocaleString() || '0', trend: '0%', direction: 'down' },
         { label: 'Revenue (MTD)', value: `$${(statsData?.financials?.grossSales || 0).toLocaleString()}`, trend: '0%', direction: 'down' },
     ];
 
@@ -85,20 +102,14 @@ const AdminOverview = () => {
                 </div>
 
                 <div className="flex items-center gap-12 border-l border-border pl-12">
+
                     <div className="flex items-center gap-3">
                         <Activity className="w-5 h-5 text-subtext" />
                         <div>
-                            <p className="text-[10px] text-subtext font-bold uppercase tracking-wider">Last Review</p>
-                            <p className="text-sm font-bold text-maintext">No recent reviews</p>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <Activity className="w-5 h-5 text-subtext" />
-                        <div>
-                            <p className="text-[10px] text-subtext font-bold uppercase tracking-wider">Compliance</p>
+                            <p className="text-[10px] text-subtext font-bold uppercase tracking-wider">Security</p>
                             <div className="flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 bg-red-500 rounded-full" />
-                                <p className="text-sm font-bold text-maintext">Pending Apps</p>
+                                <Activity className="w-4 h-4 text-green-500" />
+                                <p className="text-sm font-bold text-maintext">System Secure</p>
                             </div>
                         </div>
                     </div>

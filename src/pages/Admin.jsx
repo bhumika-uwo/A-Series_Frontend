@@ -10,14 +10,14 @@ import {
   Settings,
   UserCheck,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  FileText
 } from "lucide-react";
 
 // Sub-Components
 import AdminOverview from "../Components/Admin/AdminOverview";
-import Approvals from "../Components/Admin/Approvals";
+import AuditLogs from "../Components/Admin/AuditLogs";
 import UserManagement from "../Components/Admin/UserManagement";
-import VendorManagement from "../Components/Admin/VendorManagement";
 import AgentManagement from "../Components/Admin/AgentManagement";
 import Financials from "../Components/Admin/Financials";
 import TransactionHistory from "../Components/Admin/TransactionHistory";
@@ -47,10 +47,9 @@ const Admin = () => {
       },
       { id: "complaints", label: "User Support", icon: AlertTriangle },
       { id: "users", label: "User Management", icon: Users },
-      { id: "vendors", label: "Vendor Support", icon: UserCheck },
     ],
     governance: [
-      { id: "approvals", label: "Approvals", icon: CheckCircle },
+      { id: "logs", label: "Audit Logs", icon: FileText },
       { id: "roles", label: "Admin Support", icon: Shield },
       { id: "settings", label: "Settings", icon: Settings },
     ]
@@ -59,9 +58,8 @@ const Admin = () => {
   const renderContent = () => {
     switch (activeTab) {
       case "overview": return <AdminOverview />;
-      case "approvals": return <Approvals />;
+      case "logs": return <AuditLogs />;
       case "users": return <UserManagement />;
-      case "vendors": return <VendorManagement />;
       case "agents": return <AgentManagement />;
       case "finance":
         return activeSubTab === "transactions" ? <TransactionHistory /> : <Financials />;
