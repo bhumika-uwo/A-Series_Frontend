@@ -31,7 +31,7 @@ const missingContent = {
         formEmailLabel: "EMAIL ADDRESS",
         formEmailPlaceholder: "john@example.com",
         formPhoneLabel: "PHONE NUMBER",
-        formPhonePlaceholder: "+91 98765 43210",
+        formPhonePlaceholder: "+91 83598 90909",
         formCategoryLabel: "CATEGORY",
         formSubjectLabel: "SUBJECT",
         formSubjectPlaceholder: "Brief summary of your issue",

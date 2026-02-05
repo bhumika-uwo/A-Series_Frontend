@@ -26,7 +26,7 @@ const ContactUs = () => {
 
   const [contactInfo, setContactInfo] = useState({
     email: 'admin@uwo24.com', // Default fallback
-    phone: '+91 98765 43210' // Default fallback
+    phone: '+91 83598 90909' // Default fallback
   });
 
   React.useEffect(() => {

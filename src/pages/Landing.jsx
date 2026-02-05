@@ -37,7 +37,7 @@ const Landing = () => {
 
   const [contactInfo, setContactInfo] = useState({
     email: 'admin@uwo24.com',
-    phone: '+91 98765 43210'
+    phone: '+91 83598 90909'
   });
 
   React.useEffect(() => {

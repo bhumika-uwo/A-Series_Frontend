@@ -102,7 +102,7 @@ const PlatformSettings = () => {
                                 name="supportPhone"
                                 value={settings.supportPhone || ''}
                                 onChange={handleChange}
-                                placeholder="+91 00000 00000"
+                                placeholder="+91 83598 90909"
                                 className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm font-bold text-maintext outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-subtext/30"
                             />
                         </div>
