@@ -1,6 +1,6 @@
-# AI-Mall Frontend
+# A-Series™ Frontend
 
-Welcome to the AI-Mall frontend. This application provides the interface for discovering, subscribing to, and interacting with specialized AI agents.
+Welcome to the A-Series™ frontend. This application provides the interface for discovering, subscribing to, and interacting with specialized AI agents.
 
 ## 📁 Key Routes
 - `/` - Landing Page

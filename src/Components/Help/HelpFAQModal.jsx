@@ -41,7 +41,7 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
         setSendStatus(null);
         try {
             await axios.post(apis.support, {
-                email: user?.email || "guest@ai-mall.in",
+                email: user?.email || "guest@uwo24.com",
                 issueType,
                 message: issueText,
                 userId: user?.id || null,
