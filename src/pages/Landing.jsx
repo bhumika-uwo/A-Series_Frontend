@@ -111,7 +111,7 @@ const Landing = () => {
           animate={{ opacity: 1, y: 0 }}
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-border text-sm text-subtext mb-8"
         >
-          <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
           {t('landing.poweredBy')}
         </motion.div>
 
@@ -223,7 +223,10 @@ const Landing = () => {
               <p className="text-sm text-subtext leading-relaxed max-w-sm">
                 {t('landing.footer.description')} <br />
                 {t('landing.footer.appCount')}<br />
-                {t('landing.footer.poweredBy')}
+                <span className="inline-flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  {t('landing.footer.poweredBy')}
+                </span>
               </p>
               <div className="flex items-center gap-4">
                 {[
