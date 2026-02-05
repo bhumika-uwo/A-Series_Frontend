@@ -79,7 +79,7 @@ const LanguageSwitcher = ({ variant = 'default' }) => {
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        className={`absolute mt-2 w-56 sm:w-72 bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-[999] ${isLanding ? 'right-0' : 'right-0'
+                        className={`absolute mt-2 w-48 sm:w-72 bg-card border border-border rounded-2xl shadow-2xl overflow-hidden z-[999] ${isLanding ? 'right-0' : 'right-0'
                             }`}
                     >
                         <div className="p-3 bg-secondary/30 border-b border-border flex items-center justify-between">
