@@ -20,7 +20,7 @@ const ContactUsModal = ({ isOpen, onClose }) => {
     const [loading, setLoading] = useState(false);
     const [errors, setErrors] = useState({});
     const [contactInfo, setContactInfo] = useState({
-        email: 'support@a-series.in', // Default fallback
+        email: 'admin@uwo24.com', // Default fallback
         phone: '+91 98765 43210' // Default fallback
     });
 

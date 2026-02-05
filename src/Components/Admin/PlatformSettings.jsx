@@ -12,7 +12,7 @@ const PlatformSettings = () => {
 
     const [settings, setSettings] = useState({
         platformName: 'A-Series™',
-        contactEmail: 'support@a-series.in',
+        contactEmail: 'admin@uwo24.com',
         maintenanceMode: false,
         killSwitch: false,
         maxTokensPerUser: 1000000
@@ -115,7 +115,7 @@ const PlatformSettings = () => {
                                 name="contactEmail"
                                 value={settings.contactEmail || ''}
                                 onChange={handleChange}
-                                placeholder="support@a-series.in"
+                                placeholder="admin@uwo24.com"
                                 className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-sm font-bold text-maintext outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all placeholder:text-subtext/30"
                             />
                         </div>

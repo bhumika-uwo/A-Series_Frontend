@@ -13,7 +13,7 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
     const [isSending, setIsSending] = useState(false);
     const [sendStatus, setSendStatus] = useState(null);
     const [supportPhone, setSupportPhone] = useState(null);
-    const [contactEmail, setContactEmail] = useState("support@a-series.in");
+    const [contactEmail, setContactEmail] = useState("admin@uwo24.com");
 
     useEffect(() => {
         if (isOpen) {

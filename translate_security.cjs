@@ -14,7 +14,7 @@ const translations = {
             "section2": { "title": "बुनियादी ढांचा", "mainText": "सुरक्षित बुनियादी ढांचा।", "dataResidencyTitle": "डेटा रेजीडेंसी", "dataResidencyText": "स्थानीय नियमों का पालन।", "accessControlTitle": "एक्सेस कंट्रोल", "accessControlText": "सख्त नियंत्रण।" },
             "section3": { "title": "निषिद्ध सामग्री", "mainText": "सख्त वर्जित:", "prohibitedItems": ["मैलवेयर", "घृणास्पद भाषण", "अवैध सामग्री", "उत्पीड़न"], "violationWarning": "खाता निलंबित होगा।" },
             "section4": { "title": "अनुपालन", "sub1Title": "GDPR", "sub1Text": "GDPR अनुपालन।", "sub2Title": "SOC2", "sub2Text": "ऑडिट लॉग उपलब्ध।" },
-            "section5": { "title": "रिपोर्टिंग", "text1": "भेद्यता रिपोर्ट करें।", "text2": "बग बाउंटी।", "text3": "report@a-series.in" },
+            "section5": { "title": "रिपोर्टिंग", "text1": "भेद्यता रिपोर्ट करें।", "text2": "बग बाउंटी।", "text3": "admin@uwo24.com" },
             "section6": { "title": "जिम्मेदारी", "text1": "क्रेडेंशियल्स सुरक्षित रखें।", "text2": "2FA सक्षम करें।" },
             "section7": { "title": "थर्ड पार्टी", "text": "हम एकीकरण की समीक्षा करते हैं।" },
             "section8": { "title": "बौद्धिक संपदा", "license": "उपयोगकर्ता सामग्री।", "ownership": "प्लेटफ़ॉर्म कोड।", "transfer": "अधिकार नीति।" },
@@ -33,7 +33,7 @@ const translations = {
             "section2": { "title": "অবকাঠামো", "mainText": "নিরাপদ অবকাঠামো।", "dataResidencyTitle": "ডেটা রেসিডেন্সি", "dataResidencyText": "স্থানীয় প্রবিধান।", "accessControlTitle": "অ্যাক্সেস", "accessControlText": "কঠোর নিয়ন্ত্রণ।" },
             "section3": { "title": "নিষিদ্ধ", "mainText": "নিষিদ্ধ বিষয়বস্তু:", "prohibitedItems": ["ম্যালওয়্যার", "ঘৃণাসূচক", "অবৈধ", "হয়রানি"], "violationWarning": "অ্যাকাউন্ট স্থগিত।" },
             "section4": { "title": "সম্মতি", "sub1Title": "GDPR", "sub1Text": "GDPR অনুগত।", "sub2Title": "SOC2", "sub2Text": "অডিট লগ।" },
-            "section5": { "title": "রিপোর্টিং", "text1": "রিপোর্ট করুন।", "text2": "বাগ বাউন্টি।", "text3": "report@a-series.in" },
+            "section5": { "title": "রিপোর্টিং", "text1": "রিপোর্ট করুন।", "text2": "বাগ বাউন্টি।", "text3": "admin@uwo24.com" },
             "section6": { "title": "দায়িত্ব", "text1": "পাসওয়ার্ড রাখুন।", "text2": "2FA চালু করুন।" },
             "section7": { "title": "তৃতীয় পক্ষ", "text": "ইন্টিগ্রেশন পর্যালোচনা।" },
             "section8": { "title": "মেধা সম্পত্তি", "license": "ব্যবহারকারী সামগ্রী।", "ownership": "প্লাটফর্ম কোড।", "transfer": "অধিকার।" },
@@ -64,7 +64,7 @@ const translations = {
             "section2": { "title": "మౌలిక సదుపాయాలు", "mainText": "మా మౌలిక సదుపాయాలు సురక్షితం.", "dataResidencyTitle": "డేటా రెసిడెన్సీ", "dataResidencyText": "స్థానిక నిబంధనల ప్రకారం డేటా నిల్వ.", "accessControlTitle": "యాక్సెస్ కంట్రోల్", "accessControlText": "కఠినమైన యాక్సెస్ నియంత్రణ." },
             "section3": { "title": "నిషేధిత కంటెంట్", "mainText": "నిషేధించబడినవి:", "prohibitedItems": ["మాల్‌వేర్", "విద్వేషపూరిత ప్రసంగం", "చట్టవిరుద్ధ కంటెంట్", "వేధింపులు"], "violationWarning": "ఖాతా తక్షణమే సస్పెండ్ చేయబడుతుంది." },
             "section4": { "title": "వర్తింపు", "sub1Title": "GDPR", "sub1Text": "GDPR కంప్లైంట్.", "sub2Title": "SOC2", "sub2Text": "ఆడిట్ లాగ్స్ అందుబాటులో ఉన్నాయి." },
-            "section5": { "title": "రిపోర్టింగ్", "text1": "లోపాన్ని నివేదించండి.", "text2": "బగ్ బౌంటీ ప్రోగ్రామ్.", "text3": "report@a-series.in" },
+            "section5": { "title": "రిపోర్టింగ్", "text1": "లోపాన్ని నివేదించండి.", "text2": "బగ్ బౌంటీ ప్రోగ్రామ్.", "text3": "admin@uwo24.com" },
             "section6": { "title": "బాధ్యత", "text1": "క్రెడెన్షియల్స్ భద్రంగా ఉంచండి.", "text2": "2FA ను ప్రారంభించండి." },
             "section12": { "title": "అత్యవసర", "mainText": "భద్రతా ఉల్లంఘన:", "reportButton": "ఇమెయిల్", "reportButtonText": "నివేదించండి", "supportButton": "కాల్" }
         }

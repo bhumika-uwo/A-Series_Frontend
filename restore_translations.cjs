@@ -91,7 +91,7 @@ const missingContent = {
                 title: "Reporting",
                 text1: "If you find a vulnerability, please report it.",
                 text2: "We offer a bug bounty program.",
-                text3: "report@a-series.in"
+                text3: "admin@uwo24.com"
             },
             section6: {
                 title: "User Responsibility",

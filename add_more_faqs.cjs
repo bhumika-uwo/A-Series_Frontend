@@ -19,7 +19,7 @@ const extraFaqs = [
     },
     {
         question: "How do I report a bug or issue?",
-        answer: "If you encounter any issues, please use the 'Contact Us' form or email our support team directly at support@a-series.in."
+        answer: "If you encounter any issues, please use the 'Contact Us' form or email our support team directly at admin@uwo24.com."
     }
 ];
 
