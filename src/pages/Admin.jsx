@@ -41,7 +41,6 @@ const Admin = () => {
   const [isRevenueExpanded, setIsRevenueExpanded] = useState(true);
   const [isDetailView, setIsDetailView] = useState(false);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const navigation = {
     management: [
@@ -68,17 +67,17 @@ const Admin = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case "overview": return <AdminOverview onDetailView={setIsDetailView} searchQuery={searchQuery} />;
+      case "overview": return <AdminOverview onDetailView={setIsDetailView} />;
 
-      case "users": return <UserManagement onDetailView={setIsDetailView} searchQuery={searchQuery} />;
+      case "users": return <UserManagement onDetailView={setIsDetailView} />;
 
-      case "agents": return <AgentManagement onDetailView={setIsDetailView} searchQuery={searchQuery} />;
+      case "agents": return <AgentManagement onDetailView={setIsDetailView} />;
       case "finance":
-        return activeSubTab === "transactions" ? <TransactionHistory onDetailView={setIsDetailView} searchQuery={searchQuery} /> : <Financials onDetailView={setIsDetailView} searchQuery={searchQuery} />;
-      case "complaints": return <AdminSupport onDetailView={setIsDetailView} searchQuery={searchQuery} />;
+        return activeSubTab === "transactions" ? <TransactionHistory onDetailView={setIsDetailView} /> : <Financials onDetailView={setIsDetailView} />;
+      case "complaints": return <AdminSupport onDetailView={setIsDetailView} />;
 
-      case "settings": return <PlatformSettings onDetailView={setIsDetailView} searchQuery={searchQuery} />;
-      default: return <AdminOverview onDetailView={setIsDetailView} searchQuery={searchQuery} />;
+      case "settings": return <PlatformSettings onDetailView={setIsDetailView} />;
+      default: return <AdminOverview onDetailView={setIsDetailView} />;
     }
   };
 
@@ -209,16 +208,7 @@ const Admin = () => {
             </button>
 
             {!isDetailView ? (
-              <div className="relative group flex-1">
-                <Activity className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-subtext group-focus-within:text-primary transition-colors" />
-                <input
-                  type="text"
-                  placeholder={t("admin.header.search")}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-secondary border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none text-maintext placeholder:text-subtext/50"
-                />
-              </div>
+              <div className="flex-1" />
             ) : (
               <div className="flex items-center gap-2 text-subtext text-xs font-bold uppercase tracking-widest">
                 <Activity className="w-4 h-4" />

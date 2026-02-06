@@ -5,7 +5,7 @@ import apiService from '../../services/apiService';
 import CreateAppModal from './CreateAppModal';
 import AppDetails from './AppDetails';
 
-const AgentManagement = ({ onDetailView, searchQuery = "" }) => {
+const AgentManagement = ({ onDetailView }) => {
     const { t } = useLanguage();
     const [statsData, setStatsData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -201,60 +201,49 @@ const AgentManagement = ({ onDetailView, searchQuery = "" }) => {
                             </thead>
                             <tbody className="divide-y divide-border">
                                 {statsData?.inventory?.length > 0 ? (
-                                    statsData.inventory
-                                        .filter(app => {
-                                            if (!searchQuery) return true;
-                                            const query = searchQuery.toLowerCase();
-                                            return (
-                                                (app.name || '').toLowerCase().includes(query) ||
-                                                (app.id || '').toLowerCase().includes(query) ||
-                                                (app.pricing || '').toLowerCase().includes(query) ||
-                                                (app.status || '').toLowerCase().includes(query)
-                                            );
-                                        })
-                                        .map((app) => (
-                                            <tr
-                                                key={app.id}
-                                                onClick={() => setSelectedApp(app)}
-                                                className="hover:bg-secondary transition-colors group cursor-pointer"
-                                            >
-                                                <td className="px-4 md:px-8 py-5">
-                                                    <div className="flex flex-col">
-                                                        <span className="text-sm font-bold text-maintext">{app.name || 'Unnamed Agent'}</span>
-                                                        <span className="text-[10px] text-subtext mt-0.5">ID: {app.id?.substring(0, 8)}...</span>
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 md:px-8 py-5 text-sm font-medium text-subtext">
-                                                    <div className="flex flex-col gap-1">
-                                                        <span>{t(app.pricing?.toLowerCase()) || app.pricing || t('free')}</span>
-                                                        {app.reviewStatus && app.reviewStatus !== 'Approved' && (
-                                                            <span className={`text-[10px] font-bold uppercase ${app.reviewStatus === 'Pending Review' ? 'text-blue-600 dark:text-blue-400' : 'text-subtext'}`}>
-                                                                {t(app.reviewStatus?.toLowerCase().replace(' ', '_')) || app.reviewStatus}
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </td>
-                                                <td className="px-4 md:px-8 py-5 text-center">
-                                                    <span className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${app.status === 'Live' || app.status === 'Active'
-                                                        ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400 border-blue-600/20'
-                                                        : 'bg-secondary text-subtext border-border'
-                                                        }`}>
-                                                        {t(app.status?.toLowerCase()) || app.status || t('inactive')}
-                                                    </span>
-                                                </td>
-                                                <td className="px-4 md:px-8 py-5 text-right">
-                                                    <div className="flex items-center justify-end gap-2">
-                                                        <button
-                                                            onClick={(e) => handleDeleteClick(app, e)}
-                                                            className="p-1.5 md:p-2 hover:bg-secondary rounded-lg text-subtext hover:text-blue-600 transition-colors"
-                                                            title="Permanently Delete"
-                                                        >
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
+                                    statsData.inventory.map((app) => (
+                                        <tr
+                                            key={app.id}
+                                            onClick={() => setSelectedApp(app)}
+                                            className="hover:bg-secondary transition-colors group cursor-pointer"
+                                        >
+                                            <td className="px-4 md:px-8 py-5">
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-bold text-maintext">{app.name || 'Unnamed Agent'}</span>
+                                                    <span className="text-[10px] text-subtext mt-0.5">ID: {app.id?.substring(0, 8)}...</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-4 md:px-8 py-5 text-sm font-medium text-subtext">
+                                                <div className="flex flex-col gap-1">
+                                                    <span>{t(app.pricing?.toLowerCase()) || app.pricing || t('free')}</span>
+                                                    {app.reviewStatus && app.reviewStatus !== 'Approved' && (
+                                                        <span className={`text-[10px] font-bold uppercase ${app.reviewStatus === 'Pending Review' ? 'text-blue-600 dark:text-blue-400' : 'text-subtext'}`}>
+                                                            {t(app.reviewStatus?.toLowerCase().replace(' ', '_')) || app.reviewStatus}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="px-4 md:px-8 py-5 text-center">
+                                                <span className={`px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${app.status === 'Live' || app.status === 'Active'
+                                                    ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400 border-blue-600/20'
+                                                    : 'bg-secondary text-subtext border-border'
+                                                    }`}>
+                                                    {t(app.status?.toLowerCase()) || app.status || t('inactive')}
+                                                </span>
+                                            </td>
+                                            <td className="px-4 md:px-8 py-5 text-right">
+                                                <div className="flex items-center justify-end gap-2">
+                                                    <button
+                                                        onClick={(e) => handleDeleteClick(app, e)}
+                                                        className="p-1.5 md:p-2 hover:bg-secondary rounded-lg text-subtext hover:text-blue-600 transition-colors"
+                                                        title="Permanently Delete"
+                                                    >
+                                                        <Trash2 className="w-4 h-4" />
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
                                 ) : (
                                     <tr>
                                         <td colSpan="4" className="px-8 py-24 text-center">
@@ -274,60 +263,49 @@ const AgentManagement = ({ onDetailView, searchQuery = "" }) => {
                     {/* Mobile Card View */}
                     <div className="md:hidden divide-y divide-border/50">
                         {statsData?.inventory?.length > 0 ? (
-                            statsData.inventory
-                                .filter(app => {
-                                    if (!searchQuery) return true;
-                                    const query = searchQuery.toLowerCase();
-                                    return (
-                                        (app.name || '').toLowerCase().includes(query) ||
-                                        (app.id || '').toLowerCase().includes(query) ||
-                                        (app.pricing || '').toLowerCase().includes(query) ||
-                                        (app.status || '').toLowerCase().includes(query)
-                                    );
-                                })
-                                .map((app) => (
-                                    <div
-                                        key={app.id}
-                                        onClick={() => setSelectedApp(app)}
-                                        className="p-4 space-y-4 hover:bg-secondary transition-colors"
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-maintext text-sm leading-tight">{app.name || 'Unnamed Agent'}</span>
-                                                <span className="text-[10px] text-subtext mt-0.5">ID: {app.id?.substring(0, 8)}...</span>
-                                            </div>
-                                            <button
-                                                onClick={(e) => handleDeleteClick(app, e)}
-                                                className="p-2 text-red-500/60 hover:text-red-500 bg-secondary/50 rounded-lg transition-colors"
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </button>
+                            statsData.inventory.map((app) => (
+                                <div
+                                    key={app.id}
+                                    onClick={() => setSelectedApp(app)}
+                                    className="p-4 space-y-4 hover:bg-secondary transition-colors"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-maintext text-sm leading-tight">{app.name || 'Unnamed Agent'}</span>
+                                            <span className="text-[10px] text-subtext mt-0.5">ID: {app.id?.substring(0, 8)}...</span>
                                         </div>
+                                        <button
+                                            onClick={(e) => handleDeleteClick(app, e)}
+                                            className="p-2 text-red-500/60 hover:text-red-500 bg-secondary/50 rounded-lg transition-colors"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+                                    </div>
 
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div className="space-y-1">
-                                                <p className="text-[9px] font-black text-subtext uppercase tracking-widest">{t("admin.overview.status")}</p>
-                                                <span className={`inline-block px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider border ${app.status === 'Live' || app.status === 'Active'
-                                                    ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400 border-blue-600/20'
-                                                    : 'bg-secondary text-subtext border-border'
-                                                    }`}>
-                                                    {t(app.status?.toLowerCase()) || app.status || t('inactive')}
-                                                </span>
-                                            </div>
-                                            <div className="space-y-1 text-right">
-                                                <p className="text-[9px] font-black text-subtext uppercase tracking-widest">{t("billing")}</p>
-                                                <div className="flex flex-col gap-0.5">
-                                                    <span className="font-bold text-maintext text-xs">{t(app.pricing?.toLowerCase()) || app.pricing || t('free')}</span>
-                                                    {app.reviewStatus && app.reviewStatus !== 'Approved' && (
-                                                        <span className={`text-[8px] font-black uppercase tracking-tighter ${app.reviewStatus === 'Pending Review' ? 'text-blue-600' : 'text-subtext/60'}`}>
-                                                            {t(app.reviewStatus?.toLowerCase().replace(' ', '_')) || app.reviewStatus}
-                                                        </span>
-                                                    )}
-                                                </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-1">
+                                            <p className="text-[9px] font-black text-subtext uppercase tracking-widest">{t("admin.overview.status")}</p>
+                                            <span className={`inline-block px-2.5 py-1 rounded-full text-[9px] font-bold uppercase tracking-wider border ${app.status === 'Live' || app.status === 'Active'
+                                                ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400 border-blue-600/20'
+                                                : 'bg-secondary text-subtext border-border'
+                                                }`}>
+                                                {t(app.status?.toLowerCase()) || app.status || t('inactive')}
+                                            </span>
+                                        </div>
+                                        <div className="space-y-1 text-right">
+                                            <p className="text-[9px] font-black text-subtext uppercase tracking-widest">{t("billing")}</p>
+                                            <div className="flex flex-col gap-0.5">
+                                                <span className="font-bold text-maintext text-xs">{t(app.pricing?.toLowerCase()) || app.pricing || t('free')}</span>
+                                                {app.reviewStatus && app.reviewStatus !== 'Approved' && (
+                                                    <span className={`text-[8px] font-black uppercase tracking-tighter ${app.reviewStatus === 'Pending Review' ? 'text-blue-600' : 'text-subtext/60'}`}>
+                                                        {t(app.reviewStatus?.toLowerCase().replace(' ', '_')) || app.reviewStatus}
+                                                    </span>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                ))
+                                </div>
+                            ))
                         ) : (
                             <div className="p-12 text-center">
                                 <Shield className="w-10 h-10 mx-auto mb-3 text-subtext/10" />
