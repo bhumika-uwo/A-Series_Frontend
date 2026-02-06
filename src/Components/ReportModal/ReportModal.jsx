@@ -106,15 +106,25 @@ const ReportModal = ({ isOpen, onClose }) => {
                                     {/* Priority */}
                                     <div>
                                         <label className="block text-sm font-medium text-maintext mb-2">{t('reportIssue.priorityLabel')}</label>
-                                        <select
-                                            value={formData.priority}
-                                            onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
-                                            className="w-full px-4 py-2.5 bg-surface border border-border rounded-xl text-maintext focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
-                                        >
-                                            <option value="low">{t('reportIssue.low')}</option>
-                                            <option value="medium">{t('reportIssue.medium')}</option>
-                                            <option value="high">{t('reportIssue.high')}</option>
-                                        </select>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                                            {[
+                                                { id: 'low', label: t('reportIssue.low'), color: 'text-green-500 bg-green-500/10 border-green-500/20' },
+                                                { id: 'medium', label: t('reportIssue.medium'), color: 'text-yellow-500 bg-yellow-500/10 border-yellow-500/20' },
+                                                { id: 'high', label: t('reportIssue.high'), color: 'text-red-500 bg-red-500/10 border-red-500/20' }
+                                            ].map((opt) => (
+                                                <button
+                                                    key={opt.id}
+                                                    type="button"
+                                                    onClick={() => setFormData({ ...formData, priority: opt.id })}
+                                                    className={`px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${formData.priority === opt.id
+                                                        ? `${opt.color} ring-1 ring-inset`
+                                                        : 'bg-surface border-border text-subtext hover:border-border/80'
+                                                        }`}
+                                                >
+                                                    {opt.label}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     {/* Description */}
