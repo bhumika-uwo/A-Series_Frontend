@@ -17,7 +17,7 @@ import PolicyModal from '../Components/PolicyModal';
 import HelpFAQModal from '../Components/Help/HelpFAQModal';
 import { apiService } from '../services/apiService';
 import { useLanguage } from '../context/LanguageContext';
-import LanguageSwitcher from '../Components/LanguageSwitcher/LanguageSwitcher';
+
 
 import SecurityModal from '../Components/Security/SecurityModal';
 import ContactUsModal from '../Components/Contact/ContactUsModal';
@@ -74,8 +74,7 @@ const Landing = () => {
         <div className="flex items-center gap-2 md:gap-4">
 
 
-          {/* Language Switcher */}
-          <LanguageSwitcher variant="landing" />
+
 
           {/* Theme Toggle */}
           <button
