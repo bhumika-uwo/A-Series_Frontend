@@ -238,14 +238,6 @@ const Marketplace = () => {
                   alt={agent.agentName}
                   className="w-20 rounded-xl object-cover shadow-sm group-hover:scale-105 transition-transform"
                 />
-                {agent.status && agent.status.toLowerCase() !== 'coming soon' && (
-                  <span className={`absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider border ${agent.status.toLowerCase() === 'live' || agent.status.toLowerCase() === 'active'
-                    ? 'bg-green-500/10 text-green-500 border-green-500/20'
-                    : 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20'
-                    }`}>
-                    {t(`statusLabels.${agent.status?.toLowerCase().replace(/\s+/g, '')}`) || agent.status}
-                  </span>
-                )}
               </div>
               <div className="bg-surface border border-border px-2 py-1 rounded-lg flex items-center gap-1">
                 <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
@@ -253,17 +245,8 @@ const Marketplace = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center mb-1">
+            <div className="mb-1">
               <h3 className="text-lg font-bold text-maintext text-2xl font-bold">{agent.agentName} <sup className='text-sm'>TM</sup></h3>
-              <button
-                onClick={() => {
-                  setDemoUrl(agent.demoVideoUrl || "https://www.youtube.com/embed/dQw4w9wgXcQ");
-                  setShowDemo(true);
-                }}
-                className="flex items-center gap-1 text-xs text-primary hover:underline font-semibold"
-              >
-                <Play className="w-3 h-3 fill-primary" /> {t('marketplacePage.demo')}
-              </button>
             </div>
 
             <span className="text-xs text-primary uppercase tracking-wider font-semibold mb-3">
