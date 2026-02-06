@@ -196,9 +196,6 @@ const Marketplace = () => {
       < div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" >
         {/* Personal Assistant App Card */}
         < div className="group bg-card border border-border hover:border-primary/50 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 flex flex-col h-full shadow-sm relative overflow-hidden" >
-          <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-            <Calendar className="w-24 h-24 text-primary" />
-          </div>
           <div className="flex justify-between items-start mb-4 relative z-10">
             <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shadow-lg">
               <Calendar className="w-10 h-10 text-white" />
