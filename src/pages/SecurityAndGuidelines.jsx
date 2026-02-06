@@ -10,6 +10,7 @@ const SecurityAndGuidelines = () => {
     const { t } = useLanguage();
 
     const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+    const [activeCategory, setActiveCategory] = useState('all');
     const [contactInfo, setContactInfo] = useState({
         email: 'admin@uwo24.com',
         phone: '+91 83598 90909'
@@ -212,6 +213,23 @@ const SecurityAndGuidelines = () => {
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
+                        <select
+                            value={activeCategory}
+                            onChange={(e) => setActiveCategory(e.target.value)}
+                            className="px-3 md:px-4 py-2 rounded-xl bg-card border border-border text-maintext text-xs md:text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer hover:bg-secondary appearance-none bg-no-repeat bg-right pr-10"
+                            style={{
+                                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235555ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
+                                backgroundPosition: 'right 0.75rem center',
+                                backgroundSize: '1.25rem'
+                            }}
+                        >
+                            <option value="all">{t('admin.support.all')} {t('landing.securityGuidelines.pageTitle')}</option>
+                            {sections.map((section) => (
+                                <option key={section.id} value={section.id}>
+                                    {section.title}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
             </header>
@@ -233,7 +251,7 @@ const SecurityAndGuidelines = () => {
 
                     {/* Grid for Sections */}
                     <div className="grid grid-cols-1 gap-4">
-                        {sections.map((section, index) => (
+                        {sections.filter(section => activeCategory === 'all' || section.id === parseInt(activeCategory)).map((section, index) => (
                             <motion.div
                                 key={section.id}
                                 initial={{ opacity: 0, y: 20 }}

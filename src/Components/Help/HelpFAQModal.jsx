@@ -128,7 +128,7 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
                                     }}
                                 >
                                     {issueOptions.map((opt) => (
-                                        <option key={opt} value={opt} className="bg-secondary text-maintext">
+                                        <option key={opt} value={opt}>
                                             {opt}
                                         </option>
                                     ))}
