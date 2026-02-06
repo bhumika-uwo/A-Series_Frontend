@@ -80,7 +80,7 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
                     </div>
                     <button
                         onClick={onClose}
-                        className="p-2 hover:bg-black/5 rounded-full text-subtext transition-colors"
+                        className="p-2 hover:bg-surface rounded-full text-subtext transition-colors"
                     >
                         <X className="w-6 h-6" />
                     </button>
@@ -117,17 +117,20 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
                         <div className="flex flex-col gap-6">
                             <div>
                                 <label className="block text-sm font-bold text-maintext mb-2">{t('faqHelp.issueCategory')}</label>
-                                <div className="relative">
-                                    <select
-                                        value={issueType}
-                                        onChange={(e) => setIssueType(e.target.value)}
-                                        className="w-full p-4 pr-10 rounded-xl bg-secondary border border-border focus:border-primary outline-none appearance-none text-maintext font-medium cursor-pointer hover:border-primary/50 transition-colors"
-                                    >
-                                        {issueOptions.map((opt) => (
-                                            <option key={opt} value={opt}>{opt}</option>
-                                        ))}
-                                    </select>
-                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-subtext pointer-events-none" />
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    {issueOptions.map((opt) => (
+                                        <button
+                                            key={opt}
+                                            onClick={() => setIssueType(opt)}
+                                            className={`p-3 rounded-xl border text-sm font-medium transition-all flex items-center justify-between group ${issueType === opt
+                                                ? 'bg-primary text-white border-primary shadow-md shadow-primary/20'
+                                                : 'bg-secondary text-subtext border-border hover:border-primary/50 hover:bg-surface hover:text-maintext'
+                                                }`}
+                                        >
+                                            {opt}
+                                            {issueType === opt && <div className="w-2 h-2 rounded-full bg-white" />}
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
 
