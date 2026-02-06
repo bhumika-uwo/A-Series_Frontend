@@ -97,13 +97,6 @@ const MyAgents = () => {
                     <h1 className="text-2xl md:text-3xl font-bold text-maintext mb-2">{t('myAgentsPage.title')}</h1>
                     <p className="text-sm md:text-base text-subtext">{t('myAgentsPage.subtitle')}</p>
                 </div>
-
-                <button
-                    onClick={handleCreateAgent}
-                    className="bg-primary text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-primary/20 hover:opacity-90 transition-all flex items-center gap-2 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
-                >
-                    <Plus className="w-5 h-5" /> {t('myAgentsPage.createNew')}
-                </button>
             </div>
 
             {/* Loading */}
@@ -182,17 +175,7 @@ const MyAgents = () => {
                             </div>
                         )}
 
-                        {/* Empty Create Card */}
-                        <div
-                            onClick={handleCreateAgent}
-                            className="border border-dashed border-border bg-surface/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center hover:bg-surface transition-colors cursor-pointer group min-h-[250px]"
-                        >
-                            <div className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center mb-3 group-hover:border-primary/50">
-                                <Plus className="w-6 h-6 text-subtext group-hover:text-primary" />
-                            </div>
-                            <h3 className="font-medium text-maintext">{t('myAgentsPage.createCustom')}</h3>
-                            <p className="text-xs text-subtext mt-1">{t('myAgentsPage.createCustomDesc')}</p>
-                        </div>
+
                     </div>
                 </div>
             )}
