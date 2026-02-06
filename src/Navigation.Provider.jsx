@@ -21,7 +21,6 @@ import UserTransactions from './pages/UserTransactions';
 import ContactUs from './pages/ContactUs';
 
 import { AppRoute } from './types';
-import { Menu } from 'lucide-react';
 import AiBiz from './agents/AIBIZ/AiBiz.jsx';
 import AiBase from './agents/AIBASE/AiBase.jsx';
 import ComingSoon from './Components/ComingSoon/ComingSoon.jsx';
@@ -31,8 +30,10 @@ import ResetPassword from './pages/ResetPassword.jsx';
 import { lazy, Suspense } from 'react';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
 import { useLanguage } from './context/LanguageContext';
+import { useTheme } from './context/ThemeContext';
 import LanguageSwitcher from './Components/LanguageSwitcher/LanguageSwitcher';
 import UserDropdown from './Components/Navbar/UserDropdown';
+import { Menu, Sun, Moon } from 'lucide-react';
 
 
 const SecurityAndGuidelines = lazy(() => import('./pages/SecurityAndGuidelines'));
@@ -62,6 +63,7 @@ const DashboardLayout = () => {
 
   const navigate = useNavigate();
   const { setLanguage, setRegion, t } = useLanguage();
+  const { theme, setTheme } = useTheme();
 
   // Sync Language from User Settings on Mount
   React.useEffect(() => {
@@ -91,12 +93,10 @@ const DashboardLayout = () => {
 
         {/* Desktop Navbar */}
         {!isFullScreen && location.pathname !== '/chat' && (
-          <div className="hidden lg:flex items-center justify-end shrink-0 z-50 bg-white">
+          <div className="hidden lg:flex items-center justify-end shrink-0 z-50 bg-background border-b border-border">
             <Navbar />
           </div>
         )}
-
-
 
         {/* Mobile Header */}
         {!isFullScreen && (
@@ -112,6 +112,12 @@ const DashboardLayout = () => {
             </div>
 
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="p-2 rounded-lg bg-surface border border-border text-subtext hover:text-primary transition-all"
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
               <LanguageSwitcher />
               <UserDropdown isMobile={true} />
             </div>
