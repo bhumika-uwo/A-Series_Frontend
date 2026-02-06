@@ -268,18 +268,27 @@ const ContactUs = () => {
                   <label className="block text-sm font-semibold text-maintext mb-2">
                     {t('landing.contactUs.formCategoryLabel')}
                   </label>
-                  <select
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 rounded-lg border-2 border-border bg-transparent text-maintext focus:outline-none focus:border-primary transition-colors"
-                  >
-                    <option value="general" className="bg-card">{t('landing.contactUs.categories.general')}</option>
-                    <option value="technical" className="bg-card">{t('landing.contactUs.categories.technical')}</option>
-                    <option value="bug" className="bg-card">{t('landing.contactUs.categories.bug')}</option>
-                    <option value="feedback" className="bg-card">{t('landing.contactUs.categories.feedback')}</option>
-                    <option value="partnership" className="bg-card">{t('landing.contactUs.categories.partnership')}</option>
-                  </select>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { id: 'general', label: t('landing.contactUs.categories.general') },
+                      { id: 'technical', label: t('landing.contactUs.categories.technical') },
+                      { id: 'bug', label: t('landing.contactUs.categories.bug') },
+                      { id: 'feedback', label: t('landing.contactUs.categories.feedback') },
+                      { id: 'partnership', label: t('landing.contactUs.categories.partnership') }
+                    ].map((cat) => (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, category: cat.id }))}
+                        className={`px-3 py-3 rounded-lg border-2 text-sm font-medium transition-all ${formData.category === cat.id
+                          ? 'border-primary bg-primary/10 text-primary'
+                          : 'border-border bg-transparent text-maintext hover:border-primary/50'
+                          }`}
+                      >
+                        {cat.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
