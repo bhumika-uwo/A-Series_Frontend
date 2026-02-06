@@ -150,6 +150,7 @@
             "resolutionNotes": "Notas de resolución y acción",
             "notesPlaceholder": "Agregar notas internas sobre la resolución o respuesta...",
             "markResolved": "Marcar como resuelto",
+            "send": "Enviar",
             "submittedOn": "Enviado el",
             "senderDetails": "Detalles del remitente",
             "subject": "Asunto",

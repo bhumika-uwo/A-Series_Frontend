@@ -1,13 +1,10 @@
 import React from 'react';
 import { userData } from '../../userStore/userData';
 import { useRecoilValue } from 'recoil';
-import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon } from 'lucide-react';
 import UserDropdown from './UserDropdown';
 
 const Navbar = () => {
     const { user } = useRecoilValue(userData);
-    const { theme, setTheme } = useTheme();
 
     // If no user logged in, don't show navbar (Login is in sidebar)
     if (!user || !user.email) {

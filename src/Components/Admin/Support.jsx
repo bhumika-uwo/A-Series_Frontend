@@ -204,7 +204,7 @@ const AdminSupport = () => {
                 </div>
 
                 {/* Category Filter Pills */}
-                <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+                <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
                     {['all', 'contact', 'faq', 'security'].map(cat => (
                         <button
                             key={cat}
@@ -382,12 +382,20 @@ const AdminSupport = () => {
                                         value={resolutionNote}
                                         onChange={(e) => setResolutionNote(e.target.value)}
                                     />
-                                    <div className="flex gap-3 justify-end">
+                                    <div className="flex flex-col sm:flex-row gap-3 justify-end">
+                                        <button
+                                            disabled={isResolving}
+                                            onClick={() => handleResolve('in-progress')}
+                                            className="bg-primary/10 text-primary border border-primary/20 px-5 py-2 rounded-xl text-sm font-bold hover:bg-primary/20 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                        >
+                                            {isResolving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
+                                            {t("admin.support.send")}
+                                        </button>
                                         {selectedReport.status !== 'resolved' && (
                                             <button
                                                 disabled={isResolving}
                                                 onClick={() => handleResolve('resolved')}
-                                                className="bg-primary text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 disabled:opacity-50 flex items-center gap-2"
+                                                className="bg-primary text-white px-5 py-2 rounded-xl text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20 disabled:opacity-50 flex items-center justify-center gap-2"
                                             >
                                                 {isResolving ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
                                                 {t("admin.support.markResolved")}

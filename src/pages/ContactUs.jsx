@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, MessageSquare, Sun, Moon } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, MessageSquare } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { apiService } from '../services/apiService';
 import { getUserData } from '../userStore/userData';
 import { useLanguage } from '../context/LanguageContext';
-import { useTheme } from '../context/ThemeContext';
-import LanguageSwitcher from '../Components/LanguageSwitcher/LanguageSwitcher';
 import { useNavigate } from 'react-router';
 import { AppRoute } from '../types';
 import { logo, name } from '../constants';
 
 const ContactUs = () => {
   const { t } = useLanguage();
-  const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',

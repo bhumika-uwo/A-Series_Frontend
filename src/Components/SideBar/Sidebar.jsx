@@ -19,20 +19,18 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+
 import HelpFAQModal from '../Help/HelpFAQModal.jsx';
 import { apis, AppRoute } from '../../types';
-import { faqs } from '../../constants'; // Import shared FAQs
+import { faqs } from '../../constants';
 import NotificationBar from '../NotificationBar/NotificationBar.jsx';
 import { useRecoilState } from 'recoil';
 import { clearUser, getUserData, setUserData, toggleState, userData, notificationsState } from '../../userStore/userData';
 import axios from 'axios';
 import { useLanguage } from '../../context/LanguageContext';
-import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon } from 'lucide-react';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const { t, language, region, regionFlags } = useLanguage();
-  const { theme, setTheme } = useTheme();
 
 
   const getFlagUrl = (code) => `https://flagcdn.com/w40/${code.toLowerCase()}.png`;

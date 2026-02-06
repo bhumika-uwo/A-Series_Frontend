@@ -353,6 +353,7 @@
             "messageContent": "Message Content",
             "resolutionNotes": "Resolution Notes & Action",
             "markResolved": "Mark Resolved",
+            "send": "Send",
             "notesPlaceholder": "Add internal notes about the resolution or response...",
             "submittedOn": "Submitted on",
             "noInquiries": "No inquiries found.",

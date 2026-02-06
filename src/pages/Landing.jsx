@@ -10,8 +10,6 @@ import { logo } from '../constants';
 import { getUserData } from '../userStore/userData';
 import { AppRoute } from '../types';
 import { FaXTwitter } from "react-icons/fa6";
-import { useTheme } from '../context/ThemeContext';
-import { Sun, Moon } from 'lucide-react';
 import { Link } from 'react-router';
 import LanguageSwitcher from '../Components/LanguageSwitcher/LanguageSwitcher';
 import PolicyModal from '../Components/PolicyModal';

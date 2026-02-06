@@ -30,10 +30,8 @@ import ResetPassword from './pages/ResetPassword.jsx';
 import { lazy, Suspense } from 'react';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
 import { useLanguage } from './context/LanguageContext';
-import { useTheme } from './context/ThemeContext';
-import LanguageSwitcher from './Components/LanguageSwitcher/LanguageSwitcher';
 import UserDropdown from './Components/Navbar/UserDropdown';
-import { Menu, Sun, Moon } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 
 const SecurityAndGuidelines = lazy(() => import('./pages/SecurityAndGuidelines'));
@@ -63,7 +61,6 @@ const DashboardLayout = () => {
 
   const navigate = useNavigate();
   const { setLanguage, setRegion, t } = useLanguage();
-  const { theme, setTheme } = useTheme();
 
   // Sync Language from User Settings on Mount
   React.useEffect(() => {
