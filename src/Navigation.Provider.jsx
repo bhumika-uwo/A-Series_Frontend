@@ -112,12 +112,6 @@ const DashboardLayout = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-lg bg-surface border border-border text-subtext hover:text-primary transition-all"
-              >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
               <LanguageSwitcher />
               <UserDropdown isMobile={true} />
             </div>

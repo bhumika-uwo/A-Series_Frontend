@@ -32,7 +32,6 @@ const Landing = () => {
   const [isSecurityModalOpen, setIsSecurityModalOpen] = useState(false);
   const [isContactUsModalOpen, setIsContactUsModalOpen] = useState(false);
   const [policyOpen, setPolicyOpen] = useState(null); // 'privacy' | 'terms' | 'cookie'
-  const { theme, setTheme } = useTheme();
   const btnClass = "px-8 py-4 bg-surface border border-border rounded-2xl font-bold text-lg text-maintext hover:bg-secondary transition-all duration-300 flex items-center justify-center gap-2";
 
   const [contactInfo, setContactInfo] = useState({
@@ -76,13 +75,7 @@ const Landing = () => {
 
 
 
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-1.5 md:p-2 rounded-full bg-surface border border-border text-subtext hover:text-primary hover:border-primary/50 transition-all shadow-sm"
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4 md:w-5 md:h-5 text-orange-400" /> : <Moon className="w-4 h-4 md:w-5 md:h-5" />}
-          </button>
+
 
           {user ? <Link to={AppRoute.PROFILE}><CircleUser className='h-6 w-6 md:h-7 md:w-7 text-maintext' /></Link> : <div className="flex gap-2 md:gap-4 items-center">
             <button

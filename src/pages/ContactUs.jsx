@@ -136,13 +136,7 @@ const ContactUs = () => {
           <span className="text-xl font-black tracking-tighter text-maintext">{name}</span>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-2.5 rounded-xl bg-white dark:bg-surface border border-border text-subtext hover:text-primary hover:border-primary/50 transition-all shadow-sm"
-            aria-label="Toggle Theme"
-          >
-            {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
+
           <LanguageSwitcher variant="landing" />
         </div>
       </div>
