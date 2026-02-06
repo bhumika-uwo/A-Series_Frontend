@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { DollarSign, TrendingUp, CreditCard, Activity, Loader2, Copy, Check } from 'lucide-react';
+import { DollarSign, TrendingUp, CreditCard, Loader2, Copy, Check } from 'lucide-react';
 import apiService from '../../services/apiService';
 
 const Financials = () => {
@@ -116,7 +116,7 @@ const Financials = () => {
                     title={t("admin.finance.operationalCosts")}
                     amount={overview.totalVendorPayouts} // reusing value for demo, logically would be different
                     subtitle={t("admin.finance.costsSubtitle")}
-                    icon={Activity}
+                    icon={CreditCard}
                     colorClass="text-maintext"
                     bgClass="bg-card"
                     borderClass="border border-border"
@@ -141,7 +141,6 @@ const Financials = () => {
                 <div className="p-4 md:p-6 border-b border-border flex items-center justify-between">
                     <h3 className="text-base md:text-lg font-bold text-maintext">{t("admin.finance.agentPerformance")}</h3>
                     <div className="flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-wider text-subtext/50">
-                        <Activity className="w-3 h-3" />
                         Live Metrics
                     </div>
                 </div>
@@ -172,9 +171,6 @@ const Financials = () => {
                                 <tr>
                                     <td colSpan="4" className="px-8 py-20 text-center">
                                         <div className="flex flex-col items-center gap-3">
-                                            <div className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
-                                                <Activity className="w-6 h-6 text-subtext/50" />
-                                            </div>
                                             <p className="text-sm text-subtext italic">{t("chatPage.noRecentChats")}</p>
                                         </div>
                                     </td>
@@ -208,7 +204,6 @@ const Financials = () => {
                         ))
                     ) : (
                         <div className="p-12 text-center">
-                            <Activity className="w-10 h-10 mx-auto mb-3 text-subtext/10" />
                             <p className="text-subtext font-bold text-xs">{t("chatPage.noRecentChats")}</p>
                         </div>
                     )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Users, ShoppingBag, AlertTriangle, Activity, DollarSign, Loader2 } from 'lucide-react';
+import { Users, ShoppingBag, AlertTriangle, DollarSign, Loader2 } from 'lucide-react';
 import apiService from '../../services/apiService';
 import CreateAppModal from './CreateAppModal';
 
@@ -87,9 +87,6 @@ const AdminOverview = () => {
             {/* Main Status Card */}
             <div className="bg-card border border-border rounded-2xl md:rounded-3xl p-5 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between shadow-sm gap-6">
                 <div className="flex items-center gap-4 md:gap-8">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-100 shadow-inner shrink-0">
-                        <Activity className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
-                    </div>
                     <div>
                         <h2 className="text-lg md:text-2xl font-bold text-gray-800">{t("admin.overview.systemsOperational")}</h2>
                         <div className="flex flex-wrap items-center gap-2 md:gap-4 mt-1 md:mt-2">
@@ -105,11 +102,9 @@ const AdminOverview = () => {
 
                 <div className="flex items-center gap-6 md:gap-12 md:border-l md:border-border md:pl-12 w-full md:w-auto">
                     <div className="flex items-center gap-3">
-                        <Activity className="w-5 h-5 text-blue-400" />
                         <div>
                             <p className="text-[9px] md:text-[10px] text-gray-500 font-bold uppercase tracking-wider">{t("admin.overview.security")}</p>
                             <div className="flex items-center gap-2">
-                                <Activity className="w-3.5 h-3.5 md:w-4 h-4 text-blue-500" />
                                 <p className="text-xs md:text-sm font-bold text-gray-800">{t("admin.overview.systemSecure")}</p>
                             </div>
                         </div>
@@ -128,10 +123,6 @@ const AdminOverview = () => {
                         <div key={index} className="bg-card border border-border rounded-2xl p-5 md:p-8 shadow-sm hover:shadow-md transition-shadow">
                             <div className="flex items-center justify-between mb-2 md:mb-4 text-subtext">
                                 <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-wider leading-none">{item.label}</span>
-                                <div className="flex items-center gap-1 text-[9px] md:text-[10px] font-bold text-blue-400 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100/50">
-                                    <Activity className="w-3 h-3" />
-                                    {item.trend}
-                                </div>
                             </div>
                             <h4 className="text-2xl md:text-4xl font-bold text-maintext">{item.value}</h4>
                         </div>
@@ -149,15 +140,12 @@ const AdminOverview = () => {
                 <div className="bg-card border border-border rounded-2xl md:rounded-3xl p-5 md:p-8 shadow-sm">
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-2 text-blue-600 font-extrabold text-sm tracking-widest">
-                            <Activity className="w-4 h-4" />
                             {t("admin.overview.financialOverview").toUpperCase()}
                         </div>
                         <div className="flex items-center gap-4">
                             <button className="text-[10px] font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1 hover:underline group">
-                                {t("admin.overview.invoice")} <Activity className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                                {t("admin.overview.invoice")}
                             </button>
-                            <Activity className="w-4 h-4 text-blue-100" />
-                            <Activity className="w-4 h-4 text-blue-100" />
                         </div>
                     </div>
 

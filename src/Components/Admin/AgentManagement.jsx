@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { Activity, Loader2, Edit2, EyeOff, Trash2, AlertCircle } from 'lucide-react';
+import { Loader2, Edit2, EyeOff, Trash2, AlertCircle } from 'lucide-react';
 import apiService from '../../services/apiService';
 import CreateAppModal from './CreateAppModal';
 import AppDetails from './AppDetails';
@@ -155,9 +155,6 @@ const AgentManagement = ({ onDetailView }) => {
             {showSuccess && (
                 <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] w-full max-w-sm bg-gradient-to-br from-blue-600 to-blue-800 border border-blue-400/30 rounded-[20px] p-2.5 flex items-center justify-between animate-in slide-in-from-top-full duration-500 shadow-2xl shadow-blue-500/40 backdrop-blur-xl">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center text-white shadow-inner shrink-0">
-                            <Activity className="w-4 h-4" />
-                        </div>
                         <div>
                             <h3 className="text-xs font-bold text-white leading-tight">Success!</h3>
                             <p className="text-[10px] font-medium text-blue-100/90 leading-tight">
