@@ -148,7 +148,7 @@ const ContactUs = () => {
           {/* Contact Info Card */}
           <div className="md:col-span-1 space-y-6">
             {/* Email */}
-            <div className="bg-white dark:bg-surface rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-border">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Mail className="w-6 h-6 text-primary" />
@@ -162,9 +162,9 @@ const ContactUs = () => {
             </div>
 
             {/* Phone */}
-            <div className="bg-white dark:bg-surface rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-border">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div>
@@ -176,9 +176,9 @@ const ContactUs = () => {
             </div>
 
             {/* Location */}
-            <div className="bg-white dark:bg-surface rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-border">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-6 h-6 text-green-600 dark:text-green-400" />
                 </div>
                 <div>
@@ -190,9 +190,9 @@ const ContactUs = () => {
             </div>
 
             {/* Support Hours */}
-            <div className="bg-white dark:bg-surface rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+            <div className="bg-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-border">
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Clock className="w-6 h-6 text-purple-600 dark:text-purple-400" />
                 </div>
                 <div>
@@ -205,7 +205,7 @@ const ContactUs = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="md:col-span-2 bg-white dark:bg-surface rounded-2xl p-8 shadow-lg">
+          <div className="md:col-span-2 bg-card rounded-2xl p-8 shadow-lg border border-border">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 {/* Name */}
@@ -274,11 +274,11 @@ const ContactUs = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 rounded-lg border-2 border-border bg-transparent text-maintext focus:outline-none focus:border-primary transition-colors"
                   >
-                    <option value="general" className="bg-surface">{t('landing.contactUs.categories.general')}</option>
-                    <option value="technical" className="bg-surface">{t('landing.contactUs.categories.technical')}</option>
-                    <option value="bug" className="bg-surface">{t('landing.contactUs.categories.bug')}</option>
-                    <option value="feedback" className="bg-surface">{t('landing.contactUs.categories.feedback')}</option>
-                    <option value="partnership" className="bg-surface">{t('landing.contactUs.categories.partnership')}</option>
+                    <option value="general" className="bg-card">{t('landing.contactUs.categories.general')}</option>
+                    <option value="technical" className="bg-card">{t('landing.contactUs.categories.technical')}</option>
+                    <option value="bug" className="bg-card">{t('landing.contactUs.categories.bug')}</option>
+                    <option value="feedback" className="bg-card">{t('landing.contactUs.categories.feedback')}</option>
+                    <option value="partnership" className="bg-card">{t('landing.contactUs.categories.partnership')}</option>
                   </select>
                 </div>
               </div>
@@ -335,7 +335,7 @@ const ContactUs = () => {
         </div>
 
         {/* FAQ Section */}
-        <div className="bg-white dark:bg-surface rounded-2xl p-8 shadow-lg">
+        <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
           <h2 className="text-3xl font-bold text-maintext mb-8 flex items-center gap-3">
             <MessageSquare className="w-8 h-8 text-primary" />
             {t('landing.contactUs.faqTitle')}
