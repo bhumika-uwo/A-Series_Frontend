@@ -34,7 +34,8 @@ import toast from 'react-hot-toast';
 // Profile Component
 const Profile = () => {
     const navigate = useNavigate();
-    const user = getUserData() || { name: 'Gauhar', email: 'gauhar@example.com' };
+    const [currentUserData, setUserRecoil] = useRecoilState(userData);
+    const user = currentUserData?.user || getUserData() || { name: 'Gauhar', email: 'gauhar@example.com' };
 
     // Settings State
     const [userSettings, setUserSettings] = React.useState(() => {
@@ -177,7 +178,7 @@ const Profile = () => {
     const [isEditing, setIsEditing] = React.useState(false);
     const [editForm, setEditForm] = React.useState({ name: user.name, email: user.email });
 
-    const [currentUserData, setUserRecoil] = useRecoilState(userData);
+
 
     const handleSaveProfile = async () => {
         const loadingToast = toast.loading(t('profilePage.updatingProfile'));
@@ -495,7 +496,7 @@ const Profile = () => {
                             <div className="flex-1">
                                 <p className="text-xs font-semibold text-subtext uppercase tracking-wide mb-1">{t('accountType')}</p>
                                 <p className="text-base font-bold text-maintext capitalize">
-                                    {user.role === 'Admin' ? t('adminRole') : user.role === 'Developer' ? t('developerRole') : t('userRole')}
+                                    {(user.role?.toLowerCase() === 'admin') ? t('adminRole') : (user.role?.toLowerCase() === 'developer') ? t('developerRole') : t('userRole')}
                                 </p>
                             </div>
                         </div>

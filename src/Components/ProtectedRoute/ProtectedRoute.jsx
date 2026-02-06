@@ -25,7 +25,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   }
 
   // 2. Check Admin Role (if required)
-  if (requireAdmin && user.role !== 'admin') {
+  if (requireAdmin && user.role?.toLowerCase() !== 'admin') {
     return <Navigate to="/dashboard/marketplace" replace />;
   }
 

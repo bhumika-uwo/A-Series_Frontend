@@ -192,7 +192,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           </NavLink>
 
           {/* Admin Dashboard Link - Only for admin users */}
-          {user.role === 'admin' && (
+          {user.role?.toLowerCase() === 'admin' && (
             <NavLink to={AppRoute.ADMIN} className={navItemClass} onClick={onClose}>
               <LayoutGrid className="w-5 h-5" />
               <span>{t('adminDashboard')}</span>
