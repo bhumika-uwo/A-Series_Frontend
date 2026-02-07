@@ -84,7 +84,7 @@ const DashboardLayout = () => {
         {/* Outlet for pages */}
 
         {/* Desktop Navbar */}
-        {!isFullScreen && !location.pathname.includes('/chat') && (
+        {!isFullScreen && !location.pathname.toLowerCase().includes('/chat') && (
           <div className="hidden lg:flex items-center justify-end shrink-0 z-50 bg-secondary border-b border-border w-full h-14 px-4">
             <Navbar />
           </div>
