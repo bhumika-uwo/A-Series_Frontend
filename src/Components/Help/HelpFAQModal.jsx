@@ -14,6 +14,18 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
     const [sendStatus, setSendStatus] = useState(null);
     const [supportPhone, setSupportPhone] = useState(null);
     const [contactEmail, setContactEmail] = useState("admin@uwo24.com");
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = React.useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     useEffect(() => {
         if (isOpen) {
@@ -117,22 +129,32 @@ const HelpFAQModal = ({ isOpen, onClose, user }) => {
                         <div className="flex flex-col gap-6">
                             <div>
                                 <label className="block text-sm font-bold text-maintext mb-2">{t('faqHelp.issueCategory')}</label>
-                                <select
-                                    value={issueType}
-                                    onChange={(e) => setIssueType(e.target.value)}
-                                    className="w-full p-4 rounded-2xl bg-secondary border-2 border-border focus:border-primary outline-none text-maintext font-medium transition-all cursor-pointer hover:bg-surface appearance-none bg-no-repeat bg-right pr-12"
-                                    style={{
-                                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%235555ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
-                                        backgroundPosition: 'right 1rem center',
-                                        backgroundSize: '1.5rem'
-                                    }}
-                                >
-                                    {issueOptions.map((opt) => (
-                                        <option key={opt} value={opt}>
-                                            {opt}
-                                        </option>
-                                    ))}
-                                </select>
+                                <div className="relative" ref={dropdownRef}>
+                                    <div
+                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                        className={`w-full p-4 rounded-2xl bg-secondary border-2 ${isDropdownOpen ? 'border-primary' : 'border-border'} hover:border-primary/50 cursor-pointer flex justify-between items-center transition-all`}
+                                    >
+                                        <span className="text-maintext font-medium">{issueType}</span>
+                                        {isDropdownOpen ? <ChevronUp className="w-5 h-5 text-primary" /> : <ChevronDown className="w-5 h-5 text-subtext" />}
+                                    </div>
+
+                                    {isDropdownOpen && (
+                                        <div className="absolute top-full left-0 right-0 mt-2 bg-card border border-border rounded-xl shadow-xl z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                                            {issueOptions.map((opt) => (
+                                                <div
+                                                    key={opt}
+                                                    onClick={() => {
+                                                        setIssueType(opt);
+                                                        setIsDropdownOpen(false);
+                                                    }}
+                                                    className={`p-3 text-sm font-medium cursor-pointer transition-colors ${issueType === opt ? 'bg-primary/10 text-primary' : 'text-maintext hover:bg-secondary'}`}
+                                                >
+                                                    {opt}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
                             <div>
