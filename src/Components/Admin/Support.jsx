@@ -224,7 +224,7 @@ const AdminSupport = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0 relative">
                 {/* Reports List */}
-                <div className={`lg:col-span-1 bg-card border border-border rounded-2xl overflow-hidden flex flex-col shadow-sm h-[calc(100vh-240px)] md:h-[calc(100vh-180px)] ${selectedReport ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`lg:col-span-1 bg-card border border-border rounded-2xl overflow-hidden flex flex-col shadow-sm h-[500px] lg:h-[600px] ${selectedReport ? 'hidden lg:flex' : 'flex'}`}>
                     <div className="p-4 border-b border-border bg-secondary">
                         <div className="relative">
                             <button onClick={handleSearch} className="absolute left-3 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors">
@@ -293,7 +293,7 @@ const AdminSupport = () => {
                 </div>
 
                 {/* Report Details */}
-                <div className={`lg:col-span-2 bg-card border border-border rounded-2xl flex flex-col shadow-sm overflow-hidden h-[calc(100vh-240px)] md:h-[calc(100vh-180px)] ${!selectedReport ? 'hidden lg:flex' : 'flex'}`}>
+                <div className={`lg:col-span-2 bg-card border border-border rounded-2xl flex flex-col shadow-sm overflow-hidden h-[500px] lg:h-[600px] ${!selectedReport ? 'hidden lg:flex' : 'flex'}`}>
                     {selectedReport ? (
                         <div className="flex flex-col h-full">
                             {/* Header */}
