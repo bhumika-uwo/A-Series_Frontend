@@ -410,7 +410,7 @@ const Profile = () => {
 
                     {/* Left Column: Identity & Profile */}
                     <div className="lg:col-span-4 space-y-6">
-                        <div className="bg-card border border-border p-6 rounded-[32px] shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+                        <div className="bg-card border border-border p-6 rounded-2xl md:rounded-[32px] shadow-sm flex flex-col items-center text-center relative overflow-hidden">
                             <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-primary/10 to-transparent pointer-events-none" />
 
                             {/* Avatar */}
@@ -504,7 +504,7 @@ const Profile = () => {
                     <div className="lg:col-span-8 space-y-6">
 
                         {/* 1. Account Preferences */}
-                        <div className="bg-card border border-border rounded-[32px] p-8">
+                        <div className="bg-card border border-border rounded-2xl md:rounded-[32px] p-6 md:p-8">
                             <h2 className="text-lg font-bold text-maintext mb-6 flex items-center gap-2">
                                 <Settings className="w-5 h-5 text-primary" />
                                 {t('accountPreferences')}
@@ -587,7 +587,7 @@ const Profile = () => {
                         </div>
 
                         {/* 2. Security & Billing */}
-                        <div className="bg-card border border-border rounded-[32px] p-8">
+                        <div className="bg-card border border-border rounded-2xl md:rounded-[32px] p-6 md:p-8">
                             <h2 className="text-lg font-bold text-maintext mb-6 flex items-center gap-2">
                                 <Shield className="w-5 h-5 text-primary" />
                                 {t('securityStatus')}
@@ -614,7 +614,7 @@ const Profile = () => {
                         </div>
 
                         {/* 3. Danger Zone (Delete Account) */}
-                        <div className="bg-red-500/5 border border-red-500/20 rounded-[32px] p-8">
+                        <div className="bg-red-500/5 border border-red-500/20 rounded-2xl md:rounded-[32px] p-6 md:p-8">
                             <h2 className="text-lg font-bold text-red-500 mb-2 flex items-center gap-2">
                                 <AlertTriangle className="w-5 h-5" />
                                 {t('profilePage.dangerZone') || "Danger Zone"}

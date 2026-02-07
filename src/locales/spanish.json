@@ -1087,6 +1087,8 @@
         "paused": "En pausa"
     },
     "profilePage": {
+        "dangerZone": "Zona de Peligro",
+        "deleteAccountDescription": "Elimine permanentemente su cuenta y todos los datos asociados. Esta acción no se puede deshacer.",
         "updatingPassword": "Actualizando contraseña...",
         "passwordUpdated": "¡Contraseña actualizada con éxito!",
         "failedToUpdate": "Error al actualizar.",

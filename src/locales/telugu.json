@@ -1098,6 +1098,8 @@
         "paused": "పాజ్ చేయబడింది"
     },
     "profilePage": {
+        "dangerZone": "Danger Zone",
+        "deleteAccountDescription": "Permanently delete your account and all associated data. This action cannot be undone.",
         "updatingPassword": "పాస్‌వర్డ్ అప్‌డేట్ అవుతోంది...",
         "passwordUpdated": "పాస్‌వర్డ్ విజయవంతంగా అప్‌డేట్ చేయబడింది!",
         "failedToUpdate": "అప్‌డేట్ చేయడం విఫలమైంది.",

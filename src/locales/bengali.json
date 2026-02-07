@@ -1093,6 +1093,8 @@
         "paused": "বিরতি দেওয়া হয়েছে"
     },
     "profilePage": {
+        "dangerZone": "Danger Zone",
+        "deleteAccountDescription": "Permanently delete your account and all associated data. This action cannot be undone.",
         "updatingPassword": "পাসওয়ার্ড আপডেট করা হচ্ছে...",
         "passwordUpdated": "পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছে!",
         "failedToUpdate": "আপডেট করতে ব্যর্থ হয়েছে।",

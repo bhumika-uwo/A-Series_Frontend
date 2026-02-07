@@ -1096,6 +1096,8 @@
         "paused": "நிறுத்தப்பட்டது"
     },
     "profilePage": {
+        "dangerZone": "Danger Zone",
+        "deleteAccountDescription": "Permanently delete your account and all associated data. This action cannot be undone.",
         "updatingPassword": "கடவுச்சொல் புதுப்பிக்கப்படுகிறது...",
         "passwordUpdated": "கடவுச்சொல் வெற்றிகரமாக புதுப்பிக்கப்பட்டது!",
         "failedToUpdate": "புதுப்பிக்கத் தவறிவிட்டது.",

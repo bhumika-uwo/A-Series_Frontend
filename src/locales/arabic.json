@@ -1102,6 +1102,8 @@
         "paused": "متوقف مؤقتاً"
     },
     "profilePage": {
+        "dangerZone": "منطقة الخطر",
+        "deleteAccountDescription": "احذف حسابك وجميع البيانات المرتبطة به بشكل دائم. لا يمكن التراجع عن هذا الإجراء.",
         "updatingPassword": "جاري تحديث كلمة المرور...",
         "passwordUpdated": "تم تحديث كلمة المرور بنجاح!",
         "failedToUpdate": "فشل التحديث.",

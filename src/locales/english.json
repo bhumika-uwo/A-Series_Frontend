@@ -1041,6 +1041,8 @@
         "India": "India"
     },
     "profilePage": {
+        "dangerZone": "Danger Zone",
+        "deleteAccountDescription": "Permanently delete your account and all associated data. This action cannot be undone.",
         "updatingPassword": "Updating password...",
         "passwordUpdated": "Password updated successfully!",
         "failedToUpdate": "Failed to update.",

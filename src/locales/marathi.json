@@ -1095,6 +1095,8 @@
         "paused": "पॉज केलेले"
     },
     "profilePage": {
+        "dangerZone": "Danger Zone",
+        "deleteAccountDescription": "Permanently delete your account and all associated data. This action cannot be undone.",
         "updatingPassword": "पासवर्ड अपडेट होत आहे...",
         "passwordUpdated": "पासवर्ड यशस्वीरित्या अपडेट झाला!",
         "failedToUpdate": "अपडेट करण्यात अयशस्वी.",

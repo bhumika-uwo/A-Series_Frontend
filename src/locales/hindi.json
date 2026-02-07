@@ -1103,6 +1103,8 @@
         "paused": "रुका हुआ"
     },
     "profilePage": {
+        "dangerZone": "Danger Zone",
+        "deleteAccountDescription": "अपने खाते और संबंधित डेटा को स्थायी रूप से हटाएं। यह क्रिया पूर्ववत नहीं की जा सकती।",
         "updatingPassword": "पासवर्ड अपडेट किया जा रहा है...",
         "passwordUpdated": "पासवर्ड सफलतापूर्वक अपडेट किया गया!",
         "failedToUpdate": "अपडेट करने में विफल।",
