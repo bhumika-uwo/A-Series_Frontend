@@ -64,7 +64,8 @@ export const AppRoute = {
 
 
 // export const API = "https://a-series-backend-561947379084.asia-south1.run.app/api";
-//const PROD_API = "https://a-series-backend-m1ls.onrender.com/api";
+//
+const PROD_API = "https://a-series-backend-m1ls.onrender.com/api";
 const DEV_API = "http://localhost:8080/api";
 
 // Robust check: if we are on the live domain, FORCE the prod API

@@ -37,6 +37,7 @@ const Profile = () => {
     const navigate = useNavigate();
     const [currentUserData, setUserRecoil] = useRecoilState(userData);
     const user = currentUserData?.user || getUserData() || { name: 'Gauhar', email: 'gauhar@example.com' };
+    const [avatarError, setAvatarError] = React.useState(false);
 
     // Settings State
     const [userSettings, setUserSettings] = React.useState(() => {
@@ -419,15 +420,12 @@ const Profile = () => {
                             {/* Avatar */}
                             <div className="relative mb-4 mt-4">
                                 <div className="w-32 h-32 rounded-full bg-primary/10 flex items-center justify-center text-primary border-4 border-card shadow-xl overflow-hidden text-4xl font-bold">
-                                    {user.avatar ? (
+                                    {user.avatar && !avatarError ? (
                                         <img
                                             src={user.avatar}
                                             alt="Profile"
                                             className="w-full h-full object-cover"
-                                            onError={(e) => {
-                                                e.target.style.display = 'none';
-                                                e.target.parentElement.innerText = user.name ? user.name.charAt(0).toUpperCase() : "U";
-                                            }}
+                                            onError={() => setAvatarError(true)}
                                         />
                                     ) : (
                                         user.name ? user.name.charAt(0).toUpperCase() : <CircleUser className="w-16 h-16" />
