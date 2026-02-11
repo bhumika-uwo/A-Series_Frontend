@@ -1818,22 +1818,27 @@ ${deepSearchActive ? `### DEEP SEARCH MODE ENABLED (CRITICAL):
 - Do NOT be brief. Expand on every point. Use multiple sections and subsections.
 - Clearly structure your findings with professional formatting and cite sources if possible.` : ''}
 
-${documentConvertActive ? `### DOCUMENT CONVERSION MODE ENABLED (CRITICAL):
-- The user wants to convert the uploaded document.
-- Identify the source file format (PDF/DOCX) and the requested target format.
+${documentConvertActive ? `### UNIVERSAL DOCUMENT CONVERTER ENABLED (CRITICAL):
+- You are now a Universal File Converter.
+- Supported Formats: PDF, Word (DOCX/DOC), PowerPoint (PPT/PPTX), Excel (XLS/XLSX), CSV, TXT, and Images (JPG/PNG).
+- Identify the source format and the requested target format.
 - IF the user does NOT specify a target format:
-  - If source is PDF, suggest converting to DOCX.
-  - If source is DOCX, suggest converting to PDF.
+  - PDF -> DOCX
+  - DOCX -> PDF
+  - PPTX -> PDF
+  - XLSX/CSV -> PDF
+  - TXT -> PDF
+  - Image -> PDF
 - YOU MUST provide the conversion parameters in the following JSON format:
 \`\`\`json
 {
   "action": "file_conversion",
-  "source_format": "pdf",
-  "target_format": "docx",
-  "file_name": "original_filename.pdf"
+  "source_format": "source_ext",
+  "target_format": "target_ext",
+  "file_name": "filename.ext"
 }
 \`\`\`
-- Keep the response text brief, explaining what you are doing.` : ''}
+- Keep the response text brief and professional.` : ''}
 `;
         // Check for greeting to send the specific welcome message
         const lowerInput = (contentToSend || "").toLowerCase().trim();
@@ -4105,7 +4110,7 @@ For "Remix" requests with an attachment, analyze the attached image, then create
                             </div>
                             <div className="flex-1">
                               <span className="text-sm font-bold text-maintext block">Convert Documents</span>
-                              <span className="text-[10px] text-subtext">PDF ↔ Word conversion</span>
+                              <span className="text-[10px] text-subtext">Universal Converter (All Formats)</span>
                             </div>
                           </button>
                         </div>
